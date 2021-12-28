@@ -1,18 +1,15 @@
 package com.serejs.diplom.desktop.text.parse.file;
 
 import java.io.*;
-import java.util.Objects;
 
 public class FileParser {
-    public static String getText(String uri) {
+    public static String getText(File file) {
         StringBuilder text = new StringBuilder();
 
-        try (BufferedReader reader = new BufferedReader(
-                new FileReader(Objects.requireNonNull(FileParser.class.getClassLoader().getResource(uri)).getFile())
-        )) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             reader.lines().forEach(text::append);
         } catch (IOException e) {
-            System.err.println("Ошибка получения текста из файла: " + uri);
+            System.err.println("Ошибка получения текста из файла: " + file.getName());
         }
 
         return text.toString();
