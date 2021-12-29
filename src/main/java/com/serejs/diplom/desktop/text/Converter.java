@@ -11,8 +11,10 @@ import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.epub.EpubReader;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.xml.sax.SAXException;
 
 import javax.swing.text.html.HTML;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,7 +37,7 @@ public class Converter {
                     case WEB -> System.err.println("поиск из web не реализован");
                     default -> System.err.println("Тип литературы не определен: " + url);
                 }
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 System.err.println("Ошибка получения информации из ресурса");
             }
         }
@@ -43,11 +45,21 @@ public class Converter {
         return literatures;
     }
 
-    public static Literature fromFb2(File file)  {
-        return new Literature();
+    public static Literature fromFb2(File file) throws Exception {
+        FictionBook fb = new FictionBook(file);
+        Map<String, String> fragments = new HashMap<>();
+        List<Section> sections = fb.getBody().getSections();
+
+        for (int i = 0; i < sections.size(); i++) {
+            StringBuilder sb = new StringBuilder();
+            sections.get(i).getElements().forEach(el -> sb.append(el.getText()));
+            fragments.put(String.valueOf(i+1), sb.toString());
+        }
+
+        return new Literature(fragments);
     }
 
-    public static Literature fromEpub(File file) throws IOException {
+    private static Literature fromEpub(File file) throws Exception {
         Book book = new EpubReader().readEpub(new FileInputStream(file));
         Map<String, String> fragments = new HashMap<>();
 
