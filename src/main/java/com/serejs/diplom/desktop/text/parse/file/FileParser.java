@@ -7,7 +7,7 @@ public class FileParser {
         StringBuilder text = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            reader.lines().forEach(text::append);
+            reader.lines().forEach(line -> text.append(line).append('\n'));
         } catch (IOException e) {
             System.err.println("Ошибка получения текста из файла: " + file.getName());
         }

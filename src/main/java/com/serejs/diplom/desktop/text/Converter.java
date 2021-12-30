@@ -73,7 +73,21 @@ public class Converter {
         return new Literature(fragments);
     }
 
-    private Literature fromCustom(File file, Format format) {
-        return new Literature();
+    public static Literature fromCustom(File file, Format format) {
+        String text = FileParser.getText(file);
+        Map<String, String> fragments = new HashMap<>();
+
+        for (String p : text.split(format.getPrev())) {
+            if (p.length() != 0) {
+                int mid = p.indexOf(format.getMid());
+
+                fragments.put(
+                        p.substring(0, mid),
+                        p.substring(mid+1).split(format.getAfter())[0]
+                );
+            }
+        }
+
+        return new Literature(fragments);
     }
 }
