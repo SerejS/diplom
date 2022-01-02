@@ -6,13 +6,7 @@ import java.util.Map;
 public class Literature {
     private final static int minLenFragment = 150;
     private Map<String, String> fragments = new HashMap<>();
-    private boolean main = true;
-
-    public Literature() {}
-
-    public Literature(Map<String, String> fragments) {
-        setFragments(fragments);
-    }
+    private boolean main;
 
     public Literature(Map<String, String> fragments, boolean main) {
         this.main = main;

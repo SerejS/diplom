@@ -30,10 +30,10 @@ public class Converter {
 
             try {
                 switch (source.type()) {
-                    case EPUB -> literatures.add(fromEpub(file));
-                    case FB2 -> literatures.add(fromFb2(file));
-                    case CUSTOM -> literatures.add(fromCustom(file, source.format()));
-                    case WEB -> literatures.add(fromWeb(source.url()));
+                    case EPUB -> literatures.add(new Literature(fromEpub(file), source.main()));
+                    case FB2 -> literatures.add(new Literature(fromFb2(file), source.main()));
+                    case CUSTOM -> literatures.add(new Literature(fromCustom(file, source.format()), source.main()));
+                    case WEB -> literatures.add(new Literature(fromWeb(source.url()), source.main()));
                     default -> System.err.println("Тип литературы не определен: " + source.url());
                 }
             } catch (ConcurrentModificationException ex) {
@@ -46,7 +46,7 @@ public class Converter {
         return literatures;
     }
 
-    public static Literature fromFb2(File file) throws Exception {
+    private static Map<String, String> fromFb2(File file) throws Exception {
         FictionBook fb = new FictionBook(file);
         Map<String, String> fragments = new HashMap<>();
         List<Section> sections = fb.getBody().getSections();
@@ -54,13 +54,13 @@ public class Converter {
         for (int i = 0; i < sections.size(); i++) {
             StringBuilder sb = new StringBuilder();
             sections.get(i).getElements().forEach(el -> sb.append(el.getText()));
-            fragments.put(String.valueOf(i+1), sb.toString());
+            fragments.put(String.valueOf(i + 1), sb.toString());
         }
 
-        return new Literature(fragments);
+        return fragments;
     }
 
-    private static Literature fromEpub(File file) throws Exception {
+    private static Map<String, String> fromEpub(File file) throws IOException {
         Book book = new EpubReader().readEpub(new FileInputStream(file));
         Map<String, String> fragments = new HashMap<>();
 
@@ -71,10 +71,10 @@ public class Converter {
         }
 
 
-        return new Literature(fragments);
+        return fragments;
     }
 
-    private static Literature fromCustom(File file, Format format) {
+    private static Map<String, String> fromCustom(File file, Format format) {
         String text = FileParser.getText(file);
         Map<String, String> fragments = new HashMap<>();
 
@@ -84,15 +84,15 @@ public class Converter {
 
                 fragments.put(
                         p.substring(0, mid),
-                        p.substring(mid+1).split(format.getAfter())[0]
+                        p.substring(mid + 1).split(format.getAfter())[0]
                 );
             }
         }
 
-        return new Literature(fragments);
+        return fragments;
     }
 
-    public static Literature fromWeb(String siteURL) throws IOException {
+    private static Map<String, String> fromWeb(String siteURL) throws IOException {
         StringBuilder sb = new StringBuilder();
 
         Document doc = Jsoup.connect(siteURL).get();
@@ -106,6 +106,6 @@ public class Converter {
             }
         });
 
-        return new Literature(fragments, true);
+        return fragments;
     }
 }
