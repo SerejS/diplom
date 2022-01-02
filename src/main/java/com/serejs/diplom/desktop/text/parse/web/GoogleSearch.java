@@ -1,6 +1,7 @@
 package com.serejs.diplom.desktop.text.parse.web;
 
 import com.serejs.diplom.desktop.text.container.Format;
+import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.text.parse.file.LiteratureType;
 import org.json.JSONObject;
@@ -13,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 public class GoogleSearch {
@@ -23,16 +25,16 @@ public class GoogleSearch {
         baseUrl.append("key=").append(key).append('&');
     }
 
-    public HashMap<String, Format> getUrls (List<Theme> themes) {
-        HashMap<String, Format> urls = new HashMap<>();
+    public List<Source> getUrls (List<Theme> themes, boolean main) {
+        List<Source> sources = new LinkedList<>();
 
         for (Theme theme : themes) {
             for (String url : getUrls(theme.getTitle())) {
-                urls.put(url, new Format(LiteratureType.WEB, null, null, null));
+                sources.add(new Source(url, LiteratureType.WEB, null, main));
             }
         }
 
-        return urls;
+        return sources;
     }
 
     private HashSet<String> getUrls(String query) {
