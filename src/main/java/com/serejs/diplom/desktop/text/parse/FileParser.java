@@ -1,4 +1,4 @@
-package com.serejs.diplom.desktop.text.parse.file;
+package com.serejs.diplom.desktop.text.parse;
 
 import java.io.*;
 

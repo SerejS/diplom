@@ -1,9 +1,9 @@
-package com.serejs.diplom.desktop.text.parse.web;
+package com.serejs.diplom.desktop.text.parse;
 
-import com.serejs.diplom.desktop.text.container.Format;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.text.parse.file.LiteratureType;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -12,10 +12,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.HashSet;
 
 public class GoogleSearch {
     private final StringBuilder baseUrl = new StringBuilder("https://customsearch.googleapis.com/customsearch/v1?");

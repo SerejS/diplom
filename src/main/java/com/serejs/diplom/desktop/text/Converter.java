@@ -6,8 +6,7 @@ import com.kursx.parser.fb2.Section;
 import com.serejs.diplom.desktop.text.container.Format;
 import com.serejs.diplom.desktop.text.container.Literature;
 import com.serejs.diplom.desktop.text.container.Source;
-import com.serejs.diplom.desktop.text.parse.file.FileParser;
-import com.serejs.diplom.desktop.text.parse.web.WebScraper;
+import com.serejs.diplom.desktop.text.parse.FileParser;
 
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
@@ -18,6 +17,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -92,8 +92,20 @@ public class Converter {
         return new Literature(fragments);
     }
 
-    private static Literature fromWeb(String siteURL) {
-        WebScraper.textFromSite(siteURL);
-        return new Literature();
+    public static Literature fromWeb(String siteURL) throws IOException {
+        StringBuilder sb = new StringBuilder();
+
+        Document doc = Jsoup.connect(siteURL).get();
+        String title = String.valueOf(doc.getElementsByTag("h1"));
+        HashMap<String, String> fragments = new HashMap<>();
+        fragments.put(title, sb.toString());
+
+        doc.getElementsByTag("p").forEach((element) -> {
+            if (element.text().length() > 100) {
+                sb.append(element.text()).append('\n');
+            }
+        });
+
+        return new Literature(fragments, true);
     }
 }
