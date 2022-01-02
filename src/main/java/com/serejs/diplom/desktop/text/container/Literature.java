@@ -27,8 +27,8 @@ public class Literature {
         });
     }
 
-    public void getFragments(Map<String, String> fragments) {
-        this.fragments = fragments;
+    public Map<String, String> getFragments() {
+        return fragments;
     }
 
     public boolean isMain() {
