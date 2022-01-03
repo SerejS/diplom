@@ -34,7 +34,7 @@ public class Converter {
                     case EPUB -> literatures.add(new Literature(fromEpub(file), source.main()));
                     case FB2 -> literatures.add(new Literature(fromFb2(file), source.main()));
                     case CUSTOM -> literatures.add(new Literature(fromCustom(file, source.format()), source.main()));
-                    case WEB -> literatures.add(new Literature(fromWeb(source.url()), source.main()));
+                    //case WEB -> literatures.add(new Literature(fromWeb(source.url()), source.main()));
                     default -> System.err.println("Тип литературы не определен: " + source.url());
                 }
             } catch (ConcurrentModificationException ex) {

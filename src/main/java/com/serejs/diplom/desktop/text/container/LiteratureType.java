@@ -1,8 +1,7 @@
-package com.serejs.diplom.desktop.text.parse.file;
+package com.serejs.diplom.desktop.text.container;
 
 public enum LiteratureType {
     EPUB,
     FB2,
-    WEB,
     CUSTOM
 }

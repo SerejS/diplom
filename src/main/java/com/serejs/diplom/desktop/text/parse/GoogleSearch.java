@@ -1,9 +1,8 @@
 package com.serejs.diplom.desktop.text.parse;
 
-import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.text.container.Theme;
-import com.serejs.diplom.desktop.text.parse.file.LiteratureType;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -12,32 +11,39 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.HashSet;
+import java.util.*;
 
 public class GoogleSearch {
-    private final StringBuilder baseUrl = new StringBuilder("https://customsearch.googleapis.com/customsearch/v1?");
+    private final static StringBuilder baseUrl = new StringBuilder("https://customsearch.googleapis.com/customsearch/v1?");
 
     public GoogleSearch(String cx, String key) {
         baseUrl.append("cx=").append(cx).append('&');
         baseUrl.append("key=").append(key).append('&');
     }
 
-    public List<Source> getUrls (List<Theme> themes, boolean main) {
-        List<Source> sources = new LinkedList<>();
+    public HashMap<String, Set<String>> getUrls(List<Theme> themes) {
+        HashMap<String, Set<String>> allUrls = new HashMap<>();
 
         for (Theme theme : themes) {
-            for (String url : getUrls(theme.getTitle())) {
-                sources.add(new Source(url, LiteratureType.WEB, null, main));
-            }
+            HashMap<String, Set<String>> themeUrls = getUrls(theme.getTitle());
+
+            themeUrls.keySet().forEach(site -> {
+                Set<String> urls = allUrls.get(site);
+                if (urls != null) {
+                    urls.addAll(themeUrls.get(site));
+                } else {
+                    urls = themeUrls.get(site);
+                }
+
+                allUrls.put(site, urls);
+            });
         }
 
-        return sources;
+        return allUrls;
     }
 
-    private HashSet<String> getUrls(String query) {
-        HashSet<String> links = new HashSet<>();
+    private HashMap<String, Set<String>> getUrls(String query) {
+        HashMap<String, Set<String>> links = new HashMap<>();
 
         URL url;
         try {
@@ -55,8 +61,26 @@ public class GoogleSearch {
             return links;
         }
 
-        JSONObject jo = new JSONObject(content);
-        jo.getJSONArray("items").forEach((el) -> links.add(((JSONObject) el).get("link").toString()));
+        //Массив найденных элементов
+        JSONArray jArr = new JSONObject(content).getJSONArray("items");
+        //Получение сайтов, по которым производится поиск
+        Set<String> sites = new HashSet<>();
+        for (int i = 0; i < jArr.toList().size(); i++) {
+            sites.add(jArr.getJSONObject(i).get("displayLink").toString());
+        }
+
+        //Распределение найденных ссылок по сайтам, где они найдены
+        sites.forEach(site -> {
+            Set<String> siteLinks = new HashSet<>();
+            for (int i = 0; i < jArr.toList().size(); i++) {
+                if (jArr.getJSONObject(i).getString("displayLink").equals(site)) {
+                    siteLinks.add(jArr.getJSONObject(i).getString("link"));
+                }
+            }
+
+            links.put(site, siteLinks);
+        });
+
 
         return links;
     }
