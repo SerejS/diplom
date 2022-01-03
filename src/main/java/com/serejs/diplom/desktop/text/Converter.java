@@ -3,6 +3,7 @@ package com.serejs.diplom.desktop.text;
 import com.kursx.parser.fb2.FictionBook;
 import com.kursx.parser.fb2.Section;
 
+import com.kursx.parser.fb2.Title;
 import com.serejs.diplom.desktop.text.container.Format;
 import com.serejs.diplom.desktop.text.container.Literature;
 import com.serejs.diplom.desktop.text.container.Source;
@@ -48,13 +49,17 @@ public class Converter {
 
     private static Map<String, String> fromFb2(File file) throws Exception {
         FictionBook fb = new FictionBook(file);
-        Map<String, String> fragments = new HashMap<>();
+        Map<String, String> fragments = new LinkedHashMap<>();
         List<Section> sections = fb.getBody().getSections();
 
         for (int i = 0; i < sections.size(); i++) {
+            String title = sections.get(i).getTitleString(".", ".");
+            if (title.equals("")) title = String.valueOf(i+1);
+
             StringBuilder sb = new StringBuilder();
             sections.get(i).getElements().forEach(el -> sb.append(el.getText()));
-            fragments.put(String.valueOf(i + 1), sb.toString());
+
+            fragments.put(title, sb.toString());
         }
 
         return fragments;
