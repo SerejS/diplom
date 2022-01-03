@@ -3,7 +3,6 @@ package com.serejs.diplom.desktop.text;
 import com.kursx.parser.fb2.FictionBook;
 import com.kursx.parser.fb2.Section;
 
-import com.kursx.parser.fb2.Title;
 import com.serejs.diplom.desktop.text.container.Format;
 import com.serejs.diplom.desktop.text.container.Literature;
 import com.serejs.diplom.desktop.text.container.Source;
@@ -23,8 +22,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class Converter {
-    public static List<Literature> convert(List<Source> sources) {
-        List<Literature> literatures = new LinkedList<>();
+    public static HashSet<Literature> convert(List<Source> sources) {
+        HashSet<Literature> literatures = new HashSet<>();
 
         for (Source source : sources) {
             File file = new File(Objects.requireNonNull(Converter.class.getClassLoader().getResource(source.url())).getFile());
@@ -34,7 +33,6 @@ public class Converter {
                     case EPUB -> literatures.add(new Literature(fromEpub(file), source.main()));
                     case FB2 -> literatures.add(new Literature(fromFb2(file), source.main()));
                     case CUSTOM -> literatures.add(new Literature(fromCustom(file, source.format()), source.main()));
-                    //case WEB -> literatures.add(new Literature(fromWeb(source.url()), source.main()));
                     default -> System.err.println("Тип литературы не определен: " + source.url());
                 }
             } catch (ConcurrentModificationException ex) {
@@ -54,7 +52,7 @@ public class Converter {
 
         for (int i = 0; i < sections.size(); i++) {
             String title = sections.get(i).getTitleString(".", ".");
-            if (title.equals("")) title = String.valueOf(i+1);
+            if (title.equals("")) title = String.valueOf(i + 1);
 
             StringBuilder sb = new StringBuilder();
             sections.get(i).getElements().forEach(el -> sb.append(el.getText()));
@@ -93,23 +91,6 @@ public class Converter {
                 );
             }
         }
-
-        return fragments;
-    }
-
-    private static Map<String, String> fromWeb(String siteURL) throws IOException {
-        StringBuilder sb = new StringBuilder();
-
-        Document doc = Jsoup.connect(siteURL).get();
-        String title = String.valueOf(doc.getElementsByTag("h1"));
-        HashMap<String, String> fragments = new HashMap<>();
-        fragments.put(title, sb.toString());
-
-        doc.getElementsByTag("p").forEach((element) -> {
-            if (element.text().length() > 100) {
-                sb.append(element.text()).append('\n');
-            }
-        });
 
         return fragments;
     }
