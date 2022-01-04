@@ -8,20 +8,20 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import org.apache.http.client.utils.URIBuilder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 import java.util.*;
 
 public class WebParser {
-    private final static StringBuilder baseUrlGS = new StringBuilder("https://customsearch.googleapis.com/customsearch/v1?");
+    private final URIBuilder uriBuilder = new URIBuilder("https://customsearch.googleapis.com/customsearch/v1?");
 
-    public WebParser(String cx, String key) {
-        baseUrlGS.append("cx=").append(cx).append('&');
-        baseUrlGS.append("key=").append(key).append('&');
+    public WebParser(String cx, String key) throws URISyntaxException {
+        uriBuilder.addParameter("cx", cx);
+        uriBuilder.addParameter("key", key);
     }
 
 
@@ -82,8 +82,8 @@ public class WebParser {
 
         URL url;
         try {
-            url = new URL(baseUrlGS + "q=" + query);
-        } catch (MalformedURLException e) {
+            url = uriBuilder.addParameter("q", query).build().toURL();
+        } catch (URISyntaxException | MalformedURLException e) {
             e.printStackTrace();
             return sites;
         }
