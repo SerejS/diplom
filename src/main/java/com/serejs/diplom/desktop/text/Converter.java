@@ -54,9 +54,9 @@ public class Converter {
 
         for (int i = 0; i < sections.size(); i++) {
             //Получение названия главы. Берется title из xml
-            String title = sections.get(i).getTitleString(".", ".");
+            String title = sections.get(i).getTitleString(" - ", "");
             //Если названия главы нет, то пишется ее номер
-            if (title.equals("")) title = String.valueOf(i + 1);
+            if (title.isEmpty()) title = String.valueOf(i + 1);
 
             //Собирание текста главы из всего текста в тегах
             StringBuilder sb = new StringBuilder();
