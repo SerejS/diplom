@@ -29,6 +29,7 @@ public class Converter {
             File file = new File(Objects.requireNonNull(Converter.class.getClassLoader().getResource(source.url())).getFile());
 
             try {
+                //Получение литературы с помощью функций каждого своего формата
                 switch (source.type()) {
                     case EPUB -> literatures.add(new Literature(fromEpub(file), source.main()));
                     case FB2 -> literatures.add(new Literature(fromFb2(file), source.main()));
@@ -45,15 +46,25 @@ public class Converter {
         return literatures;
     }
 
+
+    /**
+     * Функция получение глав книги из файла fb2
+     * @param file Файл fb2
+     * @return Получение глав книги
+     */
     private static Map<String, String> fromFb2(File file) throws Exception {
         FictionBook fb = new FictionBook(file);
         Map<String, String> fragments = new LinkedHashMap<>();
+        //Разделы книжки
         List<Section> sections = fb.getBody().getSections();
 
         for (int i = 0; i < sections.size(); i++) {
+            //Получение названия главы. Берется title из xml
             String title = sections.get(i).getTitleString(".", ".");
+            //Если названия главы нет, то пишется ее номер
             if (title.equals("")) title = String.valueOf(i + 1);
 
+            //Собирание текста главы из всего текста в тегах
             StringBuilder sb = new StringBuilder();
             sections.get(i).getElements().forEach(el -> sb.append(el.getText()));
 
@@ -63,28 +74,46 @@ public class Converter {
         return fragments;
     }
 
+
+    /**
+     * Функция получение глав книги из файла epub
+     * @param file Файл epub
+     * @return Получение глав книги
+     */
     private static Map<String, String> fromEpub(File file) throws IOException {
+        //Преобразование файла в книгу java
         Book book = new EpubReader().readEpub(new FileInputStream(file));
         Map<String, String> fragments = new HashMap<>();
 
+        //Получение таблицы глав и добавление их в мапу
         for (Resource res : book.getTableOfContents().getAllUniqueResources()) {
             Document doc = Jsoup.parse(new String(res.getData(), StandardCharsets.UTF_8));
 
             fragments.put(doc.getElementsByTag("h2").text(), doc.body().text());
         }
 
-
         return fragments;
     }
 
+    /**
+     * Функция получение глав книги из файла пользовательского формата
+     * @param file Файл epub
+     * @param format Формат книги: разделители до названия главы, после и после основного текста
+     * @return Получение глав книги
+     */
     private static Map<String, String> fromCustom(File file, Format format) {
+        //Получение текста из файла
         String text = FileParser.getText(file);
         Map<String, String> fragments = new HashMap<>();
 
+        //Разделение текста на главы (разделитель до названия главы)
         for (String p : text.split(format.getPrev())) {
+            //Если глава не пустая
             if (p.length() != 0) {
+                //Получение символа между названием главы и содержанием
                 int mid = p.indexOf(format.getMid());
 
+                //Добавление названия главы и содержания в мапу
                 fragments.put(
                         p.substring(0, mid),
                         p.substring(mid + 1).split(format.getAfter())[0]
