@@ -22,24 +22,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class Converter {
-    public static HashSet<Literature> convert(List<Source> sources) {
+    public static HashSet<Literature> convert(List<Source> sources) throws Exception {
         HashSet<Literature> literatures = new HashSet<>();
 
         for (Source source : sources) {
             File file = new File(Objects.requireNonNull(Converter.class.getClassLoader().getResource(source.url())).getFile());
 
-            try {
-                //Получение литературы с помощью функций каждого своего формата
-                switch (source.type()) {
-                    case EPUB -> literatures.add(new Literature(fromEpub(file), source.main()));
-                    case FB2 -> literatures.add(new Literature(fromFb2(file), source.main()));
-                    case CUSTOM -> literatures.add(new Literature(fromCustom(file, source.format()), source.main()));
-                    default -> System.err.println("Тип литературы не определен: " + source.url());
-                }
-            } catch (ConcurrentModificationException ex) {
-                System.err.println("Создание литературы прошло неудачно");
-            } catch (Exception ex) {
-                System.err.println("Ошибка получения информации из ресурса");
+            //Получение литературы с помощью функций каждого своего формата
+            switch (source.type()) {
+                case EPUB -> literatures.add(new Literature(fromEpub(file), source.main()));
+                case FB2 -> literatures.add(new Literature(fromFb2(file), source.main()));
+                case CUSTOM -> literatures.add(new Literature(fromCustom(file, source.format()), source.main()));
+                default -> System.err.println("Тип литературы не определен: " + source.url());
             }
         }
 
