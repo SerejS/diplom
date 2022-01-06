@@ -5,10 +5,12 @@ import java.util.Map;
 
 public class Literature {
     private final static int minLenFragment = 150;
+    private final String title;
     private Map<String, String> fragments = new HashMap<>();
     private boolean main;
 
-    public Literature(Map<String, String> fragments, boolean main) {
+    public Literature(String title, Map<String, String> fragments, boolean main) {
+        this.title = title;
         this.main = main;
         setFragments(fragments);
     }

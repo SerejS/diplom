@@ -27,12 +27,13 @@ public class Converter {
 
         for (Source source : sources) {
             File file = new File(Objects.requireNonNull(Converter.class.getClassLoader().getResource(source.url())).getFile());
+            String fileName = file.getName();
 
             //Получение литературы с помощью функций каждого своего формата
             switch (source.type()) {
-                case EPUB -> literatures.add(new Literature(fromEpub(file), source.main()));
-                case FB2 -> literatures.add(new Literature(fromFb2(file), source.main()));
-                case CUSTOM -> literatures.add(new Literature(fromCustom(file, source.format()), source.main()));
+                case EPUB -> literatures.add(new Literature(fileName, fromEpub(file), source.main()));
+                case FB2 -> literatures.add(new Literature(fileName, fromFb2(file), source.main()));
+                case CUSTOM -> literatures.add(new Literature(fileName, fromCustom(file, source.format()), source.main()));
                 default -> System.err.println("Тип литературы не определен: " + source.url());
             }
         }

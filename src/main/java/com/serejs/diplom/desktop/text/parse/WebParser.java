@@ -50,7 +50,7 @@ public class WebParser {
                 fragments.put(link, sb.toString());
             }
 
-            literatures.add(new Literature(fragments, true));
+            literatures.add(new Literature(title, fragments, true));
         }
 
         return literatures;
