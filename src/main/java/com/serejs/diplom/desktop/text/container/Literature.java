@@ -18,7 +18,7 @@ public class Literature {
     private void setFragments(Map<String, String> fragments) {
         fragments.keySet().forEach(key -> {
             if (fragments.get(key).length() >= minLenFragment) {
-                this.fragments.put(key, fragments.get(key));
+                this.fragments.put(title + " " + key, fragments.get(key));
             }
         });
     }
