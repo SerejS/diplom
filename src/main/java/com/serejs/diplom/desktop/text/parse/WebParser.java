@@ -60,7 +60,7 @@ public class WebParser {
         HashMap<String, Set<String>> allUrls = new HashMap<>();
 
         for (Theme theme : themes) {
-            HashMap<String, Set<String>> themeUrls = getSites(theme.getTitle());
+            HashMap<String, Set<String>> themeUrls = getSites(theme.title());
 
             themeUrls.keySet().forEach(site -> {
                 Set<String> urls = allUrls.get(site);
