@@ -3,3 +3,6 @@ lib/
 target/
 ^src/main/resources/ui/
 src/main/resources/
+src/main/java/com/serejs/diplom/desktop/anayse/
+src/main/java/com/serejs/diplom/desktop/server/
+src/main/java/com/serejs/diplom/desktop/text/
