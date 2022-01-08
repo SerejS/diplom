@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="200.0" prefWidth="311.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <Label text="Войдите в аккаунт">
+      <font>
+         <Font size="20.0" />
+      </font>
+   </Label>
+
+   <TextField text="Логин пользователя" />
+   <TextField text="Пароль пользователя" />
+
+    <Button onAction="#login" text="Вход" />
+    <Button onAction="#registration" text="Регистрация" />
+</VBox>
