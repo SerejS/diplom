@@ -1,0 +1,5 @@
+.idea/
+lib/
+target/
+^src/main/resources/ui/
+src/main/resources/
