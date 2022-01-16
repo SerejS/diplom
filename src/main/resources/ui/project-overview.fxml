@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="269.0" prefWidth="358.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.ProjectOverviewController">
+   <Label alignment="CENTER" prefHeight="30.0" prefWidth="230.0" text="Выберите проект">
+      <font>
+         <Font size="20.0" />
+      </font>
+   </Label>
+    <ListView fx:id="projectList" cacheShape="false" centerShape="false" focusTraversable="false" prefHeight="292.0" prefWidth="271.0" scaleShape="false" style="-fx-border-color: #D7D2FB; -fx-border-width: 3px;" />
+   <SplitMenuButton fx:id="createButton" onAction="#onCreateProject" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" text="Создать">
+     <items>
+       <MenuItem mnemonicParsing="false" text="Новый проект" />
+       <MenuItem mnemonicParsing="false" text="Новый тип литературы" />
+     </items>
+   </SplitMenuButton>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+
+</VBox>
