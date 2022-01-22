@@ -31,7 +31,7 @@ public class Project {
             List<Theme> themes,
             WebParser defaultWeb,
             WebParser extendWeb
-    ) {
+    ) throws Exception {
         this.themes = themes;
 
         literature = Converter.convert(sources);
@@ -42,5 +42,7 @@ public class Project {
     /**
      * Метод в котором запускается анализ и все остальное (синхронизация, залив на сервер и тд)
      */
-    public void execute() {}
+    public void execute() {
+        Analyser.analise(literature, themes);
+    }
 }
