@@ -51,7 +51,14 @@ public class Converter {
         FictionBook fb = new FictionBook(file);
         Map<String, String> fragments = new LinkedHashMap<>();
         //Разделы книжки
-        List<Section> sections = fb.getBody().getSections();
+        ArrayDeque<Section> sectionDeque = new ArrayDeque<>(fb.getBody().getSections());
+        List<Section> sections = new LinkedList<>();
+        while (!sectionDeque.isEmpty()) {
+            Section s = sectionDeque.pollFirst();
+            if (s.getSections().isEmpty()) sections.add(s);
+            else s.getSections().forEach(sectionDeque::addFirst);
+        }
+
 
         for (int i = 0; i < sections.size(); i++) {
             //Получение названия главы. Берется title из xml
