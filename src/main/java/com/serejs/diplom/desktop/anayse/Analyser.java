@@ -18,8 +18,9 @@ public class Analyser {
 
     /**
      * Анализ всей литературы
+     *
      * @param literatures Анализируемая литература
-     * @param allThemes Темы анализируемой литературы
+     * @param allThemes   Темы анализируемой литературы
      */
     public static void analise(Set<Literature> literatures, List<Theme> allThemes) {}
 
@@ -33,9 +34,9 @@ public class Analyser {
         short delta = 5;
         int totalCountWords = fragments.values().stream()
                 .map(s -> s.split(" ").length)
-                .reduce(Integer::sum).get();
+                .reduce(Integer::sum).orElseThrow();
 
-        Theme largestTheme = fragmentTheme.values().stream().max(Comparator.comparingInt(Theme::percent)).get();
+        Theme largestTheme = fragmentTheme.values().stream().max(Comparator.comparingInt(Theme::percent)).orElseThrow(Exception::new);
 
         int wordsPerPercent = maxWords * largestTheme.percent() / 100;
 
@@ -97,9 +98,10 @@ public class Analyser {
 
     /**
      * Функция перерасчета процентного содержания выбранных тем
+     *
      * @param fragmentTheme Мапа названий фрагментов против выбранной темы
      */
-    private static void recalculateThemes(HashMap<String, Theme> fragmentTheme) {
+    private static void recalculateThemes(HashMap<String, Theme> fragmentTheme) throws IllegalArgumentException {
         Set<String> allKeys = new HashSet<>(fragmentTheme.keySet());
         while (!allKeys.isEmpty()) {
             Set<String> iterateKeys = new HashSet<>(allKeys);
@@ -117,15 +119,12 @@ public class Analyser {
                     .mapToInt(Theme::percent)
                     .sum();
 
-            if (sum >= 100) {
-                if (sum != 100) System.err.println("Сумма частей темы больше 100%");
-                break;
-            }
-
+            if (sum > 100) throw new IllegalArgumentException("Сумма всех частей больше 100%");
+            if (sum == 100) break;
 
             keys.forEach(k -> {
                 Theme t = fragmentTheme.get(k);
-                fragmentTheme.put(k, t.recalculate((byte) (100 * t.percent() / sum)));
+                fragmentTheme.put(k, t.recalculate((byte) Math.round(100.0 * t.percent() / sum)));
             });
         }
     }
@@ -133,8 +132,9 @@ public class Analyser {
 
     /**
      * Функция выбора темы для текста из предложенных
+     *
      * @param content Определяемый текст
-     * @param themes Все преложенные темы
+     * @param themes  Все преложенные темы
      * @return Выбранная тема
      */
     private static Theme getTheme(String content, List<Theme> themes) {
@@ -167,40 +167,43 @@ public class Analyser {
 
     /**
      * Функция получения из всего списка тем дочерние принимаемой
-     * @param root Родитель искомых тем
+     *
+     * @param root   Родитель искомых тем
      * @param themes Весь список тем
      * @return Дочерние темы
      */
     private static List<Theme> subThemes(Theme root, Collection<Theme> themes) {
         return themes.stream().filter(theme -> root == theme).collect(Collectors.toList());
-     }
+    }
 
 
     /**
      * Подсчет количества слов в фрагментах данной темы
+     *
      * @param fragmentTheme (title, theme)
-     * @param fragments (title, content)
-     * @param theme Тема, по которой ищется
+     * @param fragments     (title, content)
+     * @param theme         Тема, по которой ищется
      * @return Количество слов
      */
     public static int countWords(HashMap<String, Theme> fragmentTheme, HashMap<String, String> fragments, Theme theme) {
         return fragmentTheme.entrySet().stream()
                 .filter(entry -> entry.getValue() == theme)
                 .mapToInt(entry -> fragments.get(entry.getKey()).split(" ").length)
-                .reduce(Integer::sum).getAsInt();
+                .reduce(Integer::sum).orElse(0);
     }
 
 
     /**
      * Функция получения из файла стоп-слов
+     *
      * @return Множество стоп-слов
      */
     public static HashSet<String> stopWords() {
         HashSet<String> stopWords = new HashSet<>();
-        try(BufferedReader reader =
-                    new BufferedReader(new FileReader(
-                            Objects.requireNonNull(App.class.getClassLoader().getResource("stop_ru.txt")).getFile()
-                    ))
+        try (BufferedReader reader =
+                     new BufferedReader(new FileReader(
+                             Objects.requireNonNull(App.class.getClassLoader().getResource("stop_ru.txt")).getFile()
+                     ))
         ) {
             stopWords = reader.lines().collect(Collectors.toCollection(HashSet::new));
         } catch (IOException e) {
@@ -212,7 +215,8 @@ public class Analyser {
 
     /**
      * Получение колличества ключевых слов в тексте
-     * @param text Проверяемый текст
+     *
+     * @param text     Проверяемый текст
      * @param keywords Ключевые слова
      * @return Количество совпадений
      * @throws IOException Получение экземпляра RuLuceneMorphology
