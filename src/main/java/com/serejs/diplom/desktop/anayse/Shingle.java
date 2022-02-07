@@ -1,9 +1,5 @@
 package com.serejs.diplom.desktop.anayse;
 
-import org.apache.lucene.morphology.LuceneMorphology;
-import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
-
-import java.io.IOException;
 import java.util.*;
 
 
@@ -19,17 +15,18 @@ public class Shingle {
      * @param str строка, для канонизации
      * @return канонизированная строка
      */
-    private static List<String> canonize(String str) throws IOException {
+    private static List<String> canonize(String str)  {
         HashSet<String> stopWords = Analyser.stopWords();
 
-        LuceneMorphology morph = new RussianLuceneMorphology();
-        return Arrays.stream(str.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split("\\s"))
+        return Arrays.stream(str.toLowerCase(Locale.ROOT).split("\\s|\\p{Punct}"))
                 .map(String::trim)
                 .filter(element -> !element.isEmpty())
                 .filter(word -> !stopWords.contains(word))
-                .map(word -> morph.getNormalForms(word).get(0))
+                .flatMap(word -> Lucene.getNormalForms(word).stream())
                 .toList();
     }
+
+
 
     /**
      * Метод разбивает текст на шинглы, а затем вычисляет их контрольные суммы.
@@ -37,7 +34,7 @@ public class Shingle {
      * @param strNew строка, для создания шинглов
      * @return ArrayList шинглов в числовом виде
      */
-    public static ArrayList<Integer> genShingle(String strNew) throws IOException {
+    public static ArrayList<Integer> genShingle(String strNew) {
         ArrayList<Integer> shingles = new ArrayList<>();
         List<String> words = canonize(strNew);
         int shinglesNumber = words.size() - SHINGLE_LEN;
@@ -64,7 +61,7 @@ public class Shingle {
      * @param text2 второй текст
      * @return процент сходства шинглов
      */
-    public static boolean compare(String text1, String text2) throws IOException {
+    public static boolean compare(String text1, String text2) {
         ArrayList<Integer> textShingles1New = genShingle(text1);
         ArrayList<Integer> textShingles2New = genShingle(text2);
 
@@ -79,8 +76,7 @@ public class Shingle {
             }
         }
 
-        System.out.println((similarShinglesNumber / ((textShingles1Number + textShingles2Number) / 2.0)) * 100);
-        return ((similarShinglesNumber / ((textShingles1Number + textShingles2Number) / 2.0)) * 100) > 0.6;
+        return ((similarShinglesNumber / ((textShingles1Number + textShingles2Number) / 2.0)) * 100) > 10;
     }
 
 
