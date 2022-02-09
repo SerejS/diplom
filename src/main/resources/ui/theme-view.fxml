@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="457.0" prefWidth="522.0" spacing="20.0" style="-fx-background-color: D7D2FB;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.ThemeController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <Label text="Добавление тем">
+        <font>
+            <Font size="20.0" />
+        </font>
+    </Label>
+    <TableView fx:id="themeTable" prefHeight="440.0" prefWidth="482.0">
+        <columns>
+            <!--<TableColumn editable="false" prefWidth="75.0" sortable="false" text="Темы" />
+            <TableColumn editable="false" prefWidth="195.0" sortable="false" text="Процентное содержание" />-->
+        </columns>
+    </TableView>
+    <HBox alignment="CENTER" prefHeight="26.0" prefWidth="271.0" spacing="50.0">
+        <Button fx:id="prevButton" mnemonicParsing="false" onMouseClicked="#goPrevPage" text="Назад" />
+        <Button fx:id="addButton" mnemonicParsing="false" onAction="#addTheme" prefHeight="25.0" prefWidth="133.0" text="Добавить тему" />
+        <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#goNextPage" text="Дальше" />
+    </HBox>
+
+
+</VBox>
