@@ -22,7 +22,7 @@ public abstract class RootController {
     }
 
 
-    protected void openModal(Button button, RootController parent, String fileName) {
+    protected Stage openModal(Button button, RootController parent, String fileName) {
         Stage root = (Stage) button.getScene().getWindow();
 
         Stage modalStage = new Stage();
@@ -31,7 +31,7 @@ public abstract class RootController {
             modalStage.setScene(new Scene(modal.load()));
         } catch (IOException e) {
             e.printStackTrace();
-            return;
+            return null;
         }
         modalStage.initModality(Modality.WINDOW_MODAL);
         modalStage.initOwner(root);
@@ -40,5 +40,7 @@ public abstract class RootController {
         modalController.setParent(parent);
 
         modalStage.show();
+
+        return modalStage;
     }
 }

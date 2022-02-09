@@ -1,5 +1,6 @@
 package com.serejs.diplom.desktop.ui.controllers;
 
+import com.serejs.diplom.desktop.containers.Theme;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -8,7 +9,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.HashSet;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class ModalThemeController implements Initializable {
     @FXML
@@ -31,9 +35,14 @@ public class ModalThemeController implements Initializable {
         if (textArea != null) textArea.setWrapText(true);
     }
 
-    public void printValue() {
-        if (parent == null) return;
-        System.out.println("Hey");
+    public void addTheme() {
+        if (parent instanceof ThemeController) {
+            Set<String> keyWords = new HashSet<>(List.of(textArea.getText().split(",")));
+
+            var theme = new Theme(titleTheme.getText(), slider.getValue(), keyWords);
+
+            ((ThemeController) parent).addRow(theme);
+        }
 
     }
 }
