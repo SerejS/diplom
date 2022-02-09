@@ -1,6 +1,6 @@
 package com.serejs.diplom.desktop.analyze;
 
-import com.serejs.diplom.desktop.App;
+import com.serejs.diplom.desktop.Main;
 import com.serejs.diplom.desktop.text.container.Fragment;
 import com.serejs.diplom.desktop.text.container.FragmentMap;
 import com.serejs.diplom.desktop.text.container.Theme;
@@ -179,7 +179,7 @@ public class Analyzer {
         try (BufferedReader reader =
                      new BufferedReader(new FileReader(
                              Objects.requireNonNull(
-                                     App.class.getClassLoader().getResource("stop_ru.txt")
+                                     Main.class.getClassLoader().getResource("stop_ru.txt")
                              ).getFile()
                      ))
         ) {

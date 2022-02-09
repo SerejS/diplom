@@ -1,6 +1,5 @@
 package com.serejs.diplom.desktop.loaders;
 
-import com.serejs.diplom.desktop.text.container.Fragment;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.epub.EpubReader;
@@ -12,8 +11,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class EpubLoader implements ContentLoader {

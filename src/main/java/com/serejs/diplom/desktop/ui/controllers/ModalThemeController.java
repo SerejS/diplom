@@ -1,6 +1,6 @@
 package com.serejs.diplom.desktop.ui.controllers;
 
-import com.serejs.diplom.desktop.containers.Theme;
+import com.serejs.diplom.desktop.text.container.Theme;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -39,9 +39,9 @@ public class ModalThemeController implements Initializable {
         if (parent instanceof ThemeController) {
             Set<String> keyWords = new HashSet<>(List.of(textArea.getText().split(",")));
 
-            var theme = new Theme(titleTheme.getText(), slider.getValue(), keyWords);
+            /*var theme = new Theme(titleTheme.getText(), slider.getValue(), keyWords);
 
-            ((ThemeController) parent).addRow(theme);
+            ((ThemeController) parent).addRow(theme);*/
         }
 
     }

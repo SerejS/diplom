@@ -1,6 +1,6 @@
 package com.serejs.diplom.desktop.ui.controllers;
 
-import com.serejs.diplom.desktop.containers.Theme;
+import com.serejs.diplom.desktop.text.container.Theme;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
