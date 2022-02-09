@@ -1,4 +1,4 @@
-package com.serejs.diplom.desktop.anayse;
+package com.serejs.diplom.desktop.analyze;
 
 import java.util.*;
 
@@ -16,7 +16,7 @@ public class Shingle {
      * @return канонизированная строка
      */
     private static List<String> canonize(String str)  {
-        HashSet<String> stopWords = Analyser.stopWords();
+        HashSet<String> stopWords = Analyzer.stopWords();
 
         return Arrays.stream(str.toLowerCase(Locale.ROOT).split("\\s|\\p{Punct}"))
                 .map(String::trim)

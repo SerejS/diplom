@@ -1,3 +1,7 @@
 package com.serejs.diplom.desktop.text.container;
 
-public record Source(String url, LiteratureType type, Format format, boolean main) {}
+import com.serejs.diplom.desktop.enums.SourceType;
+
+import java.net.URI;
+
+public record Source(URI uri, SourceType type) {}

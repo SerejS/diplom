@@ -1,4 +1,4 @@
-package com.serejs.diplom.desktop.anayse;
+package com.serejs.diplom.desktop.analyze;
 
 import org.apache.lucene.morphology.LuceneMorphology;
 import org.apache.lucene.morphology.WrongCharaterException;
