@@ -75,4 +75,9 @@ public class Theme {
     public int hashCode() {
         return Objects.hash(root, title, percent, keyWords);
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

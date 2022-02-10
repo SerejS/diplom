@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ThemeController extends RootController implements Initializable {
@@ -22,15 +23,21 @@ public class ThemeController extends RootController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        var col1 = new TableColumn<Theme, String>();
-        col1.setMinWidth(150);
+        themeTable.setEditable(false);
+
+        var col1 = new TableColumn<Theme, String>("Название темы");
+        col1.setMinWidth(200);
         col1.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        var col2 = new TableColumn<Theme, Double>();
-        col2.setMinWidth(100);
-        col2.setCellValueFactory(new PropertyValueFactory<>("percentage"));
+        var col2 = new TableColumn<Theme, Double>("Процентное содержание");
+        col2.setMinWidth(200);
+        col2.setCellValueFactory(new PropertyValueFactory<>("percent"));
 
-        themeTable.getColumns().addAll(col1, col2);
+        var col3 = new TableColumn<Theme, String>("Ключевые слова");
+        col3.setMinWidth(400);
+        col3.setCellValueFactory(new PropertyValueFactory<>("keyWords"));
+
+        themeTable.getColumns().addAll(col1, col2, col3);
     }
 
     @FXML
@@ -38,11 +45,13 @@ public class ThemeController extends RootController implements Initializable {
         modal = openModal(addButton, this,"modal-theme.fxml");
     }
 
+    public List<Theme> getThemes() {
+        return themeTable.getItems();
+    }
+
     public void addRow(Theme theme) {
         themeTable.getItems().add(0, theme);
-
         modal.close();
-        System.out.println("Попытка добавить элемент " + theme);
     }
 
     @FXML

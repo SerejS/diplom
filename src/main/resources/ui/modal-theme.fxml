@@ -16,7 +16,7 @@
             </font>
         </Label>
         <TextField fx:id="titleTheme" prefHeight="39.0" prefWidth="400.0" promptText="Название темы" style="-fx-font-size: 18;" />
-        <ComboBox prefHeight="4.0" prefWidth="395.0" promptText="Основная тема" />
+        <ComboBox fx:id="themeBox" prefHeight="4.0" prefWidth="395.0" promptText="Основная тема" />
         <Slider fx:id="slider" majorTickUnit="10.0" minorTickCount="4" onDragDropped="#addTheme" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
         <Label text="Ключевые слова:">
             <font>
