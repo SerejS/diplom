@@ -20,7 +20,7 @@
     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
         <children>
             <Button fx:id="selectButton" disable="true" mnemonicParsing="false" onAction="#goNextPage" text="Выбрать" />
-            <Button fx:id="addButton" mnemonicParsing="false" onAction="#addView" text="Создать" />
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#openModal" text="Создать" />
         </children>
         <cursor>
             <Cursor fx:constant="DEFAULT" />

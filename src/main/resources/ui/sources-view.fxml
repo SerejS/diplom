@@ -5,53 +5,51 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="500.0" prefWidth="665.0" spacing="20.0" xmlns="http://javafx.com/javafx/16"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.SourceController">
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="521.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.SourceController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <Label text="Основная литература">
         <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
         </font>
     </Label>
     <HBox prefHeight="37.0" prefWidth="625.0">
         <children>
-            <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="216.0" text="CX" textAlignment="RIGHT"/>
-            <TextField prefHeight="33.0" prefWidth="416.0" style="-fx-border-color: D7D2FB; -fx-border-width: 4;"/>
+            <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="42.0" text="CX" textAlignment="RIGHT" />
+            <TextField fx:id="mainCX" prefHeight="33.0" prefWidth="428.0" style="-fx-border-color: D7D2FB; -fx-border-width: 4;" />
         </children>
     </HBox>
     <HBox layoutX="30.0" layoutY="212.0" prefHeight="46.0" prefWidth="524.0">
         <children>
-            <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="216.0" text="token" textAlignment="RIGHT"/>
-            <TextField prefHeight="35.0" prefWidth="428.0" style="-fx-border-color: D7D2FB; -fx-border-width: 4;"/>
+            <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="40.0" text="token" textAlignment="RIGHT" />
+            <TextField fx:id="mainKey" prefHeight="35.0" prefWidth="429.0" style="-fx-border-color: D7D2FB; -fx-border-width: 4;" />
         </children>
     </HBox>
     <Label layoutX="253.0" layoutY="101.0" text="Дополнительная литература">
         <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
         </font>
     </Label>
     <HBox layoutX="30.0" layoutY="209.0" prefHeight="37.0" prefWidth="625.0">
         <children>
-            <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="216.0" text="CX" textAlignment="RIGHT"/>
-            <TextField prefHeight="21.0" prefWidth="406.0" style="-fx-border-color: D7D2FB; -fx-border-width: 4;"/>
+            <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="56.0" text="CX" textAlignment="RIGHT" />
+            <TextField prefHeight="33.0" prefWidth="416.0" style="-fx-border-color: D7D2FB; -fx-border-width: 4;" />
         </children>
     </HBox>
     <HBox layoutX="30.0" layoutY="266.0" prefHeight="46.0" prefWidth="524.0">
         <children>
-            <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="216.0" text="token" textAlignment="RIGHT"/>
-            <TextField prefHeight="35.0" prefWidth="406.0" style="-fx-border-color: D7D2FB; -fx-border-width: 4;"/>
+            <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="49.0" text="token" textAlignment="RIGHT" />
+            <TextField prefHeight="35.0" prefWidth="425.0" style="-fx-border-color: D7D2FB; -fx-border-width: 4;" />
         </children>
     </HBox>
-    <TextField prefHeight="35.0" prefWidth="444.0" promptText="Минимальное количество слов"
-               style="-fx-border-color: D7D2FB; -fx-border-width: 4;"/>
+    <TextField prefHeight="33.0" prefWidth="437.0" promptText="Минимальное количество слов" style="-fx-border-color: D7D2FB; -fx-border-width: 4;" />
 
-    <Button mnemonicParsing="false" text="Файл с РПД"/>
+    <Button mnemonicParsing="false" text="Файл с РПД" />
 
     <HBox alignment="CENTER" prefHeight="26.0" prefWidth="271.0" spacing="50.0">
-        <Button fx:id="prevButton" onAction="#goPrevPage" mnemonicParsing="false" text="Назад"/>
-        <Button fx:id="analiseButton" onAction="#goResultPage" mnemonicParsing="false" text="Начать анализ"/>
+        <Button fx:id="prevButton" mnemonicParsing="false" onAction="#goPrevPage" text="Назад" />
+        <Button fx:id="analiseButton" mnemonicParsing="false" onAction="#goResultPage" text="Начать анализ" />
     </HBox>
 
 

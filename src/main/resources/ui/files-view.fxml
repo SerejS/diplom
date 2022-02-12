@@ -14,16 +14,10 @@
             <Font size="20.0" />
         </font>
     </Label>
-    <TableView fx:id="tableTheme" prefHeight="397.0" prefWidth="625.0">
-        <columns>
-            <TableColumn editable="false" prefWidth="184.0" sortable="false" text="Источник" />
-            <TableColumn editable="false" prefWidth="182.0" sortable="false" text="Тип литературы" />
-         <TableColumn editable="false" prefWidth="182.0" sortable="false" text="Формат" />
-        </columns>
-    </TableView>
+    <TableView fx:id="table" prefHeight="397.0" prefWidth="625.0"/>
     <HBox alignment="CENTER" prefHeight="26.0" prefWidth="271.0" spacing="50.0">
         <Button fx:id="prevButton" onAction="#onPrevPage" mnemonicParsing="false" text="Назад" />
-        <Button fx:id="addButton" mnemonicParsing="false" onAction="#addFile" prefHeight="25.0" prefWidth="133.0" text="Добавить" />
+        <Button fx:id="addButton" onAction="#openModal" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Добавить" />
         <Button fx:id="nextButton" onAction="#onNextPage" mnemonicParsing="false" text="Дальше" />
     </HBox>
 

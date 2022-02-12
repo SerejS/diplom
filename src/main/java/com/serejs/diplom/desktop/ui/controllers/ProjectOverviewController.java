@@ -1,6 +1,8 @@
 package com.serejs.diplom.desktop.ui.controllers;
 
 import com.serejs.diplom.desktop.server.User;
+import com.serejs.diplom.desktop.ui.App;
+import com.serejs.diplom.desktop.ui.controllers.abstarts.RootController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,6 +34,7 @@ public class ProjectOverviewController extends RootController implements Initial
 
     @FXML
     protected void onCreateProject() {
+        App.createNewProject();
         anotherPage(createButton, "theme-view.fxml");
     }
 
