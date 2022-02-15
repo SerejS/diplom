@@ -4,31 +4,13 @@ import com.serejs.diplom.desktop.Main;
 import com.serejs.diplom.desktop.text.container.Fragment;
 import com.serejs.diplom.desktop.text.container.FragmentMap;
 import com.serejs.diplom.desktop.text.container.Theme;
+import com.serejs.diplom.desktop.utils.Settings;
 
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Analyzer {
-    //Настройки анализа
-    private static final short minimalFragmentsPerTheme = 1;
-    private static final short delta = 5;
-    private static final int maxWords = 50000;
-
-
-    /*//Запись итоговых фрагментов в файлик.
-    public static void testResult(FragmentBucket fragments) {
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("out.txt"))) {
-            for (Fragment f : fragments.getAllFragments()) {
-                writer.write(f.content());
-                writer.newLine();
-            }
-            writer.flush();
-        } catch (Exception e) {}
-    }*/
-
-
-
     /**
      * Выравнивание найденного материала
      *
@@ -49,15 +31,15 @@ public class Analyzer {
      */
     private static void localAlignment(FragmentMap fragments, Theme theme) {
         int totalWords = fragments.values().stream().mapToInt(Fragment::countWords).sum();
-        double wordsPerPercent = Math.min((double) maxWords / 100, (double) totalWords / 100);
+        double wordsPerPercent = Math.min((double) Settings.getMaxWords() / 100, (double) totalWords / 100);
 
         //Реальное процентное содержание текстов данной темы
         double percents = fragments.countWords(theme) / wordsPerPercent;
-        if (percents < theme.getPercent() + delta) return;
+        if (percents < theme.getPercent() + Settings.getDelta()) return;
 
         //Ключи всех фрагментов данной темы
         List<String> keys = new LinkedList<>(fragments.keySet(theme));
-        if (keys.size() <= minimalFragmentsPerTheme) return;
+        if (keys.size() <= Settings.getMinimalFragmentsPerTheme()) return;
 
         //Выделение ключей схожих фрагментов по "листам веток"
         List<List<String>> similarFragments = new LinkedList<>();
@@ -111,7 +93,7 @@ public class Analyzer {
                 //Удаление если при нем отклонение уменьшается
                 if (Math.abs(percents - theme.getPercent()) > Math.abs(newPercents - theme.getPercent())) {
                     totalWords -= deltaWords;
-                    wordsPerPercent = Math.min(maxWords / 100, totalWords / 100);
+                    wordsPerPercent = Math.min(Settings.getMaxWords() / 100, totalWords / 100);
                     fragments.remove(branchKey);
                     keys.remove(branchKey);
 
@@ -126,13 +108,13 @@ public class Analyzer {
         int size = keys.size();
         double themePercent = theme.getPercent();
         for (String key : keys) {
-            if (percents <= theme.getPercent() || size <= minimalFragmentsPerTheme) break;
+            if (percents <= theme.getPercent() || size <= Settings.getMinimalFragmentsPerTheme()) break;
 
             int deltaWords = fragments.get(key).countWords();
             double newPercents = (fragments.countWords(theme) - deltaWords) / wordsPerPercent;
-            if (Math.abs(percents - themePercent) > Math.abs(newPercents - themePercent) && Math.abs(newPercents) > themePercent - delta) {
+            if (Math.abs(percents - themePercent) > Math.abs(newPercents - themePercent) && Math.abs(newPercents) > themePercent - Settings.getDelta()) {
                 totalWords -= deltaWords;
-                wordsPerPercent = Math.min(maxWords / 100, totalWords / 100);
+                wordsPerPercent = Math.min(Settings.getMaxWords() / 100, totalWords / 100);
                 fragments.remove(key);
 
                 percents = newPercents;
