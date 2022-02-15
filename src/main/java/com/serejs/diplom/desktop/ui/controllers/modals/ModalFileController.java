@@ -3,9 +3,9 @@ package com.serejs.diplom.desktop.ui.controllers.modals;
 import com.serejs.diplom.desktop.enums.SourceType;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.ui.controllers.FilesViewController;
+import com.serejs.diplom.desktop.ui.controllers.abstarts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstarts.TableViewController;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -15,8 +15,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ModalFileController extends ModalController<Source> {
-    @FXML
-    public Button addButton;
     @FXML
     private TextField uriField;
     @FXML
@@ -42,7 +40,12 @@ public class ModalFileController extends ModalController<Source> {
 
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {}
+
+    @Override
+    public void setObject(Source source) {
+        uriField.setText(source.getUri().toString());
+        sourceBox.getSelectionModel().select(source.getType());
+    }
 }

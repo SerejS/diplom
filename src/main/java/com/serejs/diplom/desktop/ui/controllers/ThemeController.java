@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ThemeController extends TableViewController<Theme> {
+    String modalFileName = "modal-theme.fxml";
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         var title = new TableColumn<Theme, String>("Название темы");
@@ -25,12 +27,17 @@ public class ThemeController extends TableViewController<Theme> {
         keywords.setMinWidth(400);
         keywords.setCellValueFactory(new PropertyValueFactory<>("keyWords"));
 
-        super.initialize(title, percent, keywords);
+        super.initialize(modalFileName, title, percent, keywords);
     }
 
     @FXML
     private void openModal() {
-        openModal("modal-theme.fxml");
+        openModal(modalFileName);
+    }
+
+    @FXML
+    private void openModal(Theme theme) {
+        openModal(modalFileName, theme);
     }
 
     @FXML
@@ -39,6 +46,13 @@ public class ThemeController extends TableViewController<Theme> {
         anotherPage(nextButton, "files-view.fxml");
     }
 
+    @FXML
+    public void deleteRow() {
+        Theme t = table.getSelectionModel().getSelectedItem();
+        var themes = table.getItems().filtered(item -> item == t || item.getRoot() == t);
+        System.out.println(themes);
+        table.getItems().removeAll(themes);
+    }
 
     @FXML
     protected void goPrevPage() {

@@ -42,7 +42,6 @@ public class UserViewController extends TableViewController<String> {
         openModal("modal-view.fxml");
     }
 
-
     @Override
     public void addRow(String string) {
         listView.getItems().add(string);

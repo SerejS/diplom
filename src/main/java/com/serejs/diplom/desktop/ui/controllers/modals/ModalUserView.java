@@ -1,5 +1,6 @@
 package com.serejs.diplom.desktop.ui.controllers.modals;
 
+import com.serejs.diplom.desktop.ui.controllers.abstarts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstarts.TableViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -21,5 +22,10 @@ public class ModalUserView extends ModalController<String> {
 
     public void addItem() {
         parent.addRow(title.getText());
+    }
+
+    @Override
+    public void setObject(String t) {
+        title.setText(t);
     }
 }

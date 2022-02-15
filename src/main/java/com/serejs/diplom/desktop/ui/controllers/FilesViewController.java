@@ -14,6 +14,9 @@ import java.util.ResourceBundle;
 
 public class FilesViewController extends TableViewController<Source> {
     //@FXML private fileChooser = new FileChooser();
+    @FXML
+    private final String modalFileName = "modal-file.fxml";
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         var uri = new TableColumn<Source, URI>("Название файла");
@@ -24,12 +27,12 @@ public class FilesViewController extends TableViewController<Source> {
         type.setMinWidth(200);
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-        super.initialize(uri, type);
+        super.initialize(modalFileName, uri, type);
     }
 
     @FXML
     private void openModal() {
-        openModal("modal-file.fxml");
+        openModal(modalFileName);
     }
 
     @FXML

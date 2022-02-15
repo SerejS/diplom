@@ -3,6 +3,7 @@ package com.serejs.diplom.desktop.ui.controllers;
 import com.serejs.diplom.desktop.server.User;
 import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.controllers.abstarts.RootController;
+import com.serejs.diplom.desktop.ui.controllers.abstarts.TableViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,13 +14,11 @@ import javafx.scene.control.SplitMenuButton;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProjectOverviewController extends RootController implements Initializable {
+public class ProjectOverviewController extends TableViewController<String> {
     @FXML
     private ListView<String> projectList;
     @FXML
     private SplitMenuButton createButton;
-    private ObservableList list = FXCollections.observableArrayList();
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -27,9 +26,12 @@ public class ProjectOverviewController extends RootController implements Initial
     }
 
     protected void loadProjects()  {
-        list.clear();
-        list.addAll(User.projectTitles());
-        projectList.getItems().addAll(list);
+        projectList.getItems().addAll(User.projectTitles());
+    }
+
+    @Override
+    public void deleteRow() {
+        projectList.getItems().remove(projectList.getSelectionModel().getSelectedIndex());
     }
 
     @FXML

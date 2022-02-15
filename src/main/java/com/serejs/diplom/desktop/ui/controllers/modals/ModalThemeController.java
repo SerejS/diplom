@@ -1,6 +1,7 @@
 package com.serejs.diplom.desktop.ui.controllers.modals;
 
 import com.serejs.diplom.desktop.text.container.Theme;
+import com.serejs.diplom.desktop.ui.controllers.abstarts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstarts.TableViewController;
 import com.serejs.diplom.desktop.ui.controllers.ThemeController;
 import javafx.fxml.FXML;
@@ -48,5 +49,16 @@ public class ModalThemeController extends ModalController<Theme> {
             parent.addRow(theme);
         }
 
+    }
+
+    @Override
+    public void setObject(Theme theme) {
+        var keywords = new StringBuilder();
+        theme.getKeyWords().forEach(word -> keywords.append(word).append(", "));
+
+        titleTheme.setText(theme.getTitle());
+        textArea.setText(keywords.toString());
+        slider.setValue(theme.getPercent());
+        if (theme.getRoot() != null) themeBox.setValue(theme.getRoot());
     }
 }
