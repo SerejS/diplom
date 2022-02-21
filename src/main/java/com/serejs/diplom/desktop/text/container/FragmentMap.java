@@ -12,7 +12,7 @@ public class FragmentMap extends HashMap<String, Fragment> {
         boolean sentence = true;
         Pattern delimiter = Pattern.compile(sentence ? "\\P{Pe}" : "\\n");
 
-        List<String> microFragments = List.of(delimiter.split(fragment.content()));
+        List<String> microFragments = List.of(delimiter.split(fragment.getContent()));
 
         StringBuilder temp = new StringBuilder();
         StringBuilder summary = new StringBuilder();
@@ -30,22 +30,30 @@ public class FragmentMap extends HashMap<String, Fragment> {
         }
 
 
-        return new Fragment(summary.toString(), fragment.theme());
+        return new Fragment(summary.toString(), fragment.getTheme());
+    }
+
+
+    public double percent(Theme theme) {
+        return (double) length(theme) / length();
     }
 
 
 
+    public long length() {
+        return this.values().stream().mapToLong(Fragment::length).sum();
+    }
 
     /**
-     * Подсчет количества слов в фрагментах данной темы
+     * Полученный объем по текстам
      *
      * @param theme Тема, по которой ищется
      * @return Количество слов
      */
-    public int countWords(Theme theme) {
+    public long length(Theme theme) {
         return this.values().stream()
-                .filter(fragment -> fragment.theme().equals(theme))
-                .mapToInt(Fragment::countWords)
+                .filter(fragment -> fragment.getTheme().equals(theme))
+                .mapToLong(Fragment::length)
                 .sum();
     }
 
@@ -65,7 +73,7 @@ public class FragmentMap extends HashMap<String, Fragment> {
             double sum = themes.stream().mapToDouble(Theme::getPercent).sum();
             if (sum == 100) continue;
 
-            themes.forEach(t -> t.setPercent(t.getPercent() * 100 / sum));
+            themes.forEach(t -> t.setPercent(t.getPercent() / sum));
         }
     }
 
@@ -74,7 +82,7 @@ public class FragmentMap extends HashMap<String, Fragment> {
      * @return Множество используемых тем
      */
     public Set<Theme> getThemes() {
-        return this.values().stream().map(Fragment::theme).collect(Collectors.toSet());
+        return this.values().stream().map(Fragment::getTheme).collect(Collectors.toSet());
     }
 
     /**
@@ -85,7 +93,7 @@ public class FragmentMap extends HashMap<String, Fragment> {
      */
     public Set<Theme> getSubThemes(Theme root) {
         return this.values()
-                .stream().map(Fragment::theme)
+                .stream().map(Fragment::getTheme)
                 .filter(theme -> root == theme.getRoot())
                 .collect(Collectors.toSet());
     }
@@ -95,11 +103,11 @@ public class FragmentMap extends HashMap<String, Fragment> {
      */
     public Set<String> keySet(Theme theme) {
         return this.keySet().stream()
-                .filter(key -> this.get(key).theme() == null || this.get(key).theme().equals(theme))
+                .filter(key -> this.get(key).getTheme() == null || this.get(key).getTheme().equals(theme))
                 .collect(Collectors.toSet());
     }
 
     public String getContent(String key) {
-        return this.get(key).content();
+        return this.get(key).getContent();
     }
 }

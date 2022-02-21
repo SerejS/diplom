@@ -1,21 +1,18 @@
 package com.serejs.diplom.desktop.analyze;
 
 import com.serejs.diplom.desktop.Main;
-import com.serejs.diplom.desktop.text.container.Fragment;
 import com.serejs.diplom.desktop.text.container.FragmentMap;
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.utils.Settings;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Analyzer {
-    /**
-     * Выравнивание найденного материала
-     *
-     * @param fragments Обрабатываемый материал
-     */
+    /*
     public static void alignment(FragmentMap fragments) {
         var themes = fragments.getThemes().stream().toList();
         for (int i = 0; i <= themes.size(); i++) {
@@ -25,10 +22,6 @@ public class Analyzer {
         }
     }
 
-
-    /**
-     * Выравнивание процентного содержания относительно каждой темы
-     */
     private static void localAlignment(FragmentMap fragments, Theme theme) {
         int totalWords = fragments.values().stream().mapToInt(Fragment::countWords).sum();
         double wordsPerPercent = Math.min((double) Settings.getMaxWords() / 100, (double) totalWords / 100);
@@ -122,6 +115,81 @@ public class Analyzer {
             }
         }
     }
+    */
+
+    /**
+     * Выравнивание контента относительно процентов
+     * @param fragments Обрабатываемые фрагменты
+     */
+    public static void alignment(FragmentMap fragments) {
+        // к-во ключевых слов в каждой теме
+        var themeMap = new HashMap<Theme, Long>();
+
+        for (var i : fragments.values()) {
+            themeMap.put(i.getTheme(), 0L);
+        }
+
+        for (var i : fragments.values()) {
+            var th = i.getTheme();
+            themeMap.put(th, themeMap.get(th) + i.countKeywords());
+        }
+
+        //Вес каждого фрагмента
+        var fragmentWeights = new HashMap<String, Double>();
+        for (var i : fragments.keySet()) {
+            fragmentWeights.put(i, 1.);
+        }
+
+
+        // Состав веса:
+        // - К-во ключевых слов относительно количества слов во фрагменте
+        // - К-во ключевых слов относительно всех ключевых слов во фрагментах
+        // - Уникальность ключевых слов во фрагменте
+
+        for (var i : fragmentWeights.entrySet()) {
+            var fragment = fragments.get(i.getKey());
+            var weight = i.getValue();
+
+            if (fragment.countKeywords() == 0) {
+                continue;
+            }
+
+            weight *= (double) fragment.countKeywords() / (double) fragment.countWords();
+            weight *= (double) fragment.countKeywords() / (double) themeMap.get(fragment.getTheme());
+
+            var shingleWeight = 1.;
+            for (var y : fragments.values()) {
+                var th = y.getTheme();
+                if (th.equals(fragment.getTheme()) && !y.equals(fragment)) {
+                    shingleWeight *= (1 - Shingle.compare(fragment.getContent(), y.getContent()));
+                }
+            }
+
+            weight *= shingleWeight;
+            //System.out.println(i.getKey() + " " + Math.round(weight * 1000000));
+
+            fragmentWeights.put(i.getKey(), weight);
+        }
+
+
+        //Удаление фрагментов, которые больше ожидаемых процентов
+        List<Theme> themes = themeMap.keySet().stream().toList();
+        for (int i = 0; i <= themes.size(); i++) {
+            for (int k = 0; k <= i && k < themes.size(); k++) {
+                Theme theme = themes.get(k);
+
+                var keys = new ArrayList<>(fragments.keySet(theme).stream()
+                        .sorted(Comparator.comparingDouble(fragmentWeights::get))
+                        .toList());
+
+                while (fragments.percent(theme) > theme.getPercent() + Settings.getDelta() * 0.01) {
+                    var worst = keys.get(0);
+                    fragments.remove(worst);
+                    keys.remove(worst);
+                }
+            }
+        }
+    }
 
 
     /**
@@ -133,16 +201,16 @@ public class Analyzer {
      */
     public static Theme getTheme(String content, List<Theme> themes) {
         //Минимальное количество слов
-        int max = 4;
+        var min = Settings.getMinimalWords();
 
         //Получение темы с наибольшим количеством совпадением ключевых слов
         Theme resultTheme = null;
         for (Theme theme : themes) {
 
-            int matches = countKeyWords(content, theme.getKeyWords());
+            var matches = countKeyWords(content, theme.getKeyWords());
 
-            if (matches > max) {
-                max = matches;
+            if (matches > min) {
+                min = matches;
                 resultTheme = theme;
             }
         }
@@ -173,27 +241,4 @@ public class Analyzer {
         return stopWords;
     }
 
-
-    /**
-     * ? Нет учета N-грамм
-     * ? Добавление синонимов
-     * Получение количества ключевых слов в тексте
-     *
-     * @param text     Проверяемый текст
-     * @param keywords Ключевые слова
-     * @return Количество совпадений
-     */
-    private static int countKeyWords(String text, Set<String> keywords) {
-        List<String> words = new LinkedList<>();
-        Set<String> stopWords = stopWords();
-
-        Arrays.stream(text.split("[\\pP\\s]"))
-                .filter(element -> !element.isEmpty())
-                .map(word -> word.toLowerCase(Locale.ROOT).trim())
-                .filter(word -> !stopWords.contains(word))
-                .forEach(word -> words.addAll(Lucene.getNormalForms(word)));
-
-        words.removeIf(word -> !keywords.contains(word));
-        return words.size();
-    }
 }

@@ -61,7 +61,7 @@ public class Shingle {
      * @param text2 второй текст
      * @return процент сходства шинглов
      */
-    public static boolean compare(String text1, String text2) {
+    public static double compare(String text1, String text2) {
         ArrayList<Integer> textShingles1New = genShingle(text1);
         ArrayList<Integer> textShingles2New = genShingle(text2);
 
@@ -76,7 +76,7 @@ public class Shingle {
             }
         }
 
-        return ((similarShinglesNumber / ((textShingles1Number + textShingles2Number) / 2.0)) * 100) > 10;
+        return similarShinglesNumber / ((textShingles1Number + textShingles2Number) / 2.0);
     }
 
 

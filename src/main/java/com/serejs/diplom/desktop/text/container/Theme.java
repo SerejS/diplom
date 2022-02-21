@@ -22,7 +22,7 @@ public class Theme {
             keyWords.addAll(root.keyWords);
             this.percent = percent * root.percent / 100.;
         } else {
-            this.percent = percent;
+            this.percent = percent / 100;
         }
 
         this.keyWords = keyWords;
