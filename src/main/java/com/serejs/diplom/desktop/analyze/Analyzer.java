@@ -61,7 +61,6 @@ public class Analyzer {
             }
 
             weight *= shingleWeight;
-            //System.out.println(i.getKey() + " " + Math.round(weight * 1000000));
 
             fragmentWeights.put(i.getKey(), weight);
         }

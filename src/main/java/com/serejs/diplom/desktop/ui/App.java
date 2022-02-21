@@ -22,6 +22,7 @@ import java.util.List;
 public class App extends Application {
     private static List<Source> sources;
     private static List<Theme> themes;
+    private static Map<Source, Format> customSources;
 
     public static void createNewProject() {
         sources = new LinkedList<>();
@@ -32,8 +33,9 @@ public class App extends Application {
         themes = newThemes;
     }
 
-    public static void addSources(List<Source> newSources) {
+    public static void addSources(List<Source> newSources, Map<Source, Format> newCustomSources) {
         sources.addAll(newSources);
+        customSources.putAll(newCustomSources);
     }
 
     public static void addSources(GoogleSearchEngine engine) throws IOException, URISyntaxException {
@@ -50,8 +52,7 @@ public class App extends Application {
             switch (source.getType()) {
                 case EPUB -> loader = new EpubLoader();
                 case FB2 -> loader = new Fb2Loader();
-                //Несколько кастомных форматов... Как??
-                case CUSTOM -> loader = new CustomLoader(new Format("Глава", "\n", "Пояснения:"));
+                case CUSTOM -> loader = new CustomLoader(customSources.get(source));
                 case WEB -> loader = new WebLoader();
                 default -> {
                     System.err.println("Тип литературы не определен: " + source.getUri());
@@ -73,7 +74,7 @@ public class App extends Application {
 
         var result = new StringBuilder();
 
-        int totalCount = mainFragments.values().stream().mapToInt(Fragment::countWords).sum();
+        var totalCount = mainFragments.values().stream().mapToLong(Fragment::countWords).sum();
         result
                 .append("Полученное количество слов: ")
                 .append(totalCount)
