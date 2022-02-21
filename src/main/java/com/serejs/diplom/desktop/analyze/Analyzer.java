@@ -220,6 +220,72 @@ public class Analyzer {
 
 
     /**
+     * Нормализация слова
+     *
+     * @param word Изначальное
+     * @return Нормализированное
+     */
+    private static String normalizeWord(String word) {
+        if (word.isEmpty()) return word;
+
+        return Lucene
+                .getNormalForms(word.toLowerCase(Locale.ROOT).trim())
+                .stream().findFirst().orElse("");
+    }
+
+    /**
+     * ? Добавление синонимов
+     * Получение количества ключевых слов в тексте
+     *
+     * @param content   Подсчитываемый текст
+     * @param keyTokens Искомые ключевые слова
+     * @return Количество совпадений
+     */
+    public static long countKeyWords(String content, Set<String> keyTokens) {
+        //Игнорируемые слова
+        Set<String> stopWords = Analyzer.stopWords();
+
+        //Лист слов в нормальных формах
+        List<String> normalWords = Arrays.stream(content.split("[\\pP\\s]"))
+                .map(Analyzer::normalizeWord)
+                .filter(element -> !element.isEmpty())
+                .filter(word -> !stopWords.contains(word))
+                .toList();
+
+        //Ключевые слова
+        Set<String> keyWords = keyTokens.stream()
+                .filter(token -> token.split("\\s").length == 1)
+                .map(Analyzer::normalizeWord)
+                .collect(Collectors.toSet());
+
+        //Ключевые фразы
+        Set<List<String>> keyPhrases = keyTokens.stream()
+                .map(token -> Arrays.stream(token.split("\\s")).map(Analyzer::normalizeWord).toList())
+                .filter(phrase -> phrase.size() > 1)
+                .collect(Collectors.toSet());
+
+        long qty = 0;
+
+        //Посчет ключевых словосочетаний
+        for (var i = 0; i < normalWords.size(); i++) {
+            checkPhrases:
+            for (var phrase : keyPhrases) {
+                for (var j = 0; j < phrase.size(); j++) {
+                    if (!normalWords.get(i + j).equals(phrase.get(j))) continue checkPhrases;
+                }
+                qty++;
+                break;
+            }
+        }
+
+        //Добавление количества одиночных ключевых слов в тексте
+        qty += normalWords.stream().filter(keyWords::contains).count();
+
+        return qty;
+    }
+
+
+    /**
      * Функция получения из файла стоп-слов
      *
      * @return Множество стоп-слов
