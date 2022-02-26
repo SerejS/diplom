@@ -6,7 +6,9 @@ public class Settings {
     private static final short delta = 3;
     private static final int maxWords = 5000;
     private static final long minimalWords = 4L;
-    private static final float minConcentration = 0;
+
+    private static final float minConcentration = 0.01f;
+    private static final long maxMicroRange = 3;
 
 
     public static short getMinimalFragmentsPerTheme() {
@@ -22,4 +24,8 @@ public class Settings {
     }
 
     public static long getMinimalWords() {return minimalWords;}
+
+    public static float getMinConcentration() {return minConcentration;}
+
+    public static long getMaxMicroRange() {return maxMicroRange;}
 }
