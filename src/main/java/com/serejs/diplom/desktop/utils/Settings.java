@@ -4,8 +4,9 @@ public class Settings {
     //Настройки анализа
     private static final short minimalFragmentsPerTheme = 1;
     private static final short delta = 3;
-    private static final int maxWords = 50000;
+    private static final int maxWords = 5000;
     private static final long minimalWords = 4L;
+    private static final float minConcentration = 0;
 
 
     public static short getMinimalFragmentsPerTheme() {

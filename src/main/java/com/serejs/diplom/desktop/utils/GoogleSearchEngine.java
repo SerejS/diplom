@@ -35,8 +35,12 @@ public class GoogleSearchEngine {
     @Experimental
     public List<Source> getSources(Theme theme) throws IOException, URISyntaxException {
         var query = theme.getTitle();
+        var keywords = theme.getKeyWords().stream().reduce("", (prev, curr) -> prev + " " + curr).trim();
 
-        URL url = uriBuilder.addParameter("q", query).build().toURL();
+        URL url = uriBuilder
+                .addParameter("q", query)
+                .addParameter("orTerms", keywords)
+                .build().toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Content-Type", "application/json");
