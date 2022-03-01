@@ -1,5 +1,6 @@
 package com.serejs.diplom.desktop.ui.controllers.abstracts;
 
+import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -91,6 +92,6 @@ public abstract class TableViewController<T> extends RootController implements I
     @FXML
     public void deleteRow() {
         T t = table.getSelectionModel().getSelectedItem();
-        table.getItems().removeAll(t);
+        if (DeleteAlert.confirm()) table.getItems().removeAll(t);
     }
 }

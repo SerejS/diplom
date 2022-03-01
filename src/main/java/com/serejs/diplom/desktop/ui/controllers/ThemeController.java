@@ -2,6 +2,7 @@ package com.serejs.diplom.desktop.ui.controllers;
 
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.ui.App;
+import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -27,7 +28,11 @@ public class ThemeController extends TableViewController<Theme> {
         keywords.setMinWidth(400);
         keywords.setCellValueFactory(new PropertyValueFactory<>("keyWords"));
 
-        super.initialize(modalFileName, title, percent, keywords);
+        var root = new TableColumn<Theme, String>("Родительская тема");
+        root.setMinWidth(200);
+        root.setCellValueFactory(new PropertyValueFactory<>("root"));
+
+        super.initialize(modalFileName, title, percent, keywords, root);
     }
 
     @FXML
@@ -48,9 +53,9 @@ public class ThemeController extends TableViewController<Theme> {
 
     @FXML
     public void deleteRow() {
+        if (!DeleteAlert.confirm()) return;
         Theme t = table.getSelectionModel().getSelectedItem();
         var themes = table.getItems().filtered(item -> item == t || item.getRoot() == t);
-        System.out.println(themes);
         table.getItems().removeAll(themes);
     }
 
