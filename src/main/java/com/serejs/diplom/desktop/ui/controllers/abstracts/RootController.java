@@ -1,11 +1,8 @@
-package com.serejs.diplom.desktop.ui.controllers.abstarts;
+package com.serejs.diplom.desktop.ui.controllers.abstracts;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBase;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;

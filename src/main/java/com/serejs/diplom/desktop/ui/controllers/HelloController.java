@@ -1,6 +1,6 @@
 package com.serejs.diplom.desktop.ui.controllers;
 
-import com.serejs.diplom.desktop.ui.controllers.abstarts.RootController;
+import com.serejs.diplom.desktop.ui.controllers.abstracts.RootController;
 import javafx.fxml.FXML;
 
 public class HelloController extends RootController {

@@ -2,7 +2,7 @@ package com.serejs.diplom.desktop.ui.controllers;
 
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.ui.App;
-import com.serejs.diplom.desktop.ui.controllers.abstarts.TableViewController;
+import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;

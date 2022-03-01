@@ -2,12 +2,8 @@ package com.serejs.diplom.desktop.ui.controllers;
 
 import com.serejs.diplom.desktop.server.User;
 import com.serejs.diplom.desktop.ui.App;
-import com.serejs.diplom.desktop.ui.controllers.abstarts.RootController;
-import com.serejs.diplom.desktop.ui.controllers.abstarts.TableViewController;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitMenuButton;
 

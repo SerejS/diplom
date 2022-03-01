@@ -1,4 +1,4 @@
-package com.serejs.diplom.desktop.ui.controllers.abstarts;
+package com.serejs.diplom.desktop.ui.controllers.abstracts;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,6 +11,8 @@ public abstract class ModalController<T> extends RootController implements Initi
 
     protected TableViewController<T> parent;
     private Stage stage;
+
+    protected T obj = null;
 
     public abstract void setParent(TableViewController<T> parentController);
 

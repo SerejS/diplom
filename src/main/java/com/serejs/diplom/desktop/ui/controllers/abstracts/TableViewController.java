@@ -1,4 +1,4 @@
-package com.serejs.diplom.desktop.ui.controllers.abstarts;
+package com.serejs.diplom.desktop.ui.controllers.abstracts;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,11 +37,11 @@ public abstract class TableViewController<T> extends RootController implements I
         table.setRowFactory(tv -> {
             TableRow<T> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
                     openModal(modalFileName, row.getItem());
                 }
             });
-            return row ;
+            return row;
         });
 
     }
@@ -77,9 +77,15 @@ public abstract class TableViewController<T> extends RootController implements I
         openModal(fileName);
         modal.setObject(t);
     }
+
     @FXML
     public void addRow(T t) {
         table.getItems().add(table.getItems().size(), t);
+        modal.close();
+    }
+
+    public void updateRows() {
+        table.refresh();
         modal.close();
     }
 

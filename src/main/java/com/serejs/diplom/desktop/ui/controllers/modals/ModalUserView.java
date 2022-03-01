@@ -1,7 +1,7 @@
 package com.serejs.diplom.desktop.ui.controllers.modals;
 
-import com.serejs.diplom.desktop.ui.controllers.abstarts.ModalController;
-import com.serejs.diplom.desktop.ui.controllers.abstarts.TableViewController;
+import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
+import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 

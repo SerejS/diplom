@@ -1,8 +1,8 @@
 package com.serejs.diplom.desktop.ui.controllers.modals;
 
 import com.serejs.diplom.desktop.text.container.Theme;
-import com.serejs.diplom.desktop.ui.controllers.abstarts.ModalController;
-import com.serejs.diplom.desktop.ui.controllers.abstarts.TableViewController;
+import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
+import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import com.serejs.diplom.desktop.ui.controllers.ThemeController;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -40,25 +40,37 @@ public class ModalThemeController extends ModalController<Theme> {
     }
 
     public void addTheme() {
-        if (parent != null) {
-            Set<String> keyWords = Arrays.stream(textArea.getText().split(","))
-                    .map(String::trim)
-                    .collect(Collectors.toSet());
+        if (parent == null) return;
 
-            var theme = new Theme(themeBox.getValue(), titleTheme.getText(), slider.getValue(), keyWords);
-            parent.addRow(theme);
+        Set<String> keyWords = Arrays.stream(textArea.getText().split(","))
+                .map(String::trim)
+                .collect(Collectors.toSet());
+
+
+        if (obj == null) {
+            obj = new Theme(themeBox.getValue(), titleTheme.getText(), slider.getValue(), keyWords);
+            parent.addRow(obj);
+            return;
         }
 
+        obj.setRoot(themeBox.getValue());
+        obj.setTitle(titleTheme.getText());
+        obj.setPercent(slider.getValue() / 100.);
+        obj.setKeyWords(keyWords);
+
+        parent.updateRows();
     }
 
     @Override
     public void setObject(Theme theme) {
+        this.obj = theme;
+
         var keywords = new StringBuilder();
         theme.getKeyWords().forEach(word -> keywords.append(word).append(", "));
 
         titleTheme.setText(theme.getTitle());
         textArea.setText(keywords.toString());
-        slider.setValue(theme.getPercent());
+        slider.setValue(theme.getPercent() * 100);
         if (theme.getRoot() != null) themeBox.setValue(theme.getRoot());
     }
 }

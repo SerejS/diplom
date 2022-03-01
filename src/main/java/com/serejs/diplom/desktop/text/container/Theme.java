@@ -1,9 +1,6 @@
 package com.serejs.diplom.desktop.text.container;
 
-import java.util.ArrayDeque;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 
 //Percent относительно root -> фактический
@@ -40,8 +37,22 @@ public class Theme {
         return percent;
     }
 
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public void setPercent(double percent) {
         this.percent = percent;
+    }
+
+    public void setRoot(Theme root) {
+        this.root = root;
+    }
+
+    public void setKeyWords(Set<String> keyWords) {
+        this.keyWords = new HashSet<>(keyWords);
+        if (root != null) this.keyWords.addAll(root.keyWords);
     }
 
     public static List<Theme> getLeafThemes(List<Theme> themes) {
