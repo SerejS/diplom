@@ -1,7 +1,7 @@
 package com.serejs.diplom.desktop.ui.controllers;
 
 import com.serejs.diplom.desktop.ui.App;
-import com.serejs.diplom.desktop.ui.controllers.abstarts.RootController;
+import com.serejs.diplom.desktop.ui.controllers.abstracts.RootController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
