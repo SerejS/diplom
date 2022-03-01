@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -43,6 +40,8 @@ public abstract class TableViewController<T> extends RootController implements I
             });
             return row;
         });
+
+        table.setPlaceholder(new Label("Добавьте хотя бы один объект в таблицу"));
 
     }
 
