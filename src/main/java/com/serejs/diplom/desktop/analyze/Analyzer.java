@@ -95,7 +95,7 @@ public class Analyzer {
      */
     public static Theme getTheme(String content, List<Theme> themes) {
         //Минимальное количество слов
-        var min = Settings.getMinimalWords();
+        var min = Settings.getMinWords();
 
         //Получение темы с наибольшим количеством совпадением ключевых слов
         Theme resultTheme = null;

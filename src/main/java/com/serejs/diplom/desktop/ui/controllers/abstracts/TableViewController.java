@@ -44,6 +44,10 @@ public abstract class TableViewController<T> extends RootController implements I
 
         table.setPlaceholder(new Label("Добавьте хотя бы один объект в таблицу"));
 
+        var tableWidth = table.getColumns().stream().mapToDouble(TableColumnBase::getWidth).sum();
+        table.setMinWidth(tableWidth);
+        table.setPrefWidth(tableWidth);
+        table.setMaxWidth(tableWidth);
     }
 
     public List<T> getItems() {

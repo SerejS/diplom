@@ -4,12 +4,15 @@ public class Settings {
     //Настройки анализа
     private static final short minimalFragmentsPerTheme = 1;
     private static final short delta = 3;
-    private static final int maxWords = 5000;
-    private static final long minimalWords = 50L;
+
+    private static final long minWords = 50L;
+    private static final long maxWords = 5000L;
+
     private static final long minKeyWords = 2L;
 
     private static final float minConcentration = 0.01f;
     private static final long maxMicroRange = 3;
+    private static boolean autoReferring = false;
 
 
     public static short getMinimalFragmentsPerTheme() {
@@ -20,11 +23,11 @@ public class Settings {
         return delta;
     }
 
-    public static int getMaxWords() {
+    public static long getMaxWords() {
         return maxWords;
     }
 
-    public static long getMinimalWords() {return minimalWords;}
+    public static long getMinWords() {return minWords;}
 
     public static float getMinConcentration() {return minConcentration;}
 

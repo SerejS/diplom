@@ -34,6 +34,6 @@ public class SourceController extends RootController {
             App.addSources(new GoogleSearchEngine(cx, key));
         }
 
-        anotherPage(analiseButton, "result-view.fxml");
+        anotherPage(analiseButton, "settings-view.fxml");
     }
 }
