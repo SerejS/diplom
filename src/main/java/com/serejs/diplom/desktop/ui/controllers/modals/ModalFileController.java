@@ -8,6 +8,7 @@ import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -17,6 +18,9 @@ import java.util.ResourceBundle;
 public class ModalFileController extends ModalController<Source> {
     @FXML
     private TextField uriField;
+    @FXML
+    private FileChooser fileChooser = new FileChooser();
+
     @FXML
     private ComboBox<SourceType> sourceBox;
 
@@ -32,16 +36,24 @@ public class ModalFileController extends ModalController<Source> {
     }
 
     public void addFile() throws URISyntaxException {
-        String path = System.getenv("resourcePath");
         if (parent instanceof FilesViewController parent) {
-            var source = new Source(new URI(path + uriField.getText()), sourceBox.getValue());
+            var source = new Source(new URI(uriField.getText()), sourceBox.getValue());
             parent.addRow(source);
         }
 
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {}
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        uriField.setOnMouseClicked(e -> {
+            var stage = addButton.getScene().getWindow();
+
+            try {
+                uriField.setText(fileChooser.showOpenDialog(stage).toURI().toString());
+            } catch (NullPointerException ignore) {}
+
+        });
+    }
 
     @Override
     public void setObject(Source source) {

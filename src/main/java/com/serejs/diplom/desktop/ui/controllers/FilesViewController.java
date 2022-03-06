@@ -12,14 +12,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FilesViewController extends TableViewController<Source> {
-    //@FXML private fileChooser = new FileChooser();
     @FXML
     private final String modalFileName = "modal-file.fxml";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         var uri = new TableColumn<Source, URI>("Название файла");
-        uri.setMinWidth(150);
+        uri.setMinWidth(300);
         uri.setCellValueFactory(new PropertyValueFactory<>("uri"));
 
         var type = new TableColumn<Source, SourceType>("Тип литературы");

@@ -65,6 +65,8 @@ public class App extends Application {
                 if (theme == null) return;
 
                 Fragment fragment = new Fragment(content, theme);
+                if (fragment.getConcentration() < Settings.getMinConcentration())
+                    fragment = AutoSummarizer.summarize(fragment);
 
                 mainFragments.put(key, fragment);
             });
