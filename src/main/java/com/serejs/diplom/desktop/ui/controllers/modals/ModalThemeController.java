@@ -37,6 +37,7 @@ public class ModalThemeController extends ModalController<Theme> {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (textArea != null) textArea.setWrapText(true);
+        closeInit();
     }
 
     public void addTheme() {

@@ -2,6 +2,7 @@ package com.serejs.diplom.desktop.ui.controllers;
 
 import com.serejs.diplom.desktop.server.User;
 import com.serejs.diplom.desktop.ui.App;
+import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -27,7 +28,9 @@ public class ProjectOverviewController extends TableViewController<String> {
 
     @Override
     public void deleteRow() {
-        projectList.getItems().remove(projectList.getSelectionModel().getSelectedIndex());
+        if (DeleteAlert.confirm()) {
+            projectList.getItems().remove(projectList.getSelectionModel().getSelectedIndex());
+        }
     }
 
     @FXML

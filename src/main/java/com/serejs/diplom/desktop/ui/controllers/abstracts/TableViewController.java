@@ -16,6 +16,8 @@ public abstract class TableViewController<T> extends RootController implements I
     @FXML
     protected Button prevButton;
     @FXML
+    protected Button deleteButton;
+    @FXML
     protected Button addButton;
     @FXML
     protected Button nextButton;
@@ -35,6 +37,7 @@ public abstract class TableViewController<T> extends RootController implements I
         table.setRowFactory(tv -> {
             TableRow<T> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
+                deleteButton.setDisable(false);
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
                     openModal(modalFileName, row.getItem());
                 }

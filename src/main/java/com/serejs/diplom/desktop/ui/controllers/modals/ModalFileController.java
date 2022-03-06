@@ -53,6 +53,7 @@ public class ModalFileController extends ModalController<Source> {
             } catch (NullPointerException ignore) {}
 
         });
+        closeInit();
     }
 
     @Override

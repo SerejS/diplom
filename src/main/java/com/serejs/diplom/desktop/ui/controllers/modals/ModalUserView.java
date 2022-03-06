@@ -18,7 +18,9 @@ public class ModalUserView extends ModalController<String> {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {}
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        closeInit();
+    }
 
     public void addItem() {
         parent.addRow(title.getText());

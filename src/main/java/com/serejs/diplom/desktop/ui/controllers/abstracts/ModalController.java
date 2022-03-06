@@ -5,14 +5,25 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public abstract class ModalController<T> extends RootController implements Initializable {
     @FXML
     public Button addButton;
+    @FXML
+    public Button closeButton;
 
     protected TableViewController<T> parent;
     private Stage stage;
 
     protected T obj = null;
+
+    protected void closeInit() {
+        closeButton.setOnMouseClicked(e -> {
+            close();
+        });
+    }
 
     public abstract void setParent(TableViewController<T> parentController);
 
