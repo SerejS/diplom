@@ -1,8 +1,6 @@
 /.idea
 /lib
 /target
-^src/main/resources/ui/
-^src/main/resources/ui/modals/
-src/main/resources/
+src/main/resources/books
 src/main/java/com/serejs/diplom/desktop/anayse/
 src/main/java/com/serejs/diplom/desktop/server/
