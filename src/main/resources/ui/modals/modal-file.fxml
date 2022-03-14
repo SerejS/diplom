@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="280" prefWidth="550.0" spacing="20.0" xmlns="http://javafx.com/javafx/16"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.serejs.diplom.desktop.ui.controllers.modals.ModalFileController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+
+    <Label text="Добавить файл">
+        <font>
+            <Font size="24.0"/>
+        </font>
+    </Label>
+    <TextField fx:id="titleField" prefHeight="39.0" prefWidth="400.0" promptText="Название файла"
+               style="-fx-font-size: 16;">
+        <font>
+            <Font size="14.0"/>
+        </font>
+    </TextField>
+    <TextField fx:id="uriField" promptText="Путь к файлу"/>
+    <ComboBox fx:id="typeBox" prefHeight="35.0" prefWidth="575.0" promptText="Тип литературы"
+              style="-fx-font-size: 16;" visibleRowCount="5"/>
+    <ComboBox fx:id="sourceBox" prefHeight="35.0" prefWidth="540.0" promptText="Тип файла" style="-fx-font-size: 16;"
+              visibleRowCount="5"/>
+    <HBox fx:id="customFields" visible="false">
+        <TextField alignment="CENTER" prefHeight="25.0" prefWidth="144.0" promptText="До названия"/>
+        <TextField alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="215.0"
+                   promptText="Между названием и содержанием"/>
+        <TextField alignment="CENTER" layoutX="159.0" layoutY="10.0" promptText="После содержания"/>
+    </HBox>
+
+    <HBox alignment="CENTER" prefHeight="57.0" prefWidth="318.0" spacing="50.0">
+        <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#addFile" text="Добавить"/>
+        <Button fx:id="closeButton" mnemonicParsing="false" text="Отменить"/>
+    </HBox>
+</VBox>

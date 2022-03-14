@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="493.0" prefWidth="504.0" spacing="20.0" xmlns="http://javafx.com/javafx/16"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.serejs.diplom.desktop.ui.controllers.modals.ModalThemeController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <children>
+        <Label text="Добавить тему">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="titleTheme" prefHeight="39.0" prefWidth="400.0" promptText="Название темы"
+                   style="-fx-font-size: 18;"/>
+        <ComboBox fx:id="themeBox" prefHeight="35.0" prefWidth="474.0" promptText="Основная тема"
+                  style="-fx-font-size: 16;"/>
+        <Slider fx:id="slider" majorTickUnit="10.0" minorTickCount="4" onDragDropped="#addTheme" showTickLabels="true"
+                showTickMarks="true" snapToTicks="true"/>
+        <ScrollPane prefHeight="184.0" prefWidth="548.0">
+            <content>
+                <VBox fx:id="keyWordsPane" fillWidth="false" prefHeight="141.0" prefWidth="445.0">
+                    <HBox alignment="CENTER" prefHeight="46.0" prefWidth="413.0" spacing="50.0">
+                        <ComboBox fx:id="typeBox" prefHeight="25.0" prefWidth="163.0"/>
+                        <TextField fx:id="competitionName" prefHeight="25.0" prefWidth="164.0"
+                                   promptText="Компетенция"/>
+                    </HBox>
+                    <HBox alignment="CENTER" prefHeight="43.0" prefWidth="410.0">
+                        <Button fx:id="addCompetitionButton" alignment="CENTER" contentDisplay="BOTTOM"
+                                lineSpacing="50.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0"
+                                text="Добавить" textAlignment="CENTER"/>
+                    </HBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+
+        <HBox alignment="CENTER" prefHeight="57.0" prefWidth="318.0" spacing="50.0">
+            <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#addTheme" text="Применить">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Button>
+            <Button fx:id="closeButton" mnemonicParsing="false" text="Отменить">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Button>
+        </HBox>
+    </children>
+
+
+</VBox>
