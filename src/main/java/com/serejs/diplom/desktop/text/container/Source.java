@@ -6,11 +6,13 @@ import java.net.URI;
 
 public class Source {
     private URI uri;
-    private SourceType type;
+    private SourceType sourceType;
+    private LiteratureType litType;
 
-    public Source(URI uri, SourceType type) {
+    public Source(URI uri, SourceType sourceType, LiteratureType litType) {
         this.uri = uri;
-        this.type = type;
+        this.sourceType = sourceType;
+        this.litType = litType;
     }
 
 
@@ -18,7 +20,11 @@ public class Source {
         return uri;
     }
 
-    public SourceType getType() {
-        return type;
+    public SourceType getSourceType() {
+        return sourceType;
+    }
+
+    public LiteratureType getLitType() {
+        return litType;
     }
 }

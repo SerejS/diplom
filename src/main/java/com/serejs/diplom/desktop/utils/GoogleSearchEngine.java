@@ -1,6 +1,7 @@
 package com.serejs.diplom.desktop.utils;
 
 import com.serejs.diplom.desktop.enums.SourceType;
+import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.text.container.Theme;
 import org.apache.http.annotation.Experimental;
@@ -20,10 +21,17 @@ import java.util.Set;
 
 public class GoogleSearchEngine {
     private final URIBuilder uriBuilder = new URIBuilder("https://customsearch.googleapis.com/customsearch/v1?");
+    private final String cx;
+    private final String key;
+    private final LiteratureType type;
 
-    public GoogleSearchEngine(String cx, String key) throws URISyntaxException {
+    public GoogleSearchEngine(String cx, String key, LiteratureType type) throws URISyntaxException {
         uriBuilder.addParameter("cx", cx);
         uriBuilder.addParameter("key", key);
+
+        this.cx = cx;
+        this.key = key;
+        this.type = type;
     }
 
     /**
@@ -35,7 +43,7 @@ public class GoogleSearchEngine {
     @Experimental
     public List<Source> getSources(Theme theme) throws IOException, URISyntaxException {
         var query = theme.getTitle();
-        var keywords = theme.getKeyWords().stream().reduce("", (prev, curr) -> prev + " " + curr).trim();
+        var keywords = theme.getKeyNGrams().stream().reduce("", (prev, curr) -> prev + " " + curr).trim();
 
         URL url = uriBuilder
                 .addParameter("q", query)
@@ -56,12 +64,27 @@ public class GoogleSearchEngine {
         String content = response.toString();
 
         //Элементы с ссылками на сайты
-        var jArr= new JSONObject(content).getJSONArray("items");
+        var jArr = new JSONObject(content).getJSONArray("items");
         Set<URI> uris = new HashSet<>();
         for (int i = 0; i < jArr.toList().size(); i++) {
             uris.add(new URI(jArr.getJSONObject(i).get("link").toString()));
         }
 
-        return uris.stream().map(uri -> new Source(uri, SourceType.WEB)).toList();
+        //Изменить!
+        var testLitType = new LiteratureType("Веб ресурс", true);
+        return uris.stream().map(uri -> new Source(uri, SourceType.WEB, testLitType)).toList();
+    }
+
+
+    public final String getCx() {
+        return cx;
+    }
+
+    public final String getKey() {
+        return key;
+    }
+
+    public final LiteratureType getType() {
+        return type;
     }
 }

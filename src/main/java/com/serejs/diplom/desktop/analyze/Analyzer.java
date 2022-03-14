@@ -101,7 +101,7 @@ public class Analyzer {
         Theme resultTheme = null;
         for (Theme theme : themes) {
 
-            var matches = countKeyWords(content, theme.getKeyWords());
+            var matches = countKeyWords(content, theme.getKeyNGrams());
 
             if (matches > min) {
                 min = matches;
@@ -128,7 +128,6 @@ public class Analyzer {
     }
 
     /**
-     * ? Добавление синонимов
      * Получение количества ключевых слов в тексте
      *
      * @param content   Подсчитываемый текст

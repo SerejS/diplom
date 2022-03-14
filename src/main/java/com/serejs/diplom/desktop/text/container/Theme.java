@@ -1,5 +1,7 @@
 package com.serejs.diplom.desktop.text.container;
 
+import javafx.util.Pair;
+
 import java.util.*;
 
 
@@ -8,21 +10,26 @@ public class Theme {
     private Theme root;
     private String title;
     private double percent;
-    private Set<String> keyWords;
+    private Map<LiteratureType, Pair<String, Set<String>>> mapKeyNGrams;
 
+    private Set<String> allKeyNGrams;
 
-    public Theme(Theme root, String title, double percent, Set<String> keyWords) {
+    public Theme(
+            Theme root, String title, double percent,
+            Map<LiteratureType, Pair<String, Set<String>>> mapKeyNGrams) {
         this.root = root;
         this.title = title;
+        this.mapKeyNGrams = new HashMap<>(mapKeyNGrams);
 
         if (this.root != null) {
-            keyWords.addAll(root.keyWords);
+            mapKeyNGrams.putAll(root.getMapKeyNGrams());
             this.percent = percent * root.percent / 100.;
         } else {
             this.percent = percent / 100;
         }
 
-        this.keyWords = keyWords;
+        this.allKeyNGrams = new HashSet<>();
+        mapKeyNGrams.forEach((key, pair) -> this.allKeyNGrams.addAll(pair.getValue()));
     }
 
     public Theme getRoot() {
@@ -50,9 +57,9 @@ public class Theme {
         this.root = root;
     }
 
-    public void setKeyWords(Set<String> keyWords) {
-        this.keyWords = new HashSet<>(keyWords);
-        if (root != null) this.keyWords.addAll(root.keyWords);
+    public void setMapKeyNGrams(Map<LiteratureType, Pair<String, Set<String>>> mapKeyNGrams) {
+        this.mapKeyNGrams = new HashMap<>(mapKeyNGrams);
+        if (root != null) this.mapKeyNGrams.putAll(root.mapKeyNGrams);
     }
 
     public static List<Theme> getLeafThemes(List<Theme> themes) {
@@ -70,8 +77,12 @@ public class Theme {
         return childDeque.stream().distinct().toList();
     }
 
-    public Set<String> getKeyWords() {
-        return keyWords;
+    public Map<LiteratureType, Pair<String, Set<String>>> getMapKeyNGrams() {
+        return mapKeyNGrams;
+    }
+
+    public Set<String> getKeyNGrams() {
+        return this.allKeyNGrams;
     }
 
     @Override
@@ -79,12 +90,12 @@ public class Theme {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Theme theme = (Theme) o;
-        return percent == theme.percent && Objects.equals(root, theme.root) && Objects.equals(title, theme.title) && Objects.equals(keyWords, theme.keyWords);
+        return percent == theme.percent && Objects.equals(root, theme.root) && Objects.equals(title, theme.title) && Objects.equals(mapKeyNGrams, theme.mapKeyNGrams);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(root, title, percent, keyWords);
+        return Objects.hash(root, title, percent, mapKeyNGrams);
     }
 
     @Override
