@@ -6,16 +6,25 @@ import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ThemeController extends TableViewController<Theme> {
+    @FXML
+    TextField titleProject;
     String modalFileName = "modal-theme.fxml";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        var project = App.getProjectTitle();
+        if (project != null) titleProject.setText(project);
+
+        var themes = App.getThemes();
+        if (themes != null) table.getItems().addAll(themes);
+
         var title = new TableColumn<Theme, String>("Название темы");
         title.setMinWidth(200);
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -24,15 +33,15 @@ public class ThemeController extends TableViewController<Theme> {
         percent.setMinWidth(200);
         percent.setCellValueFactory(new PropertyValueFactory<>("percent"));
 
-        var keywords = new TableColumn<Theme, String>("Ключевые слова");
+       /* var keywords = new TableColumn<Theme, String>("Ключевые слова");
         keywords.setMinWidth(400);
-        keywords.setCellValueFactory(new PropertyValueFactory<>("keyWords"));
+        keywords.setCellValueFactory(new PropertyValueFactory<>("keyWords"));*/
 
         var root = new TableColumn<Theme, String>("Родительская тема");
         root.setMinWidth(200);
         root.setCellValueFactory(new PropertyValueFactory<>("root"));
 
-        super.initialize(modalFileName, title, percent, keywords, root);
+        super.initialize(modalFileName, title, percent, root);
     }
 
     @FXML
@@ -41,12 +50,8 @@ public class ThemeController extends TableViewController<Theme> {
     }
 
     @FXML
-    private void openModal(Theme theme) {
-        openModal(modalFileName, theme);
-    }
-
-    @FXML
     private void goNextPage() {
+        App.setProjectTitle(titleProject.getText());
         App.setThemes(getItems());
         anotherPage(nextButton, "files-view.fxml");
     }

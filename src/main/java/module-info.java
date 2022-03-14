@@ -16,14 +16,19 @@ module diplom.desktop.ui {
     requires org.apache.httpcomponents.httpcore;
     requires org.json;
     requires org.apache.httpcomponents.httpclient;
+    requires com.google.api.services.customsearch;
+    requires java.desktop;
+
 
     exports com.serejs.diplom.desktop.ui;
     opens com.serejs.diplom.desktop.ui to javafx.fxml;
     opens com.serejs.diplom.desktop.text.container;
+    opens com.serejs.diplom.desktop.utils;
     exports com.serejs.diplom.desktop.ui.controllers;
     opens com.serejs.diplom.desktop.ui.controllers to javafx.fxml;
     exports com.serejs.diplom.desktop.ui.controllers.modals;
     opens com.serejs.diplom.desktop.ui.controllers.modals to javafx.fxml;
-    exports com.serejs.diplom.desktop.ui.controllers.abstarts;
-    opens com.serejs.diplom.desktop.ui.controllers.abstarts to javafx.fxml;
+    exports com.serejs.diplom.desktop.ui.controllers.abstracts;
+    opens com.serejs.diplom.desktop.ui.controllers.abstracts to javafx.fxml;
+
 }

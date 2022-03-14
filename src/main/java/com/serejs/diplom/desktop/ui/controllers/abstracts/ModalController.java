@@ -3,10 +3,9 @@ package com.serejs.diplom.desktop.ui.controllers.abstracts;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public abstract class ModalController<T> extends RootController implements Initializable {
     @FXML
@@ -23,12 +22,20 @@ public abstract class ModalController<T> extends RootController implements Initi
         closeButton.setOnMouseClicked(e -> {
             close();
         });
+
     }
 
     public abstract void setParent(TableViewController<T> parentController);
 
     public void setStage(Stage stage) {
         this.stage = stage;
+        stage.setResizable(false);
+
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE){
+                close();
+            }
+        });
     }
 
     public void close() {

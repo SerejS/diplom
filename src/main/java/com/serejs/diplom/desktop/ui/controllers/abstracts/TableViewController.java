@@ -37,6 +37,7 @@ public abstract class TableViewController<T> extends RootController implements I
         table.setRowFactory(tv -> {
             TableRow<T> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
+                if (row.isEmpty()) return;
                 deleteButton.setDisable(false);
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
                     openModal(modalFileName, row.getItem());
@@ -100,5 +101,6 @@ public abstract class TableViewController<T> extends RootController implements I
     public void deleteRow() {
         T t = table.getSelectionModel().getSelectedItem();
         if (DeleteAlert.confirm()) table.getItems().removeAll(t);
+        if (table.getItems().size() == 0) deleteButton.setDisable(true);
     }
 }

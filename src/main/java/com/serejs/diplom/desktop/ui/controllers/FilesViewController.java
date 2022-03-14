@@ -1,7 +1,9 @@
 package com.serejs.diplom.desktop.ui.controllers;
 
 import com.serejs.diplom.desktop.enums.SourceType;
+import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Source;
+import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -17,15 +19,22 @@ public class FilesViewController extends TableViewController<Source> {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        var sources = App.getSources();
+        table.getItems().addAll(sources.stream().filter(s -> s.getSourceType() != SourceType.WEB).toList());
+
         var uri = new TableColumn<Source, URI>("Название файла");
         uri.setMinWidth(300);
         uri.setCellValueFactory(new PropertyValueFactory<>("uri"));
 
-        var type = new TableColumn<Source, SourceType>("Тип литературы");
-        type.setMinWidth(200);
-        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        var sourceType = new TableColumn<Source, SourceType>("Тип источника");
+        sourceType.setMinWidth(200);
+        sourceType.setCellValueFactory(new PropertyValueFactory<>("sourceType"));
 
-        super.initialize(modalFileName, uri, type);
+        var litType = new TableColumn<Source, LiteratureType>("Тип литературы");
+        litType.setMinWidth(200);
+        litType.setCellValueFactory(new PropertyValueFactory<>("litType"));
+
+        super.initialize(modalFileName, uri, sourceType, litType);
     }
 
     @FXML
@@ -36,11 +45,12 @@ public class FilesViewController extends TableViewController<Source> {
     @FXML
     public void onNextPage() {
         App.addSources(getItems());
-        anotherPage(nextButton, "sources-view.fxml");
+        anotherPage(nextButton, "web-view.fxml");
     }
 
     @FXML
     public void onPrevPage() {
+        App.addSources(getItems());
         anotherPage(prevButton, "theme-view.fxml");
     }
 }

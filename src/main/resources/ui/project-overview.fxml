@@ -16,7 +16,7 @@
      <items>
        <MenuItem mnemonicParsing="false" text="Новый проект" />
        <MenuItem mnemonicParsing="false" onAction="#deleteRow" text="Удалить проект" />
-       <MenuItem mnemonicParsing="false" text="Новый тип литературы" />
+       <MenuItem mnemonicParsing="false" onAction="#openLiteratures" text="Типы литературы" />
      </items>
    </SplitMenuButton>
    <padding>
