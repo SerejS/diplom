@@ -11,10 +11,10 @@ import com.serejs.diplom.desktop.utils.Settings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class App extends Application {
     private static String projectTitle;
     private static List<Source> sources;
     private static List<Theme> themes;
-    private static Map<Source, Format> customSources;
+    private static Map<Source, Format> customSources = new HashMap<>();
     private static List<LiteratureType> types;
     private static List<GoogleSearchEngine> engines = new LinkedList<>();
 
@@ -31,6 +31,25 @@ public class App extends Application {
         types = Server.getTypes(1);
         launch(args);
     }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        stage.setTitle("Анализ литературы");
+
+        stage.setWidth(1200);
+        stage.setMinWidth(800);
+        stage.setHeight(600);
+        stage.setMinHeight(400);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/ui/hello-view.fxml"));
+        AppScene scene = new AppScene(fxmlLoader.load());
+        //!!stage.initStyle(StageStyle.UNDECORATED);
+
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     public static void createNewProject() {
         sources = new LinkedList<>();
@@ -54,14 +73,15 @@ public class App extends Application {
         return projectTitle;
     }
 
+
     public static void setThemes(List<Theme> newThemes) {
         themes = newThemes;
     }
 
-
     public static List<Theme> getThemes() {
         return themes;
     }
+
 
     public static List<LiteratureType> getTypes() {
         return types;
@@ -95,6 +115,7 @@ public class App extends Application {
     public static void addEngine(GoogleSearchEngine engine) {
         engines.add(engine);
     }
+
 
     public static String getResult() throws Exception {
         ///Подготовка фрагментов
@@ -138,23 +159,5 @@ public class App extends Application {
                 .append("\n\n");
 
         return result.toString();
-    }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        stage.setTitle("Анализ литературы");
-
-        stage.setWidth(1200);
-        stage.setMinWidth(800);
-        stage.setHeight(600);
-        stage.setMinHeight(400);
-
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/ui/hello-view.fxml"));
-        AppScene scene = new AppScene(fxmlLoader.load());
-        //!!stage.initStyle(StageStyle.UNDECORATED);
-
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
     }
 }
