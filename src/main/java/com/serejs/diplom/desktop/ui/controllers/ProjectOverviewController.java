@@ -47,4 +47,8 @@ public class ProjectOverviewController extends TableViewController<String> {
         anotherPage(createButton, "theme-view.fxml");
     }
 
+    @FXML
+    protected void openLiteratures() {
+        anotherPage(createButton, "types-view.fxml");
+    }
 }
