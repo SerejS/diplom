@@ -20,6 +20,14 @@ public class ProjectOverviewController extends TableViewController<String> {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadProjects();
+        projectList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                var project = projectList.getSelectionModel().getSelectedItem();
+
+                App.openProject(project.length());
+                anotherPage(createButton, "theme-view.fxml");
+            }
+        });
     }
 
     protected void loadProjects()  {
