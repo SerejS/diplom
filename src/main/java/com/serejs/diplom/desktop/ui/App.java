@@ -134,10 +134,10 @@ public class App extends Application {
             }
 
             loader.load(source.getUri()).forEach((key, content) -> {
-                Theme theme = Analyzer.getTheme(content, themes);
+                Theme theme = Analyzer.getTheme(content, themes, source.getLitType());
                 if (theme == null) return;
 
-                Fragment fragment = new Fragment(content, theme);
+                Fragment fragment = new Fragment(content, theme, source.getLitType());
                 if (fragment.getConcentration() < Settings.getMinConcentration())
                     fragment = AutoSummarizer.summarize(fragment);
 

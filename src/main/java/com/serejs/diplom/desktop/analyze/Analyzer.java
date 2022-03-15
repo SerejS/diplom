@@ -2,6 +2,7 @@ package com.serejs.diplom.desktop.analyze;
 
 import com.serejs.diplom.desktop.Main;
 import com.serejs.diplom.desktop.text.container.FragmentMap;
+import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.utils.Settings;
 
@@ -93,7 +94,7 @@ public class Analyzer {
      * @param themes  Все преложенные темы
      * @return Выбранная тема
      */
-    public static Theme getTheme(String content, List<Theme> themes) {
+    public static Theme getTheme(String content, List<Theme> themes, LiteratureType type) {
         //Минимальное количество слов
         var min = Settings.getMinWords();
 
@@ -101,7 +102,7 @@ public class Analyzer {
         Theme resultTheme = null;
         for (Theme theme : themes) {
 
-            var matches = countKeyWords(content, theme.getKeyNGrams());
+            var matches = countKeyWords(content, theme.getKeyNGrams(type));
 
             if (matches > min) {
                 min = matches;
