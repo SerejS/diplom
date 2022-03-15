@@ -6,16 +6,18 @@ import com.serejs.diplom.desktop.analyze.Analyzer;
 public class Fragment {
     private final String content;
     private Theme theme;
+    private LiteratureType type;
     private final long keyWordsQty;
     private final long wordsQty;
     private final long length;
 
-    public Fragment(String content, Theme theme) {
+    public Fragment(String content, Theme theme, LiteratureType type) {
         this.content = content;
         this.theme = theme;
+        this.type = type;
         this.wordsQty = this.content.split("\\s").length;
         this.length = this.content.length();
-        this.keyWordsQty = Analyzer.countKeyWords(this.content, theme.getKeyNGrams());
+        this.keyWordsQty = Analyzer.countKeyWords(this.content, theme.getKeyNGrams(type));
     }
 
     public float getConcentration() {
@@ -33,6 +35,10 @@ public class Fragment {
 
     public Theme getTheme() {
         return this.theme;
+    }
+
+    public LiteratureType getType() {
+        return type;
     }
 
     public String getContent() {

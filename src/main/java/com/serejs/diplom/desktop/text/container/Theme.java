@@ -81,8 +81,8 @@ public class Theme {
         return mapKeyNGrams;
     }
 
-    public Set<String> getKeyNGrams() {
-        return this.allKeyNGrams;
+    public Set<String> getKeyNGrams(LiteratureType type) {
+        return mapKeyNGrams.get(type).getValue();
     }
 
     @Override

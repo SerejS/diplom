@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class FragmentMap extends HashMap<String, Fragment> {
-    //!Создание квазиреферата. Деление по абзацам или по предложениям? (Checkbox?)
     private Fragment summarize(Fragment fragment) {
         double minKeyWordsDensity = 0.05;
         int maxDistance = 5;
@@ -30,7 +29,7 @@ public class FragmentMap extends HashMap<String, Fragment> {
         }
 
 
-        return new Fragment(summary.toString(), fragment.getTheme());
+        return new Fragment(summary.toString(), fragment.getTheme(), fragment.getType());
     }
 
 
