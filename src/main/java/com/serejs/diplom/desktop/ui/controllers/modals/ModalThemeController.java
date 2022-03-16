@@ -42,6 +42,12 @@ public class ModalThemeController extends ModalController<Theme> {
         this.parent = parent;
         if (themeBox != null && parent instanceof ThemeController controller) {
             themeBox.getItems().addAll(controller.getItems());
+
+            double percent;
+            var items = parent.getItems();
+            if (items.isEmpty())  percent = 100.;
+            else percent = (1 - items.stream().mapToDouble(Theme::getPercent).sum()) * 100;
+            slider.setMax(percent);
         }
     }
 
