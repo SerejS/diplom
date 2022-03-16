@@ -12,8 +12,6 @@ public class Theme {
     private double percent;
     private Map<LiteratureType, Pair<String, Set<String>>> mapKeyNGrams;
 
-    private Set<String> allKeyNGrams;
-
     public Theme(
             Theme root, String title, double percent,
             Map<LiteratureType, Pair<String, Set<String>>> mapKeyNGrams) {
@@ -27,9 +25,6 @@ public class Theme {
         } else {
             this.percent = percent / 100;
         }
-
-        this.allKeyNGrams = new HashSet<>();
-        mapKeyNGrams.forEach((key, pair) -> this.allKeyNGrams.addAll(pair.getValue()));
     }
 
     public Theme getRoot() {
@@ -82,7 +77,11 @@ public class Theme {
     }
 
     public Set<String> getKeyNGrams(LiteratureType type) {
-        return mapKeyNGrams.get(type).getValue();
+        try {
+            return mapKeyNGrams.get(type).getValue();
+        } catch (Exception e) {
+            return new HashSet<>();
+        }
     }
 
     @Override
