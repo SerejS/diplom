@@ -95,10 +95,12 @@ public class Analyzer {
      * @return Выбранная тема
      */
     public static Theme getTheme(String content, List<Theme> themes, LiteratureType type) {
-        //Минимальное количество слов
-        var min = Settings.getMinWords();
+        if (content.split("\\s").length < Settings.getMinWords()) return null;
 
-        //Получение темы с наибольшим количеством совпадением ключевых слов
+        //Минимальное количество ключевых слов
+        var min = Settings.getMinKeyWords();
+
+        //Получение темы с наибольшим количеством совпадений ключевых слов
         Theme resultTheme = null;
         for (Theme theme : themes) {
 
