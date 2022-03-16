@@ -45,7 +45,7 @@ public class ModalThemeController extends ModalController<Theme> {
 
             double percent;
             var items = parent.getItems();
-            if (items.isEmpty())  percent = 100.;
+            if (items.isEmpty()) percent = 100.;
             else percent = (1 - items.stream().mapToDouble(Theme::getPercent).sum()) * 100;
             slider.setMax(percent);
         }
@@ -149,16 +149,16 @@ public class ModalThemeController extends ModalController<Theme> {
         if (theme.getRoot() != null) themeBox.setValue(theme.getRoot());
 
         theme.getMapKeyNGrams().forEach((key, pair) -> {
-                var keywords = new StringBuilder();
-                pair.getValue().forEach(word -> keywords.append(word).append(", "));
+                    var keywords = new StringBuilder();
+                    pair.getValue().forEach(word -> keywords.append(word).append(", "));
 
-                var pane = keyWordsPane.getChildren();
-                pane.add(
-                        pane.size() - 2,
-                        typeGroup(pair.getKey(), key, keywords.toString())
-                );
+                    var pane = keyWordsPane.getChildren();
+                    pane.add(
+                            pane.size() - 2,
+                            typeGroup(pair.getKey(), key, keywords.toString())
+                    );
 
-            }
+                }
         );
     }
 }
