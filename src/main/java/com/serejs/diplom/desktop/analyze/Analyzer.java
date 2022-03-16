@@ -73,6 +73,7 @@ public class Analyzer {
             for (int k = 0; k <= i && k < themes.size(); k++) {
                 Theme theme = themes.get(k);
 
+                //Сортировка ключей по возрастанрию ценности содержимого
                 var keys = new ArrayList<>(fragments.keySet(theme).stream()
                         .sorted(Comparator.comparingDouble(fragmentWeights::get))
                         .toList());
@@ -103,7 +104,6 @@ public class Analyzer {
         //Получение темы с наибольшим количеством совпадений ключевых слов
         Theme resultTheme = null;
         for (Theme theme : themes) {
-
             var matches = countKeyWords(content, theme.getKeyNGrams(type));
 
             if (matches > min) {
@@ -127,7 +127,22 @@ public class Analyzer {
 
         return Lucene
                 .getNormalForms(word.toLowerCase(Locale.ROOT).trim())
-                .stream().findFirst().orElse("");
+                .stream().findFirst().orElse(word);
+    }
+
+
+    public static Set<String> parseNGrams(String content) {
+        return Arrays.stream(content.split(","))
+                .map(
+                        el -> Arrays.stream(el.split(" "))
+                                .map(String::trim).map(String::toLowerCase)
+                                .map(Analyzer::normalizeWord)
+                                .filter(word -> !stopWords().contains(word))
+                                .reduce("", (acc, word) -> acc + word + " ")
+                                .trim()
+                )
+                .filter(ph -> !ph.isEmpty())
+                .collect(Collectors.toSet());
     }
 
     /**
