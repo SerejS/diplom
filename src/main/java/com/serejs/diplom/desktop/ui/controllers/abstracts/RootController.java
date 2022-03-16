@@ -11,7 +11,7 @@ public abstract class RootController {
     protected void anotherPage(ButtonBase pageButton, String fileName) {
         try {
             Stage stage = (Stage) pageButton.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/" + fileName));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/pages/" + fileName));
             stage.setScene(new Scene(fxmlLoader.load()));
         } catch (IOException e) {
             e.printStackTrace();
