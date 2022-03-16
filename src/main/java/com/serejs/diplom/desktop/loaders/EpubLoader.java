@@ -22,7 +22,7 @@ public class EpubLoader implements ContentLoader {
     @Override
     public Map<String, String> load(URI uri) throws IOException {
         //Преобразование файла в книгу java
-        Book book = new EpubReader().readEpub(new FileInputStream(String.valueOf(uri)));
+        Book book = new EpubReader().readEpub(new FileInputStream(uri.getPath()));
         Map<String, String> fragments = new HashMap<>();
 
         //Получение таблицы глав и добавление их в мапу

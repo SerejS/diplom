@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -63,9 +64,9 @@ public class ModalFileController extends ModalController<Source> {
         assert typeBox != null;
         typeBox.getItems().addAll(App.getTypes());
 
-        FileChooser.ExtensionFilter extFilter1 = new FileChooser.ExtensionFilter("TXT files", "*.txt");
-        FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("EPUB files", "*.epub");
-        FileChooser.ExtensionFilter extFilter3 = new FileChooser.ExtensionFilter("FB2 files", "*.fb2");
+        FileChooser.ExtensionFilter extFilter1 = new FileChooser.ExtensionFilter("FB2 files", "*.fb2");
+        FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("TXT files", "*.txt");
+        FileChooser.ExtensionFilter extFilter3 = new FileChooser.ExtensionFilter("EPUB files", "*.epub");
         fileChooser.getExtensionFilters().addAll(extFilter1, extFilter2, extFilter3);
         uriField.setOnMouseClicked(e -> {
             var stage = addButton.getScene().getWindow();

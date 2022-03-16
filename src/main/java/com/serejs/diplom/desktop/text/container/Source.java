@@ -27,4 +27,8 @@ public class Source {
     public LiteratureType getLitType() {
         return litType;
     }
+
+    public void setLitType(LiteratureType type) {
+        this.litType = type;
+    }
 }

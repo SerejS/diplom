@@ -53,7 +53,7 @@ public class Analyzer {
             weight *= (double) fragment.countKeywords() / (double) fragment.countWords();
             weight *= (double) fragment.countKeywords() / (double) themeMap.get(fragment.getTheme());
 
-            var shingleWeight = 1.;
+            /*var shingleWeight = 1.;
             for (var y : fragments.values()) {
                 var th = y.getTheme();
                 if (th.equals(fragment.getTheme()) && !y.equals(fragment)) {
@@ -61,7 +61,7 @@ public class Analyzer {
                 }
             }
 
-            weight *= shingleWeight;
+            weight *= shingleWeight;*/
 
             fragmentWeights.put(i.getKey(), weight);
         }

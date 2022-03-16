@@ -3,6 +3,8 @@ package com.serejs.diplom.desktop.ui.controllers;
 import com.serejs.diplom.desktop.server.User;
 import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.RootController;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -21,6 +23,15 @@ public class ResultController extends RootController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         area.setWrapText(true);
 
+
+        var task = new Task<String>() {
+            @Override
+            protected String call() throws Exception {
+                return App.getResult();
+            }
+        };
+
+        task.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, t -> area.setText(task.getValue()));
         try {
             area.setText(App.getResult());
         } catch (Exception e) {

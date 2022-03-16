@@ -1,7 +1,6 @@
 package com.serejs.diplom.desktop.ui;
 
 import com.serejs.diplom.desktop.analyze.Analyzer;
-import com.serejs.diplom.desktop.analyze.AutoSummarizer;
 import com.serejs.diplom.desktop.loaders.*;
 import com.serejs.diplom.desktop.server.Server;
 import com.serejs.diplom.desktop.text.container.*;
@@ -87,6 +86,21 @@ public class App extends Application {
         return types;
     }
 
+    public static void remove(LiteratureType type) {
+        //Сделать получение из БД
+        var defaultType = new LiteratureType("Общий", true);
+
+        types.remove(type);
+        themes.forEach(th -> {
+            var map = th.getMapKeyNGrams();
+            var value = map.get(type);
+            if (value == null) return;
+            map.remove(type);
+            map.put(defaultType, value);
+        });
+
+        sources.stream().filter(s -> s.getLitType() == type).forEach(s -> s.setLitType(defaultType));
+    }
 
     public static List<Source> getSources() {
         return sources;
@@ -120,7 +134,7 @@ public class App extends Application {
     public static String getResult() throws Exception {
         ///Подготовка фрагментов
         var mainFragments = new FragmentMap();
-        for (Source source : sources) {
+        for (Source source : getSources()) {
             ContentLoader loader;
             switch (source.getSourceType()) {
                 case EPUB -> loader = new EpubLoader();
@@ -133,30 +147,54 @@ public class App extends Application {
                 }
             }
 
+            var localThemes = themes.stream()
+                    .filter(t -> t.getMapKeyNGrams().containsKey(source.getLitType()))
+                    .toList();
+            if (localThemes.isEmpty()) continue;
+
             loader.load(source.getUri()).forEach((key, content) -> {
-                Theme theme = Analyzer.getTheme(content, themes, source.getLitType());
+                Theme theme = Analyzer.getTheme(content, localThemes, source.getLitType());
                 if (theme == null) return;
 
                 Fragment fragment = new Fragment(content, theme, source.getLitType());
-                if (fragment.getConcentration() < Settings.getMinConcentration())
-                    fragment = AutoSummarizer.summarize(fragment);
-
+                if (fragment.getConcentration() < Settings.getMinConcentration()) {
+                    //fragment = AutoSummarizer.summarize(fragment);
+                    if (fragment.getConcentration() < Settings.getMinConcentration()) return;
+                }
                 mainFragments.put(key, fragment);
             });
         }
 
         mainFragments.recalculateThemes();
 
+        Analyzer.alignment(mainFragments);
+
+
+        //Вывод результата
         var result = new StringBuilder();
 
-        var totalCount = mainFragments.values().stream().mapToLong(Fragment::countWords).sum();
-        result
-                .append("Полученное количество слов: ")
-                .append(totalCount)
-                .append(" на ")
-                .append(mainFragments.size())
-                .append(" фрагентов")
-                .append("\n\n");
+        result.append("Количество найденных фрагментов: ").append(mainFragments.size());
+        for (Theme theme : mainFragments.getThemes()) {
+            result.append(theme).append('\n');
+
+            var keys = new LinkedList<>(mainFragments.keySet(theme).stream().toList());
+
+            keys.sort((k1, k2) -> {
+                var s1 = mainFragments.get(k1).getType().getTitle();
+                var s2 = mainFragments.get(k2).getType().getTitle();
+                return s1.compareTo(s2);
+            });
+
+            keys.forEach(key -> {
+                var fragment = mainFragments.get(key);
+                result.append(fragment.getType()).append(" / ");
+                result.append(key).append(" - ");
+                result.append(fragment.getConcentration()).append('\n');
+                //result.append(fragment.getContent(), 0, 100).append('\n');
+            });
+
+            result.append("\n");
+        }
 
         return result.toString();
     }
