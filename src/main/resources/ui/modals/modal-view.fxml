@@ -5,22 +5,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="165.0" prefWidth="358.0" spacing="20.0" xmlns="http://javafx.com/javafx/16"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.modals.ModalUserView">
+<VBox alignment="CENTER" prefHeight="199.0" prefWidth="358.0" spacing="20.0" style="-fx-background-color: D7D2FB;" stylesheets="@../style/index.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.modals.ModalUserView">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <children>
         <Label text="Создать отображение">
             <font>
-                <Font size="20.0"/>
+                <Font size="22.0" />
             </font>
         </Label>
-        <TextField fx:id="title" prefHeight="58.0" prefWidth="318.0" promptText="Название отображения" style="-fx-font-size: 18;"/>
+        <TextField fx:id="title" prefHeight="58.0" prefWidth="318.0" promptText="Название отображения" style="-fx-font-size: 18;" />
         <HBox alignment="CENTER" prefHeight="57.0" prefWidth="318.0" spacing="50.0">
             <children>
-                <Button fx:id="addButton" onAction="#addItem" mnemonicParsing="false" text="Создать"/>
-                <Button fx:id="closeButton" mnemonicParsing="false" text="Отменить"/>
+                <Button fx:id="addButton" mnemonicParsing="false" onAction="#addItem" text="Создать" />
+                <Button fx:id="closeButton" mnemonicParsing="false" text="Отменить" />
             </children>
         </HBox>
     </children>

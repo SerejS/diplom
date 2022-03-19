@@ -5,18 +5,43 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="258.0" prefWidth="311.0" spacing="20.0" style="-fx-background-color: D7D2FB;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.HelloController">
+<VBox alignment="CENTER" prefHeight="288.0" prefWidth="490.0" stylesheets="@../style/index.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <Label text="Войдите в аккаунт">
         <font>
-            <Font size="20.0" />
+            <Font size="24.0" />
         </font>
     </Label>
-
-    <TextField text="Логин пользователя" />
-    <TextField text="Пароль пользователя" />
+   <HBox alignment="CENTER" prefHeight="38.0" prefWidth="271.0">
+      <children>
+         <Label prefHeight="35.0" prefWidth="130.0" text="Логин:">
+            <font>
+               <Font size="20.0" />
+            </font></Label>
+      
+          <TextField />
+      </children>
+      <VBox.margin>
+         <Insets bottom="5.0" top="20.0" />
+      </VBox.margin>
+      <padding>
+         <Insets top="5.0" />
+      </padding>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="47.0" prefWidth="271.0">
+      <children>
+         <Label prefHeight="17.0" prefWidth="130.0" text="Пароль:">
+            <font>
+               <Font size="20.0" />
+            </font></Label>
+          <TextField />
+      </children>
+      <VBox.margin>
+         <Insets bottom="20.0" />
+      </VBox.margin>
+   </HBox>
 
     <Button fx:id="login" onAction="#handleLoginEvent" text="Вход" />
     <Button fx:id="reg" onAction="#registration" text="Регистрация" />

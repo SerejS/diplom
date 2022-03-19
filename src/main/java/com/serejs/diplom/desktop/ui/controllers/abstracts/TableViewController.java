@@ -51,7 +51,7 @@ public abstract class TableViewController<T> extends RootController implements I
         var tableWidth = table.getColumns().stream().mapToDouble(TableColumnBase::getWidth).sum();
         table.setMinWidth(tableWidth);
         table.setPrefWidth(tableWidth);
-        table.setMaxWidth(tableWidth);
+        //table.setMaxWidth(tableWidth);
     }
 
     public List<T> getItems() {

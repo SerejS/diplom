@@ -21,11 +21,11 @@ public class TypesController extends TableViewController<LiteratureType> {
         if (types != null) table.getItems().addAll(types);
 
         var title = new TableColumn<LiteratureType, String>("Название типа литературы");
-        title.setMinWidth(200);
+        title.setMinWidth(500);
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         var main = new TableColumn<LiteratureType, Boolean>("Основная / Дополонительная");
-        main.setMinWidth(200);
+        main.setMinWidth(500);
         main.setCellValueFactory(new PropertyValueFactory<>("main"));
 
 

@@ -30,6 +30,7 @@ public abstract class ModalController<T> extends RootController implements Initi
     public void setStage(Stage stage) {
         this.stage = stage;
         stage.setResizable(false);
+        stage.setOpacity(0.95);
 
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ESCAPE){

@@ -1,0 +1,63 @@
+.button {
+    -fx-background-color: #22ECAF;
+    -fx-pref-width: 400px;
+    -fx-padding: 30%;
+    -fx-start-margin: 0;
+    -fx-end-margin: 0;
+    -fx-font-size: 24;
+    -fx-background-radius: 0;
+}
+
+.button:hover {
+    -fx-background-color: #14d39c;
+}
+
+.button:disabled {
+    -fx-text-fill: black;
+    -fx-background-color: #dadada;
+}
+
+/*.menu-button {
+    -fx-background-color: #22ECAF;
+    -fx-pref-width: 400px;
+    -fx-padding: 30%;
+    -fx-start-margin: 0;
+    -fx-end-margin: 0;
+    -fx-font-size: 24;
+    -fx-background-radius: 0;
+}*/
+
+.text-field {
+    -fx-border-color: black;
+    -fx-border-radius: 0;
+    -fx-border-width: 3;
+
+    -fx-padding: 1;
+    -fx-font-size: 22;
+    -fx-pref-width: 400px;
+}
+
+.list-view {
+    -fx-font-size: 22;
+}
+
+
+
+.table-view {
+    -fx-cell-size: 20;
+    -fx-font-size: 20;
+    -fx-border-width: 5;
+    -fx-border-color: #dedbff;
+}
+
+.table-view .cell {
+    -fx-border-color: #a4a4a4;
+    -fx-border-width: 0.5;
+}
+
+.table-view .cell:even {
+    -fx-background-color: white;
+}
+.table-view .cell:odd {
+    -fx-background-color: white;
+}

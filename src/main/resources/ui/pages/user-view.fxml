@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="366.0" prefWidth="358.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.UserViewController">
+<VBox alignment="CENTER" prefHeight="366.0" prefWidth="487.0" spacing="20.0" stylesheets="@../style/index.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.UserViewController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <Label text="Выбирете отображение">
         <font>
-            <Font size="20.0" />
+            <Font size="26.0" />
         </font>
     </Label>
-    <ListView fx:id="listView" cacheShape="false" centerShape="false" focusTraversable="false" onMouseClicked="#select" prefHeight="240.0" prefWidth="318.0" scaleShape="false" style="-fx-border-color: #D7D2FB; -fx-border-width: 3px; -fx-fixed-cell-size: 45;" />
+    <ListView fx:id="listView" cacheShape="false" centerShape="false" focusTraversable="false" onMouseClicked="#select" prefHeight="240.0" prefWidth="318.0" scaleShape="false" style="-fx-border-color: #D7D2FB; -fx-border-width: 3px; -fx-fixed-cell-size: 40;" />
 
     <HBox alignment="CENTER" prefHeight="0.0" prefWidth="318.0" spacing="50.0">
         <children>
