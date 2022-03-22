@@ -5,6 +5,7 @@ import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitMenuButton;
 
@@ -15,7 +16,7 @@ public class ProjectOverviewController extends TableViewController<String> {
     @FXML
     private ListView<String> projectList;
     @FXML
-    private SplitMenuButton createButton;
+    private Button createButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -26,6 +27,10 @@ public class ProjectOverviewController extends TableViewController<String> {
 
                 App.openProject(project.length());
                 anotherPage(createButton, "theme-view.fxml");
+            }
+
+            if (!projectList.getSelectionModel().isEmpty()) {
+                deleteButton.setDisable(false);
             }
         });
     }
@@ -39,6 +44,8 @@ public class ProjectOverviewController extends TableViewController<String> {
         if (DeleteAlert.confirm()) {
             projectList.getItems().remove(projectList.getSelectionModel().getSelectedIndex());
         }
+
+        if (projectList.getSelectionModel().isEmpty()) deleteButton.setDisable(true);
     }
 
     @FXML
