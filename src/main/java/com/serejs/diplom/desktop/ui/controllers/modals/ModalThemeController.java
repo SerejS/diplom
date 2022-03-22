@@ -88,6 +88,8 @@ public class ModalThemeController extends ModalController<Theme> {
 
         titleTheme.setText(theme.getTitle());
         slider.setValue(theme.getPercent() * 100);
+        slider.setMax(slider.getMax() + theme.getPercent() * 100);
+
         if (theme.getRoot() != null) themeBox.setValue(theme.getRoot());
         theme.getTypes().forEach(type -> typeBox.getCheckModel().check(type));
         themeBox.getItems().removeAll(theme);
