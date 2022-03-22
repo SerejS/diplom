@@ -1,6 +1,5 @@
 package com.serejs.diplom.desktop.ui.controllers.modals;
 
-import com.serejs.diplom.desktop.analyze.Analyzer;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.ui.App;
@@ -17,7 +16,6 @@ import org.controlsfx.control.CheckComboBox;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 public class ModalThemeController extends ModalController<Theme> {
     @FXML
@@ -60,11 +58,10 @@ public class ModalThemeController extends ModalController<Theme> {
     public void addTheme() {
         if (parent == null) return;
 
-        var keyNGrams = getNGrams(areaNGrams);
-
+        var textNGrams = areaNGrams.getText();
         var types = typeBox.getCheckModel().getCheckedItems();
         if (obj == null) {
-            obj = new Theme(themeBox.getValue(), titleTheme.getText(), slider.getValue(), keyNGrams, new HashSet<>(types));
+            obj = new Theme(themeBox.getValue(), titleTheme.getText(), slider.getValue(), textNGrams, new HashSet<>(types));
             parent.addRow(obj);
             return;
         }
@@ -72,13 +69,9 @@ public class ModalThemeController extends ModalController<Theme> {
         obj.setRoot(themeBox.getValue());
         obj.setTitle(titleTheme.getText());
         obj.setPercent(slider.getValue() / 100.);
-        obj.setKeyNGrams(keyNGrams);
+        obj.setKeyNGrams(textNGrams);
 
         parent.updateRows();
-    }
-
-    private Set<String> getNGrams(TextArea area) {
-        return Analyzer.parseNGrams(area.getText());
     }
 
 
@@ -94,8 +87,6 @@ public class ModalThemeController extends ModalController<Theme> {
         theme.getTypes().forEach(type -> typeBox.getCheckModel().check(type));
         themeBox.getItems().removeAll(theme);
 
-        var keyNGrams = new StringBuilder();
-        theme.getKeyNGrams().forEach(keyNGram -> keyNGrams.append(keyNGram).append(", "));
-        areaNGrams.setText(keyNGrams.toString());
+        areaNGrams.setText(theme.getTextKeyNGrams());
     }
 }

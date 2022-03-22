@@ -1,5 +1,7 @@
 package com.serejs.diplom.desktop.text.container;
 
+import com.serejs.diplom.desktop.analyze.Analyzer;
+
 import java.util.*;
 
 
@@ -8,13 +10,15 @@ public class Theme {
     private Theme root;
     private String title;
     private double percent;
+    private String textKeyNGrams;
     private Set<String> keyNGrams;
     private Set<LiteratureType> types;
 
-    public Theme(Theme root, String title, double percent, Set<String> keyNGrams, Set<LiteratureType> types) {
+    public Theme(Theme root, String title, double percent, String textKeyNGrams, Set<LiteratureType> types) {
         this.root = root;
         this.title = title;
-        this.keyNGrams = new HashSet<>(keyNGrams);
+        this.textKeyNGrams = textKeyNGrams;
+        this.keyNGrams = new HashSet<>(Analyzer.parseNGrams(textKeyNGrams));
         this.types = types;
 
         if (this.root != null) {
@@ -51,9 +55,14 @@ public class Theme {
         this.root = root;
     }
 
-    public void setKeyNGrams(Set<String> keyNGrams) {
-        this.keyNGrams = new HashSet<>(keyNGrams);
+    public void setKeyNGrams(String textKeyNGrams) {
+        this.textKeyNGrams = textKeyNGrams;
+        this.keyNGrams = new HashSet<>(Analyzer.parseNGrams(textKeyNGrams));
         if (root != null) this.keyNGrams.addAll(root.keyNGrams);
+    }
+
+    public String getTextKeyNGrams() {
+        return textKeyNGrams;
     }
 
     public static List<Theme> getLeafThemes(List<Theme> themes) {
