@@ -43,11 +43,11 @@ public class GoogleSearchEngine {
     @Experimental
     public List<Source> getSources(Theme theme) throws IOException, URISyntaxException {
         var query = theme.getTitle();
-        var keywords = theme.getKeyNGrams(type).stream().reduce("", (prev, curr) -> prev + " " + curr).trim();
+        var keyNGrams = theme.getKeyNGrams().stream().reduce("", (prev, curr) -> prev + " " + curr).trim();
 
         URL url = uriBuilder
                 .addParameter("q", query)
-                .addParameter("orTerms", keywords)
+                .addParameter("orTerms", keyNGrams)
                 .build().toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");

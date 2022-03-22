@@ -17,7 +17,7 @@ public class Fragment {
         this.type = type;
         this.wordsQty = this.content.split("\\s").length;
         this.length = this.content.length();
-        this.keyWordsQty = Analyzer.countKeyWords(this.content, theme.getKeyNGrams(type));
+        this.keyWordsQty = Analyzer.countKeyNGrams(this.content, theme.getKeyNGrams());
     }
 
     public float getConcentration() {

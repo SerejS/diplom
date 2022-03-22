@@ -1,7 +1,5 @@
 package com.serejs.diplom.desktop.text.container;
 
-import javafx.util.Pair;
-
 import java.util.*;
 
 
@@ -10,17 +8,18 @@ public class Theme {
     private Theme root;
     private String title;
     private double percent;
-    private Map<LiteratureType, Pair<String, Set<String>>> mapKeyNGrams;
+    private Set<String> keyNGrams;
+    private Set<LiteratureType> types;
 
-    public Theme(
-            Theme root, String title, double percent,
-            Map<LiteratureType, Pair<String, Set<String>>> mapKeyNGrams) {
+    public Theme(Theme root, String title, double percent, Set<String> keyNGrams, Set<LiteratureType> types) {
         this.root = root;
         this.title = title;
-        this.mapKeyNGrams = new HashMap<>(mapKeyNGrams);
+        this.keyNGrams = new HashSet<>(keyNGrams);
+        this.types = types;
 
         if (this.root != null) {
-            mapKeyNGrams.putAll(root.getMapKeyNGrams());
+            this.types.addAll(root.types);
+            this.keyNGrams.addAll(root.keyNGrams);
             this.percent = percent * root.percent / 100.;
         } else {
             this.percent = percent / 100;
@@ -52,9 +51,9 @@ public class Theme {
         this.root = root;
     }
 
-    public void setMapKeyNGrams(Map<LiteratureType, Pair<String, Set<String>>> mapKeyNGrams) {
-        this.mapKeyNGrams = new HashMap<>(mapKeyNGrams);
-        if (root != null) this.mapKeyNGrams.putAll(root.mapKeyNGrams);
+    public void setKeyNGrams(Set<String> keyNGrams) {
+        this.keyNGrams = new HashSet<>(keyNGrams);
+        if (root != null) this.keyNGrams.addAll(root.keyNGrams);
     }
 
     public static List<Theme> getLeafThemes(List<Theme> themes) {
@@ -72,16 +71,16 @@ public class Theme {
         return childDeque.stream().distinct().toList();
     }
 
-    public Map<LiteratureType, Pair<String, Set<String>>> getMapKeyNGrams() {
-        return mapKeyNGrams;
+    public Set<String> getKeyNGrams() {
+        return this.keyNGrams;
     }
 
-    public Set<String> getKeyNGrams(LiteratureType type) {
-        try {
-            return mapKeyNGrams.get(type).getValue();
-        } catch (Exception e) {
-            return new HashSet<>();
-        }
+    public Set<LiteratureType> getTypes() {
+        return types;
+    }
+
+    public void setTypes(Set<LiteratureType> types) {
+        this.types = types;
     }
 
     @Override
@@ -89,12 +88,12 @@ public class Theme {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Theme theme = (Theme) o;
-        return percent == theme.percent && Objects.equals(root, theme.root) && Objects.equals(title, theme.title) && Objects.equals(mapKeyNGrams, theme.mapKeyNGrams);
+        return percent == theme.percent && Objects.equals(root, theme.root) && Objects.equals(title, theme.title) && Objects.equals(keyNGrams, theme.keyNGrams);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(root, title, percent, mapKeyNGrams);
+        return Objects.hash(root, title, percent, keyNGrams);
     }
 
     @Override

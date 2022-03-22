@@ -2,7 +2,6 @@ package com.serejs.diplom.desktop.analyze;
 
 import com.serejs.diplom.desktop.Main;
 import com.serejs.diplom.desktop.text.container.FragmentMap;
-import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.utils.Settings;
 
@@ -95,7 +94,7 @@ public class Analyzer {
      * @param themes  Все преложенные темы
      * @return Выбранная тема
      */
-    public static Theme getTheme(String content, List<Theme> themes, LiteratureType type) {
+    public static Theme getTheme(String content, List<Theme> themes) {
         if (content.split("\\s").length < Settings.getMinWords()) return null;
 
         //Минимальное количество ключевых слов
@@ -104,7 +103,7 @@ public class Analyzer {
         //Получение темы с наибольшим количеством совпадений ключевых слов
         Theme resultTheme = null;
         for (Theme theme : themes) {
-            var matches = countKeyWords(content, theme.getKeyNGrams(type));
+            var matches = countKeyNGrams(content, theme.getKeyNGrams());
 
             if (matches > min) {
                 min = matches;
@@ -152,7 +151,7 @@ public class Analyzer {
      * @param keyTokens Искомые ключевые слова
      * @return Количество совпадений
      */
-    public static long countKeyWords(String content, Set<String> keyTokens) {
+    public static long countKeyNGrams(String content, Set<String> keyTokens) {
         //Игнорируемые слова
         Set<String> stopWords = Analyzer.stopWords();
 

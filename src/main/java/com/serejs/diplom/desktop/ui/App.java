@@ -91,14 +91,6 @@ public class App extends Application {
         var defaultType = new LiteratureType("Общий", true);
 
         types.remove(type);
-        themes.forEach(th -> {
-            var map = th.getMapKeyNGrams();
-            var value = map.get(type);
-            if (value == null) return;
-            map.remove(type);
-            map.put(defaultType, value);
-        });
-
         sources.stream().filter(s -> s.getLitType() == type).forEach(s -> s.setLitType(defaultType));
     }
 
@@ -148,12 +140,12 @@ public class App extends Application {
             }
 
             var localThemes = themes.stream()
-                    .filter(t -> t.getMapKeyNGrams().containsKey(source.getLitType()))
+                    .filter(t -> t.getTypes().contains(source.getLitType()))
                     .toList();
             if (localThemes.isEmpty()) continue;
 
             loader.load(source.getUri()).forEach((key, content) -> {
-                Theme theme = Analyzer.getTheme(content, localThemes, source.getLitType());
+                Theme theme = Analyzer.getTheme(content, localThemes);
                 if (theme == null) return;
 
                 Fragment fragment = new Fragment(content, theme, source.getLitType());
