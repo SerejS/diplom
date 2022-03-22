@@ -3,14 +3,17 @@ package com.serejs.diplom.desktop.ui;
 import com.serejs.diplom.desktop.analyze.Analyzer;
 import com.serejs.diplom.desktop.loaders.*;
 import com.serejs.diplom.desktop.server.Server;
+import com.serejs.diplom.desktop.server.User;
 import com.serejs.diplom.desktop.text.container.*;
 import com.serejs.diplom.desktop.ui.controllers.AppScene;
 import com.serejs.diplom.desktop.utils.GoogleSearchEngine;
 import com.serejs.diplom.desktop.utils.Settings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -25,6 +28,7 @@ public class App extends Application {
     private static Map<Source, Format> customSources = new HashMap<>();
     private static List<LiteratureType> types;
     private static List<GoogleSearchEngine> engines = new LinkedList<>();
+    private static File outputDirectory;
 
     public static void main(String[] args) {
         types = Server.getTypes(1);
@@ -53,6 +57,7 @@ public class App extends Application {
     public static void createNewProject() {
         sources = new LinkedList<>();
         themes = new LinkedList<>();
+        selectResultDir();
     }
 
 
@@ -61,6 +66,10 @@ public class App extends Application {
         sources = Server.getSources(id);
         themes = Server.getThemes(id);
         Server.updateSettings(id);
+    }
+
+    public static void saveProject() {
+        User.addProject(projectTitle);
     }
 
 
@@ -122,6 +131,18 @@ public class App extends Application {
         engines.add(engine);
     }
 
+
+    public static File getOutputDirectory() {
+        return outputDirectory;
+    }
+
+    public static void selectResultDir() {
+        var chooser = new DirectoryChooser();
+        try {
+            var dir = chooser.showDialog(null);
+            if (dir.isDirectory()) outputDirectory = dir;
+        } catch (NullPointerException ignored) {}
+    }
 
     public static String getResult() throws Exception {
         ///Подготовка фрагментов

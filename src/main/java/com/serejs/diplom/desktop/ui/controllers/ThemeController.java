@@ -3,6 +3,7 @@ package com.serejs.diplom.desktop.ui.controllers;
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
+import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -46,6 +47,12 @@ public class ThemeController extends TableViewController<Theme> {
 
     @FXML
     private void openModal() {
+        var percent = table.getItems().stream().filter(el -> el.getRoot() == null).mapToDouble(Theme::getPercent).sum();
+        if (percent >= 1) {
+            ErrorAlert.info("Сумма процентов основных тем достигла предела.");
+            return;
+        }
+
         openModal(modalFileName);
     }
 

@@ -42,7 +42,7 @@ public class ResultController extends RootController implements Initializable {
     }
 
     public void goProjectOverview() {
-        User.addProject(App.getProjectTitle());
+        App.saveProject();
         anotherPage(finishButton, "project-overview.fxml");
     }
 }
