@@ -18,6 +18,7 @@ module diplom.desktop.ui {
     requires org.apache.httpcomponents.httpclient;
     requires com.google.api.services.customsearch;
     requires java.desktop;
+    requires static lombok;
 
 
     exports com.serejs.diplom.desktop.ui;
@@ -30,5 +31,4 @@ module diplom.desktop.ui {
     opens com.serejs.diplom.desktop.ui.controllers.modals to javafx.fxml;
     exports com.serejs.diplom.desktop.ui.controllers.abstracts;
     opens com.serejs.diplom.desktop.ui.controllers.abstracts to javafx.fxml;
-
 }
