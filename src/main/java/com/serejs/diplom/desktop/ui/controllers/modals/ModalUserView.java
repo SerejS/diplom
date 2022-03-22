@@ -1,5 +1,6 @@
 package com.serejs.diplom.desktop.ui.controllers.modals;
 
+import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import javafx.fxml.FXML;
@@ -23,6 +24,10 @@ public class ModalUserView extends ModalController<String> {
     }
 
     public void addItem() {
+        if (title.getText().isEmpty()) {
+            ErrorAlert.info("Название не указано");
+            return;
+        }
         parent.addRow(title.getText());
     }
 
