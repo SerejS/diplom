@@ -40,7 +40,7 @@ public class FragmentMap extends HashMap<String, Fragment> {
 
 
     public long length() {
-        return this.values().stream().mapToLong(Fragment::length).sum();
+        return this.values().stream().mapToLong(Fragment::getLength).sum();
     }
 
     /**
@@ -52,7 +52,7 @@ public class FragmentMap extends HashMap<String, Fragment> {
     public long length(Theme theme) {
         return this.values().stream()
                 .filter(fragment -> fragment.getTheme().equals(theme))
-                .mapToLong(Fragment::length)
+                .mapToLong(Fragment::getLength)
                 .sum();
     }
 

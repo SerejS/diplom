@@ -26,7 +26,7 @@ public class Analyzer {
 
         for (var i : fragments.values()) {
             var th = i.getTheme();
-            themeMap.put(th, themeMap.get(th) + i.countKeywords());
+            themeMap.put(th, themeMap.get(th) + i.getKeyWordsQty());
         }
 
         //Вес каждого фрагмента
@@ -45,12 +45,12 @@ public class Analyzer {
             var fragment = fragments.get(i.getKey());
             var weight = i.getValue();
 
-            if (fragment.countKeywords() == 0) {
+            if (fragment.getKeyWordsQty() == 0) {
                 continue;
             }
 
-            weight *= (double) fragment.countKeywords() / (double) fragment.countWords();
-            weight *= (double) fragment.countKeywords() / (double) themeMap.get(fragment.getTheme());
+            weight *= (double) fragment.getKeyWordsQty() / (double) fragment.getCountWords();
+            weight *= (double) fragment.getKeyWordsQty() / (double) themeMap.get(fragment.getTheme());
 
             /*var shingleWeight = 1.;
             for (var y : fragments.values()) {
