@@ -43,6 +43,6 @@ public class ModalTypeController extends ModalController<LiteratureType> {
     @Override
     public void setObject(LiteratureType type) {
         this.title.setText(type.getTitle());
-        this.main.setSelected(type.getMain());
+        this.main.setSelected(type.isMain());
     }
 }

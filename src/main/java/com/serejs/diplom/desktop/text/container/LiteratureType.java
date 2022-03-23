@@ -1,21 +1,13 @@
 package com.serejs.diplom.desktop.text.container;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public class LiteratureType {
     private final String title;
     private final boolean main;
-
-    public LiteratureType(String title, boolean main) {
-        this.title = title;
-        this.main = main;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public boolean getMain() {
-        return main;
-    }
 
     @Override
     public String toString() {

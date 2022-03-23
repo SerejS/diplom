@@ -1,34 +1,17 @@
 package com.serejs.diplom.desktop.text.container;
 
 import com.serejs.diplom.desktop.enums.SourceType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.net.URI;
 
+@Getter
+@AllArgsConstructor
 public class Source {
     private URI uri;
     private SourceType sourceType;
+    @Setter
     private LiteratureType litType;
-
-    public Source(URI uri, SourceType sourceType, LiteratureType litType) {
-        this.uri = uri;
-        this.sourceType = sourceType;
-        this.litType = litType;
-    }
-
-
-    public URI getUri() {
-        return uri;
-    }
-
-    public SourceType getSourceType() {
-        return sourceType;
-    }
-
-    public LiteratureType getLitType() {
-        return litType;
-    }
-
-    public void setLitType(LiteratureType type) {
-        this.litType = type;
-    }
 }

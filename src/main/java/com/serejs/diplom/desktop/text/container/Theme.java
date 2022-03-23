@@ -1,10 +1,13 @@
 package com.serejs.diplom.desktop.text.container;
 
 import com.serejs.diplom.desktop.analyze.Analyzer;
-
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import java.util.*;
 
 
+@EqualsAndHashCode
+@Data
 //Percent относительно root -> фактический
 public class Theme {
     private Theme root;
@@ -30,39 +33,10 @@ public class Theme {
         }
     }
 
-    public Theme getRoot() {
-        return root;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public double getPercent() {
-        return percent;
-    }
-
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setPercent(double percent) {
-        this.percent = percent;
-    }
-
-    public void setRoot(Theme root) {
-        this.root = root;
-    }
-
     public void setKeyNGrams(String textKeyNGrams) {
         this.textKeyNGrams = textKeyNGrams;
         this.keyNGrams = new HashSet<>(Analyzer.parseNGrams(textKeyNGrams));
         if (root != null) this.keyNGrams.addAll(root.keyNGrams);
-    }
-
-    public String getTextKeyNGrams() {
-        return textKeyNGrams;
     }
 
     public static List<Theme> getLeafThemes(List<Theme> themes) {
@@ -78,31 +52,6 @@ public class Theme {
             }
         }
         return childDeque.stream().distinct().toList();
-    }
-
-    public Set<String> getKeyNGrams() {
-        return this.keyNGrams;
-    }
-
-    public Set<LiteratureType> getTypes() {
-        return types;
-    }
-
-    public void setTypes(Set<LiteratureType> types) {
-        this.types = types;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Theme theme = (Theme) o;
-        return percent == theme.percent && Objects.equals(root, theme.root) && Objects.equals(title, theme.title) && Objects.equals(keyNGrams, theme.keyNGrams);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(root, title, percent, keyNGrams);
     }
 
     @Override

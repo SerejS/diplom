@@ -16,7 +16,6 @@ module diplom.desktop.ui {
     requires org.apache.httpcomponents.httpcore;
     requires org.json;
     requires org.apache.httpcomponents.httpclient;
-    requires com.google.api.services.customsearch;
     requires java.desktop;
     requires static lombok;
 

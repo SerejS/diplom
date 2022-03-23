@@ -4,6 +4,7 @@ import com.serejs.diplom.desktop.enums.SourceType;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.text.container.Theme;
+import lombok.Getter;
 import org.apache.http.annotation.Experimental;
 import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONObject;
@@ -19,6 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Getter
 public class GoogleSearchEngine {
     private final URIBuilder uriBuilder = new URIBuilder("https://customsearch.googleapis.com/customsearch/v1?");
     private final String cx;
@@ -73,18 +75,5 @@ public class GoogleSearchEngine {
         //Изменить!
         var testLitType = new LiteratureType("Веб ресурс", true);
         return uris.stream().map(uri -> new Source(uri, SourceType.WEB, testLitType)).toList();
-    }
-
-
-    public final String getCx() {
-        return cx;
-    }
-
-    public final String getKey() {
-        return key;
-    }
-
-    public final LiteratureType getType() {
-        return type;
     }
 }
