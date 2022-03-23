@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="199.0" prefWidth="358.0" spacing="20.0" style="-fx-background-color: D7D2FB;" stylesheets="@../style/index.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.modals.ModalUserView">
+<VBox alignment="CENTER" prefHeight="178.0" prefWidth="358.0" spacing="20.0" stylesheets="@../style/modal.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.modals.ModalUserView">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
