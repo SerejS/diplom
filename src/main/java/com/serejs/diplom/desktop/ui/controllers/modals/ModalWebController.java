@@ -27,6 +27,8 @@ public class ModalWebController extends ModalController<GoogleSearchEngine> {
     @Override
     public void setParent(TableViewController<GoogleSearchEngine> parent) {
         this.parent = parent;
+
+        litTypes.getItems().removeAll(parent.getItems().stream().map(GoogleSearchEngine::getType).toList());
     }
 
     public void addEngine() throws URISyntaxException {
