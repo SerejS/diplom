@@ -27,6 +27,8 @@ public class WebSearchController extends TableViewController<GoogleSearchEngine>
     @FXML
     private Button rpdButton;
     @FXML
+    private Button clearButton;
+    @FXML
     private FileChooser fileChooser = new FileChooser();
     private File rpdFile;
 
@@ -64,9 +66,16 @@ public class WebSearchController extends TableViewController<GoogleSearchEngine>
             if (file != null) {
                 fileChooser.setInitialDirectory(file.getParentFile());
                 rpdFile = file;
+                clearButton.setDisable(false);
             }
         });
 
+    }
+
+    @FXML
+    private void clearRpd() {
+        rpdFile = null;
+        clearButton.setDisable(true);
     }
 
     @FXML
