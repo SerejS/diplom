@@ -17,16 +17,6 @@
     -fx-background-color: #dadada;
 }
 
-/*.menu-button {
-    -fx-background-color: #22ECAF;
-    -fx-pref-width: 400px;
-    -fx-padding: 30%;
-    -fx-start-margin: 0;
-    -fx-end-margin: 0;
-    -fx-font-size: 24;
-    -fx-background-radius: 0;
-}*/
-
 .text-field {
     -fx-border-color: black;
     -fx-border-radius: 0;
@@ -43,21 +33,60 @@
 
 
 
-.table-view {
-    -fx-cell-size: 20;
-    -fx-font-size: 20;
-    -fx-border-width: 5;
-    -fx-border-color: #dedbff;
+/* TABLES */
+.table-view,
+.table-view .column-header,
+.table-view .column-header-background .filler,
+.table-view .corner {
+    -fx-background-color: transparent;
 }
 
-.table-view .cell {
-    -fx-border-color: #a4a4a4;
-    -fx-border-width: 0.5;
+.table-view .column-header-background{
+    -fx-background-color: #e6e5ff;
+    -fx-background-radius: 7px 7px 0px 0px;
+
+    -fx-padding: 0 0 5px 0;
 }
 
-.table-view .cell:even {
-    -fx-background-color: white;
+.table-view .table-cell{
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 10px;
 }
-.table-view .cell:odd {
-    -fx-background-color: white;
+
+
+.table-row-cell:odd{
+    -fx-background-color: #f5f2ff;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.table-row-cell:even{
+    -fx-background-color: #dedbff;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #c9c3ff;
+    -fx-text-background-color: black;
+    -fx-background-radius: 5px;
+    -fx-background-insets: 2px;
+}
+
+
+.table-view .virtual-flow .scroll-bar:vertical,
+.table-view .virtual-flow .scroll-bar:vertical .track,
+.table-view .virtual-flow .scroll-bar:vertical .track-background,
+.table-view .virtual-flow .scroll-bar:horizontal,
+.table-view .virtual-flow .scroll-bar:horizontal .track,
+.table-view .virtual-flow .scroll-bar:horizontal .track-background {
+    -fx-background-color: linear-gradient(to right, #e6e5ff, #d5d0ff);
+}
+
+.table-view .virtual-flow .scroll-bar:vertical .thumb{
+    -fx-background-color: #d5d0ff;
+}
+
+.table-view .virtual-flow .scroll-bar:horizontal .thumb {
+    -fx-background-color:  linear-gradient(to right, #e6e5ff, #d5d0ff);
 }
