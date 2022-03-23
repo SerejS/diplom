@@ -1,7 +1,7 @@
 package com.serejs.diplom.desktop.ui.controllers;
 
-import com.serejs.diplom.desktop.server.User;
 import com.serejs.diplom.desktop.ui.App;
+import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.RootController;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -10,6 +10,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -44,5 +48,19 @@ public class ResultController extends RootController implements Initializable {
     public void goProjectOverview() {
         App.saveProject();
         anotherPage(finishButton, "project-overview.fxml");
+    }
+
+    public void saveMdFile() {
+        var dir = App.getOutputDirectory();
+        try {
+            var mdFile = new File(dir.getAbsolutePath() + "/" + App.getProjectTitle() + ".md");
+            var writer = new BufferedWriter(new FileWriter(mdFile));
+            writer.write(App.getMdResult());
+            writer.flush();
+        } catch (IOException ex) {
+            ErrorAlert.info("Ошибка создания файла.");
+        } catch (Exception e) {
+            ErrorAlert.info("Ошибка получения результата.");
+        }
     }
 }

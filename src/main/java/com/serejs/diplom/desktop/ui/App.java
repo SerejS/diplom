@@ -211,4 +211,9 @@ public class App extends Application {
 
         return result.toString();
     }
+
+    ///Text of MdFile
+    public static String getMdResult() throws Exception {
+        return "#Название темы....";
+    }
 }
