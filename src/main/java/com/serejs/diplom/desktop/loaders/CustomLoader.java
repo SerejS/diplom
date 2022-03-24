@@ -7,10 +7,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
-public class CustomLoader implements ContentLoader {
+public class CustomLoader extends AbstractLoader {
     private final Format format;
 
     public CustomLoader(Format format) {
@@ -18,13 +16,12 @@ public class CustomLoader implements ContentLoader {
     }
 
     /**
-     * Функция получение глав книги из файла пользовательского формата
+     * Функция получение содержания книги из файла пользовательского формата
+     *
      * @param uri Файл книги
-     * @return Получение глав книги
      */
     @Override
-    public Map<String, String> load(URI uri) throws Exception {
-
+    public void load(URI uri) {
         //Получение текста из файла
         StringBuilder text = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(uri.getPath()))) {
@@ -32,8 +29,6 @@ public class CustomLoader implements ContentLoader {
         } catch (IOException e) {
             System.err.println("Ошибка получения текста из файла: " + uri);
         }
-
-        Map<String, String> fragments = new HashMap<>();
 
         //Разделение текста на главы (разделитель до названия главы)
         for (String p : text.toString().split(format.getPrev())) {
@@ -49,7 +44,5 @@ public class CustomLoader implements ContentLoader {
                 );
             }
         }
-
-        return fragments;
     }
 }

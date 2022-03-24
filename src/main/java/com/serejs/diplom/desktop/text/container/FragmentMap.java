@@ -29,7 +29,7 @@ public class FragmentMap extends HashMap<String, Fragment> {
         }
 
 
-        return new Fragment(summary.toString(), fragment.getTheme(), fragment.getType());
+        return new Fragment(summary.toString(), fragment.getTheme(), fragment.getType(), fragment.getAttachments());
     }
 
 
@@ -104,9 +104,5 @@ public class FragmentMap extends HashMap<String, Fragment> {
         return this.keySet().stream()
                 .filter(key -> this.get(key).getTheme() == null || this.get(key).getTheme().equals(theme))
                 .collect(Collectors.toSet());
-    }
-
-    public String getContent(String key) {
-        return this.get(key).getContent();
     }
 }

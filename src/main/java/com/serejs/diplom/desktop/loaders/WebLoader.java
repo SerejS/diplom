@@ -1,20 +1,21 @@
 package com.serejs.diplom.desktop.loaders;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.io.IOException;
+import java.net.URI;
+import java.util.HashMap;
 
-public class WebLoader implements ContentLoader {
+import static com.serejs.diplom.desktop.utils.AttachmentParser.xmlAttachments;
+
+
+public class WebLoader extends AbstractLoader {
 
     @Override
-    public Map<String, String> load(URI uri) throws IOException {
-        var fragments = new HashMap<String, String>();
+    public void load(URI uri) throws IOException {
+        fragments = new HashMap<>();
 
         //Получение содержимого сайта в виде документа
         Document doc = Jsoup.connect(uri.toString()).get();
@@ -36,7 +37,6 @@ public class WebLoader implements ContentLoader {
             if (el.tagName().equals("p")) content.append(el.text()).append('\n');
         }
         fragments.put(name, content.toString());
-
-        return fragments;
+        attachments.put(name, xmlAttachments(doc));
     }
 }

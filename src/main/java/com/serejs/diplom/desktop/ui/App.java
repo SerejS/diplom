@@ -165,17 +165,23 @@ public class App extends Application {
                     .toList();
             if (localThemes.isEmpty()) continue;
 
-            loader.load(source.getUri()).forEach((key, content) -> {
-                Theme theme = Analyzer.getTheme(content, localThemes);
-                if (theme == null) return;
+            loader.load(source.getUri());
+            var contents = loader.getContent();
 
-                Fragment fragment = new Fragment(content, theme, source.getLitType());
+            for (String key : contents.keySet()) {
+                var content = contents.get(key);
+
+                Theme theme = Analyzer.getTheme(content, localThemes);
+                if (theme == null) continue;
+
+                Fragment fragment = new Fragment(content, theme, source.getLitType(), loader.getAttachments(key));
                 if (fragment.getConcentration() < Settings.getMinConcentration()) {
                     //fragment = AutoSummarizer.summarize(fragment);
-                    if (fragment.getConcentration() < Settings.getMinConcentration()) return;
+                    if (fragment.getConcentration() < Settings.getMinConcentration()) continue;
                 }
                 mainFragments.put(key, fragment);
-            });
+            }
+
         }
 
         mainFragments.recalculateThemes();
