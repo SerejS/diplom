@@ -2,6 +2,7 @@ package com.serejs.diplom.desktop.ui.controllers;
 
 import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.ui.App;
+import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import com.serejs.diplom.desktop.utils.GoogleSearchEngine;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class WebSearchController extends TableViewController<GoogleSearchEngine> {
     private final String modalFileName = "modal-web.fxml";
@@ -80,7 +82,15 @@ public class WebSearchController extends TableViewController<GoogleSearchEngine>
 
     @FXML
     private void openModal() {
-        openModal(modalFileName);
+        var containsAllTypes = table.getItems()
+                .stream().map(GoogleSearchEngine::getType)
+                .collect(Collectors.toSet()).containsAll(App.getTypes());
+
+        if (containsAllTypes)
+            ErrorAlert.info("Добавлены поисковые движки ко всем типам литерартуры");
+        else
+            openModal(modalFileName);
+
     }
 
     @FXML
