@@ -11,7 +11,7 @@ public class AutoSummarizer {
         //Получение абзацев текста
         var paragraphs = Arrays.stream(fragment.getContent().split("\n"));
         var microFragments = paragraphs
-                .map(p -> new Fragment(p, fragment.getTheme(), fragment.getType())).toList();
+                .map(p -> new Fragment(p, fragment.getTheme(), fragment.getType(), fragment.getAttachments())).toList();
 
         //Отбор индексов абзацев с минимальной конценрацией ключевых слов
         var indexes = new LinkedList<Integer>();
@@ -34,6 +34,6 @@ public class AutoSummarizer {
             }
         }
 
-        return new Fragment(result.toString(), fragment.getTheme(), fragment.getType());
+        return new Fragment(result.toString(), fragment.getTheme(), fragment.getType(), fragment.getAttachments());
     }
 }
