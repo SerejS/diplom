@@ -4,13 +4,18 @@ import com.kursx.parser.fb2.FictionBook;
 import com.kursx.parser.fb2.Section;
 import com.serejs.diplom.desktop.enums.AttachmentType;
 import com.serejs.diplom.desktop.text.container.Attachment;
+import com.serejs.diplom.desktop.utils.AttachmentParser;
+import org.jsoup.Jsoup;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Fb2Loader extends AbstractLoader {
     /**
@@ -20,12 +25,16 @@ public class Fb2Loader extends AbstractLoader {
      */
     @Override
     public void load(URI uri) throws ParserConfigurationException, IOException, SAXException {
-        FictionBook fb = new FictionBook(new File(uri.getPath()));
-        fragments = new LinkedHashMap<>();
+        var file = new File(uri.getPath());
+
+        FictionBook fb = new FictionBook(file);
+        var doc = Jsoup.parse(file, "windows-1251");
+        var xmlSections = doc.getElementsByTag("section");
 
         //Разделы книжки
         ArrayDeque<Section> sectionDeque = new ArrayDeque<>(fb.getBody().getSections());
         List<Section> sections = new LinkedList<>();
+
         while (!sectionDeque.isEmpty()) {
             Section s = sectionDeque.pollFirst();
             if (s.getSections().isEmpty()) sections.add(s);
@@ -49,13 +58,13 @@ public class Fb2Loader extends AbstractLoader {
 
             //Сохранение приложений книги
             var fragmentAttachments = new HashSet<Attachment>();
-
             var image = section.getImage();
             if (image != null)
                 fragmentAttachments.add(new Attachment(image, AttachmentType.IMAGE));
 
-
+            fragmentAttachments.addAll(AttachmentParser.xmlAttachments(xmlSections.get(i)));
             attachments.put(title, fragmentAttachments);
+
         }
     }
 }

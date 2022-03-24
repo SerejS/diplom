@@ -10,11 +10,13 @@ import java.util.Set;
 
 public class AttachmentParser {
 
-    public static Set<Attachment> xmlAttachments(Document doc) {
+    public static Set<Attachment> xmlAttachments(Element document) {
         var xmlAttachments = new HashSet<Attachment>();
-        xmlAttachments.addAll(imgFromXML(doc));
-        xmlAttachments.addAll(audioFromXML(doc));
-        xmlAttachments.addAll(tablesFromXML(doc));
+        if (document instanceof Document doc) {
+            xmlAttachments.addAll(imgFromXML(doc));
+            xmlAttachments.addAll(audioFromXML(doc));
+            xmlAttachments.addAll(tablesFromXML(doc));
+        }
         return xmlAttachments;
     }
 
