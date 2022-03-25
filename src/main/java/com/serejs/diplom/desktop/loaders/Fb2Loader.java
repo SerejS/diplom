@@ -4,7 +4,7 @@ import com.kursx.parser.fb2.FictionBook;
 import com.kursx.parser.fb2.Section;
 import com.serejs.diplom.desktop.enums.AttachmentType;
 import com.serejs.diplom.desktop.text.container.Attachment;
-import com.serejs.diplom.desktop.utils.AttachmentParser;
+import com.serejs.diplom.desktop.utils.MarkDown;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.xml.sax.SAXException;
@@ -50,6 +50,7 @@ public class Fb2Loader extends AbstractLoader {
         //Получение контента книги
         for (int i = 0; i < sections.size(); i++) {
             var section = sections.get(i);
+            var xmlSection = xmlSections.get(i);
 
             //Получение названия главы. Берется title из xml
             String title = section.getTitleString(" - ", "")
@@ -68,7 +69,7 @@ public class Fb2Loader extends AbstractLoader {
             var fragmentAttachments = new HashSet<Attachment>();
 
             //Получение бинарников картинок
-            var imageElements = xmlSections.get(i).getElementsByTag("img");
+            var imageElements = xmlSection.getElementsByTag("img");
             imageElements.forEach(image -> {
                 var href = image.attributes().get("l:href");
                 if (href.isEmpty()) return;
@@ -77,8 +78,12 @@ public class Fb2Loader extends AbstractLoader {
                 );
             });
 
-            //Остальные приложения
-            fragmentAttachments.addAll(AttachmentParser.xmlAttachments(xmlSections.get(i)));
+            //Получение таблиц
+            var tableElements = xmlSection.getElementsByTag("table");
+            var tableSB = new StringBuilder();
+            tableElements.forEach(table -> tableSB.append(MarkDown.mdTable(table)).append("\n\n"));
+            if (!tableSB.isEmpty()) fragmentAttachments.add(new Attachment(tableSB.toString(), AttachmentType.TABLE));
+
             attachments.put(title, fragmentAttachments);
         }
     }
