@@ -13,9 +13,10 @@ module diplom.desktop.ui {
     requires epublib.core;
     requires org.jsoup;
     requires fb2parser;
-    requires org.apache.httpcomponents.httpcore;
     requires org.json;
+    requires org.apache.httpcomponents.httpcore;
     requires org.apache.httpcomponents.httpclient;
+    requires org.apache.commons.io;
     requires markdowngenerator;
     requires java.desktop;
     requires static lombok;
