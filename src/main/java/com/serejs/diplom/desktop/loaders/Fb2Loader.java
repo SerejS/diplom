@@ -6,6 +6,7 @@ import com.serejs.diplom.desktop.enums.AttachmentType;
 import com.serejs.diplom.desktop.text.container.Attachment;
 import com.serejs.diplom.desktop.utils.AttachmentParser;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,7 +30,12 @@ public class Fb2Loader extends AbstractLoader {
 
         FictionBook fb = new FictionBook(file);
         var doc = Jsoup.parse(file, "windows-1251");
-        var xmlSections = doc.getElementsByTag("section");
+        //Получение только невложенных секций
+        var xmlSubSections = doc.select("section section");
+        var xmlSections = doc.select("section").stream()
+                .filter((Element sec) -> !xmlSubSections.contains(sec))
+                .filter((Element sec) -> !sec.text().isEmpty())
+                .toList();
 
         //Разделы книжки
         ArrayDeque<Section> sectionDeque = new ArrayDeque<>(fb.getBody().getSections());
@@ -46,7 +52,8 @@ public class Fb2Loader extends AbstractLoader {
             var section = sections.get(i);
 
             //Получение названия главы. Берется title из xml
-            String title = section.getTitleString(" - ", "");
+            String title = section.getTitleString(" - ", "")
+                    .replaceAll("\\p{all}", "");
             //Если названия главы нет, то пишется ее номер
             if (title.isEmpty()) title = String.valueOf(i + 1);
 
@@ -56,15 +63,23 @@ public class Fb2Loader extends AbstractLoader {
 
             fragments.put(title, sb.toString());
 
+
             //Сохранение приложений книги
             var fragmentAttachments = new HashSet<Attachment>();
-            var image = section.getImage();
-            if (image != null)
-                fragmentAttachments.add(new Attachment(image, AttachmentType.IMAGE));
 
+            //Получение бинарников картинок
+            var imageElements = xmlSections.get(i).getElementsByTag("img");
+            imageElements.forEach(image -> {
+                var href = image.attributes().get("l:href");
+                if (href.isEmpty()) return;
+                fragmentAttachments.add(
+                        new Attachment(doc.getElementsByTag(href.substring(1)).text(), AttachmentType.IMAGE)
+                );
+            });
+
+            //Остальные приложения
             fragmentAttachments.addAll(AttachmentParser.xmlAttachments(xmlSections.get(i)));
             attachments.put(title, fragmentAttachments);
-
         }
     }
 }
