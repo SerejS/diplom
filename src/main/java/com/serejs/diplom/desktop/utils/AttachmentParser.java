@@ -25,7 +25,10 @@ public class AttachmentParser {
         doc.getElementsByTag("img").forEach(((Element img) ->
                 img.attributes().forEach(attr -> {
                     if (attr.getKey().equals("src")) {
-                        imageAttachments.add(new Attachment(attr.getValue(), AttachmentType.IMAGE));
+                        var name = attr.getValue();
+                        if (name.contains("/")) name = name.substring(name.lastIndexOf("/") + 1);
+
+                        imageAttachments.add(new Attachment(name, attr.getValue(), AttachmentType.IMAGE));
                     }
                 })
         ));
@@ -35,7 +38,7 @@ public class AttachmentParser {
     private static Set<Attachment> tablesFromXML(Document doc) {
         var tablesAttachments = new HashSet<Attachment>();
         doc.getElementsByTag("table").forEach((Element table) ->
-                tablesAttachments.add(new Attachment(MarkDown.mdTable(table), AttachmentType.TABLE)));
+                tablesAttachments.add(new Attachment("", MarkDown.mdTable(table), AttachmentType.TABLE)));
         return tablesAttachments;
     }
 
@@ -44,8 +47,12 @@ public class AttachmentParser {
         doc.getElementsByTag("audio").forEach((Element audio) ->
                 audio.getElementsByTag("source").forEach((Element source) ->
                         source.attributes().forEach(attr -> {
-                            if (attr.getKey().equals("src"))
-                                audioAttachments.add(new Attachment(attr.getValue(), AttachmentType.AUDIO));
+                            if (attr.getKey().equals("src")) {
+                                var name = attr.getValue();
+                                if (name.contains("/")) name = name.substring(name.lastIndexOf("/") + 1);
+
+                                audioAttachments.add(new Attachment(name, attr.getValue(), AttachmentType.AUDIO));
+                            }
                         })
                 )
         );

@@ -73,8 +73,16 @@ public class Fb2Loader extends AbstractLoader {
             imageElements.forEach(image -> {
                 var href = image.attributes().get("l:href");
                 if (href.isEmpty()) return;
+
+                var imageEl = doc.getElementById(href.substring(1));
+                if (imageEl == null) return;
+
+                String name = href.substring(1);
                 fragmentAttachments.add(
-                        new Attachment(doc.getElementsByTag(href.substring(1)).text(), AttachmentType.IMAGE)
+                        new Attachment(
+                                name,
+                                imageEl.text(),
+                                AttachmentType.IMAGE)
                 );
             });
 
@@ -82,7 +90,8 @@ public class Fb2Loader extends AbstractLoader {
             var tableElements = xmlSection.getElementsByTag("table");
             var tableSB = new StringBuilder();
             tableElements.forEach(table -> tableSB.append(MarkDown.mdTable(table)).append("\n\n"));
-            if (!tableSB.isEmpty()) fragmentAttachments.add(new Attachment(tableSB.toString(), AttachmentType.TABLE));
+            if (!tableSB.isEmpty())
+                fragmentAttachments.add(new Attachment(title, tableSB.toString(), AttachmentType.TABLE));
 
             attachments.put(title, fragmentAttachments);
         }

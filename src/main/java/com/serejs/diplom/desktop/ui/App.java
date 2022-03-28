@@ -21,6 +21,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.stream.Collectors.groupingBy;
+
 public class App extends Application {
     private static String projectTitle;
     private static List<Source> sources;
@@ -141,7 +143,8 @@ public class App extends Application {
         try {
             var dir = chooser.showDialog(null);
             if (dir.isDirectory()) outputDirectory = dir;
-        } catch (NullPointerException ignored) {}
+        } catch (NullPointerException ignored) {
+        }
     }
 
     public static String getResult() throws Exception {
@@ -193,27 +196,34 @@ public class App extends Application {
         var result = new StringBuilder();
 
         result.append("Количество найденных фрагментов: ").append(mainFragments.size());
-        for (Theme theme : mainFragments.getThemes()) {
+
+        // Группировка в формате темы / типы / фрагменты
+        var groupedThemes = mainFragments.keySet().stream().collect(
+                groupingBy(k -> mainFragments.get(k).getTheme(),
+                groupingBy(k -> mainFragments.get(k).getType())));
+
+        groupedThemes.forEach((theme, groupedTypes) -> {
             result.append(theme).append('\n');
 
-            var keys = new LinkedList<>(mainFragments.keySet(theme).stream().toList());
+            groupedTypes.forEach((type, keys) -> {
+                result.append("Тип литературы: ").append(type.getTitle()).append("\n");
+                keys.forEach(key -> {
+                    //Подготовка текста для вывода содержания
+                    var fragment = mainFragments.get(key);
+                    result.append(fragment.getType()).append(" / ");
+                    result.append(key).append(" - ");
+                    result.append(fragment.getConcentration()).append('\n');
+                    result.append(fragment.getContent(), 0, 100).append('\n');
 
-            keys.sort((k1, k2) -> {
-                var s1 = mainFragments.get(k1).getType().getTitle();
-                var s2 = mainFragments.get(k2).getType().getTitle();
-                return s1.compareTo(s2);
+                    //Сохранение приложений
+                    fragment.saveAttachments(outputDirectory);
+
+                });
+                result.append("\n");
+
             });
-
-            keys.forEach(key -> {
-                var fragment = mainFragments.get(key);
-                result.append(fragment.getType()).append(" / ");
-                result.append(key).append(" - ");
-                result.append(fragment.getConcentration()).append('\n');
-                //result.append(fragment.getContent(), 0, 100).append('\n');
-            });
-
             result.append("\n");
-        }
+        });
 
         return result.toString();
     }
