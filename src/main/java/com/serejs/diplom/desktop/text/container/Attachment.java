@@ -35,6 +35,7 @@ public record Attachment(String name, Object content, AttachmentType type) {
                 FileUtils.writeByteArrayToFile(newFile, imageBytes);
             }
             case AUDIO -> {
+                //IF EPUB than bytes
                 //Форматы аудио
                 //ogg/vorbis
                 //wav
@@ -42,11 +43,9 @@ public record Attachment(String name, Object content, AttachmentType type) {
                 //AAC
 
                 var url = new URL(str);
-
-                var audio = new File("audio.wav");
                 try (var is = url.openStream()) {
                     byte[] bytes = is.readAllBytes();
-                    FileUtils.writeByteArrayToFile(audio, bytes);
+                    FileUtils.writeByteArrayToFile(newFile, bytes);
                 }
             }
         }
