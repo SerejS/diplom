@@ -27,6 +27,16 @@ public class Fb2Loader extends AbstractLoader {
     @Override
     public void load(URI uri) throws ParserConfigurationException, IOException, SAXException {
         var file = new File(uri.getPath());
+        var firstLine = FileUtils.readLines(file).get(0);
+
+        var attrEncode = "encoding=\"";
+        var startIndex = firstLine.indexOf(attrEncode) + attrEncode.length();
+
+        var endEncode = "\"?>";
+        var endIndex = firstLine.lastIndexOf(endEncode);
+
+        var encoding = firstLine.substring(startIndex, endIndex);
+        var doc = Jsoup.parse(file, encoding);
 
         FictionBook fb = new FictionBook(file);
         var doc = Jsoup.parse(file, "windows-1251");
