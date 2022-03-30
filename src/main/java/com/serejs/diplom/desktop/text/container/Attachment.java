@@ -29,7 +29,11 @@ public record Attachment(String name, Object content, AttachmentType type) {
                         return;
                     }
                 } else {
-                    imageBytes = Base64.getDecoder().decode(str);
+                    try {
+                        imageBytes = Base64.getDecoder().decode(str);
+                    } catch (IllegalArgumentException ex) {
+                        return;
+                    }
                 }
 
                 FileUtils.writeByteArrayToFile(newFile, imageBytes);
