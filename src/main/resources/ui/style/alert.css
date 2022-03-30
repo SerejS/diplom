@@ -1,0 +1,22 @@
+.dialog {
+    -fx-font-size: 16pt;
+}
+
+.alert {
+    -fx-horizontal-grid-lines-visible: false;
+}
+
+.button {
+    -fx-background-color: #22ECAF;
+    -fx-pref-width: 200px;
+    -fx-padding: 30%;
+    -fx-start-margin: 0;
+    -fx-end-margin: 0;
+    -fx-font-size: 18;
+    -fx-background-radius: 0;
+    -fx-alignment: center;
+}
+
+.button:hover {
+    -fx-background-color: #14d39c;
+}
