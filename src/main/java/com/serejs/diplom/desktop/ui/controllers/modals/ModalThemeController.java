@@ -48,6 +48,7 @@ public class ModalThemeController extends ModalController<Theme> {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        areaNGrams.setWrapText(true);
         typeBox.getItems().addAll(App.getTypes());
         closeInit();
     }
