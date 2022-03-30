@@ -1,5 +1,6 @@
 package com.serejs.diplom.desktop.ui.controllers;
 
+import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.RootController;
 import com.serejs.diplom.desktop.utils.Settings;
 import javafx.fxml.FXML;
@@ -46,7 +47,7 @@ public class SettingsController extends RootController implements Initializable 
         referring.setSelected(Settings.isAutoReferring());
     }
 
-    private void saveState() {
+    private void saveState() throws NumberFormatException {
         Settings.setMinimalFragmentsPerTheme(Short.parseShort(minFragments.getText()));
         Settings.setDelta(Short.parseShort(delta.getText()));
         Settings.setMinWords(Long.parseLong(minWords.getText()));
@@ -59,14 +60,26 @@ public class SettingsController extends RootController implements Initializable 
 
     @FXML
     private void goNextPage() {
-        saveState();
+        try {
+            saveState();
+        } catch (NumberFormatException ex) {
+            ErrorAlert.info("Неправльный формат одного из полей.");
+            return;
+        }
+
         anotherPage(nextButton, "result-view.fxml");
     }
 
 
     @FXML
     protected void goPrevPage() {
-        saveState();
+        try {
+            saveState();
+        } catch (NumberFormatException ex) {
+            ErrorAlert.info("Неправльный формат одного из полей.");
+            return;
+        }
+
         anotherPage(prevButton, "web-view.fxml");
     }
 }
