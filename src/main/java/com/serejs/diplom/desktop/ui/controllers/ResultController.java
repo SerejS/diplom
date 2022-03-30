@@ -55,8 +55,9 @@ public class ResultController extends RootController implements Initializable {
         try {
             var mdFile = new File(dir.getAbsolutePath() + "/" + App.getProjectTitle() + ".md");
             var writer = new BufferedWriter(new FileWriter(mdFile));
-            writer.write(App.getMdResult());
+            writer.write(App.getMdResult(App.getFragments(), App.getOutputDirectory()));
             writer.flush();
+            InfoAlert.info("Вы сохранили результат в файл MarkDown");
         } catch (IOException ex) {
             ErrorAlert.info("Ошибка создания файла.");
         } catch (Exception e) {

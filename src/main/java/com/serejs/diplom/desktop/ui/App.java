@@ -192,6 +192,43 @@ public class App extends Application {
         Analyzer.alignment(mainFragments);
 
 
+    ///Text of MdFile
+    public static String getMdResult(FragmentMap mainFragments, File file) throws Exception {
+        //Вывод результата
+        var result = new StringBuilder();
+
+        // Группировка в формате темы / типы / фрагменты
+        var groupedThemes = mainFragments.keySet().stream().collect(
+                groupingBy(k -> mainFragments.get(k).getTheme(),
+                        groupingBy(k -> mainFragments.get(k).getType())));
+
+        groupedThemes.forEach((theme, groupedTypes) -> {
+            result.append("# Тема: ").append(theme.getTitle()).append('\n');
+
+            groupedTypes.forEach((type, keys) -> {
+                result.append("## Тип литературы: ").append(type.getTitle()).append("\n");
+                keys.forEach(key -> {
+                    //Подготовка текста для вывода содержания
+                    var fragment = mainFragments.get(key);
+                    result.append("### ").append(key).append('\n');
+                    result.append("Концентрация ключевых слов: ").append(fragment.getConcentration()).append('\n');
+                    result.append(fragment.getContent()).append('\n');
+
+                    //Сохранение приложений
+                    fragment.saveAttachments(outputDirectory);
+
+                });
+                result.append("\n");
+
+            });
+            result.append("\n");
+        });
+        FileUtils.writeStringToFile(file, result.toString());
+        return result.toString();
+    }
+
+
+    public static String getPlainResult(FragmentMap mainFragments) {
         //Вывод результата
         var result = new StringBuilder();
 
