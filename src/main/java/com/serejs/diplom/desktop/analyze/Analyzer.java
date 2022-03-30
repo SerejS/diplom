@@ -77,7 +77,8 @@ public class Analyzer {
                         .sorted(Comparator.comparingDouble(fragmentWeights::get))
                         .toList());
 
-                while (fragments.percent(theme) > theme.getPercent() + Settings.getDelta() * 0.01) {
+                while (fragments.percent(theme) > theme.getPercent() + (Settings.getDelta() * 0.01)
+                       && keys.size() > Settings.getMinimalFragmentsPerTheme()) {
                     var worst = keys.get(0);
                     fragments.remove(worst);
                     keys.remove(worst);
