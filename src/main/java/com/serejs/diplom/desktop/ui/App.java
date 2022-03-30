@@ -158,6 +158,7 @@ public class App extends Application {
             switch (source.getSourceType()) {
                 case EPUB -> loader = new EpubLoader();
                 case FB2 -> loader = new Fb2Loader();
+                case PDF -> loader = new PdfLoader(customSources.get(source));
                 case CUSTOM -> loader = new CustomLoader(customSources.get(source));
                 case WEB -> loader = new WebLoader();
                 default -> {

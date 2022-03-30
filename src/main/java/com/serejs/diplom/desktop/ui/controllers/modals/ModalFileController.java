@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 
-import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -28,7 +27,7 @@ public class ModalFileController extends ModalController<Source> {
     @FXML
     private HBox customFields;
     @FXML
-    private FileChooser fileChooser = new FileChooser();
+    private final FileChooser fileChooser = new FileChooser();
 
     @FXML
     private ComboBox<LiteratureType> typeBox;
@@ -58,7 +57,9 @@ public class ModalFileController extends ModalController<Source> {
         );
 
         sourceBox.setOnAction(event ->
-            customFields.setVisible(sourceBox.getValue() == SourceType.CUSTOM)
+            customFields.setVisible(
+                    sourceBox.getValue() == SourceType.CUSTOM || sourceBox.getValue() == SourceType.PDF
+            )
         );
 
         assert typeBox != null;
@@ -67,7 +68,9 @@ public class ModalFileController extends ModalController<Source> {
         FileChooser.ExtensionFilter extFilter1 = new FileChooser.ExtensionFilter("FB2 files", "*.fb2");
         FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("TXT files", "*.txt");
         FileChooser.ExtensionFilter extFilter3 = new FileChooser.ExtensionFilter("EPUB files", "*.epub");
-        fileChooser.getExtensionFilters().addAll(extFilter1, extFilter2, extFilter3);
+        FileChooser.ExtensionFilter extFilter4 = new FileChooser.ExtensionFilter("PDF files", "*.pdf");
+        fileChooser.getExtensionFilters().addAll(extFilter1, extFilter2, extFilter3, extFilter4);
+
         uriField.setOnMouseClicked(e -> {
             var stage = addButton.getScene().getWindow();
 
