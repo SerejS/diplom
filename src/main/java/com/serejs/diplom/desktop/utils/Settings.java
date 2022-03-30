@@ -11,6 +11,9 @@ public class Settings {
     private static short delta = 3;
 
     @Getter @Setter
+    private static int maxLengthTitle = 80;
+
+    @Getter @Setter
     private static long minWords = 50L;
     @Getter @Setter
     private static long maxWords = 5000L;
