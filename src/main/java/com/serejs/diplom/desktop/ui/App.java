@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.*;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -28,9 +29,9 @@ public class App extends Application {
     private static String projectTitle;
     private static List<Source> sources;
     private static List<Theme> themes;
-    private static Map<Source, Format> customSources = new HashMap<>();
-    private static List<LiteratureType> types;
-    private static List<GoogleSearchEngine> engines = new LinkedList<>();
+    private static final Map<Source, Format> customSources = new HashMap<>();
+    private static List<LiteratureType> types = new LinkedList<>();
+    private static final List<GoogleSearchEngine> engines = new LinkedList<>();
     private static File outputDirectory;
     @Getter
     private static FragmentMap fragments;
@@ -233,7 +234,7 @@ public class App extends Application {
             });
             result.append("\n");
         });
-        FileUtils.writeStringToFile(file, result.toString());
+        FileUtils.writeStringToFile(file, result.toString(), Charset.defaultCharset());
         return result.toString();
     }
 
