@@ -42,7 +42,7 @@ public class TypesController extends TableViewController<LiteratureType> {
         if (!DeleteAlert.confirm()) return;
         LiteratureType t = table.getSelectionModel().getSelectedItem();
         table.getItems().removeAll(t);
-        App.getTypes().remove(t);
+        App.remove(t);
     }
 
     @FXML
