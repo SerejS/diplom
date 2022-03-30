@@ -1,6 +1,7 @@
 package com.serejs.diplom.desktop.ui;
 
 import com.serejs.diplom.desktop.analyze.Analyzer;
+import com.serejs.diplom.desktop.enums.SourceType;
 import com.serejs.diplom.desktop.loaders.*;
 import com.serejs.diplom.desktop.server.Server;
 import com.serejs.diplom.desktop.server.User;
@@ -12,14 +13,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import lombok.Getter;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -31,6 +32,8 @@ public class App extends Application {
     private static List<LiteratureType> types;
     private static List<GoogleSearchEngine> engines = new LinkedList<>();
     private static File outputDirectory;
+    @Getter
+    private static FragmentMap fragments;
 
     public static void main(String[] args) {
         types = Server.getTypes(1);
@@ -148,7 +151,7 @@ public class App extends Application {
     }
 
     public static String getResult() throws Exception {
-        ///Подготовка фрагментов
+        ///Извлечение фрагментов
         var mainFragments = new FragmentMap();
         for (Source source : getSources()) {
             ContentLoader loader;
@@ -177,6 +180,8 @@ public class App extends Application {
                 Theme theme = Analyzer.getTheme(content, localThemes);
                 if (theme == null) continue;
 
+                System.out.println(source.getUri() + " " + loader.getContent().size());
+
                 Fragment fragment = new Fragment(content, theme, source.getLitType(), loader.getAttachments(key));
                 if (fragment.getConcentration() < Settings.getMinConcentration()) {
                     //fragment = AutoSummarizer.summarize(fragment);
@@ -187,10 +192,14 @@ public class App extends Application {
 
         }
 
+        //Обработка
         mainFragments.recalculateThemes();
-
         Analyzer.alignment(mainFragments);
 
+        fragments = mainFragments;
+
+        return getPlainResult(mainFragments);
+    }
 
     ///Text of MdFile
     public static String getMdResult(FragmentMap mainFragments, File file) throws Exception {
@@ -232,25 +241,24 @@ public class App extends Application {
         //Вывод результата
         var result = new StringBuilder();
 
-        result.append("Количество найденных фрагментов: ").append(mainFragments.size());
+        result.append("Количество найденных фрагментов: ").append(mainFragments.size()).append('\n');
 
         // Группировка в формате темы / типы / фрагменты
         var groupedThemes = mainFragments.keySet().stream().collect(
                 groupingBy(k -> mainFragments.get(k).getTheme(),
-                groupingBy(k -> mainFragments.get(k).getType())));
+                        groupingBy(k -> mainFragments.get(k).getType())));
 
         groupedThemes.forEach((theme, groupedTypes) -> {
-            result.append(theme).append('\n');
+            result.append(theme.getTitle()).append('\n');
 
             groupedTypes.forEach((type, keys) -> {
                 result.append("Тип литературы: ").append(type.getTitle()).append("\n");
                 keys.forEach(key -> {
                     //Подготовка текста для вывода содержания
                     var fragment = mainFragments.get(key);
-                    result.append(fragment.getType()).append(" / ");
-                    result.append(key).append(" - ");
-                    result.append(fragment.getConcentration()).append('\n');
-                    result.append(fragment.getContent(), 0, 100).append('\n');
+                    result.append(fragment.getType()).append(" / ").append(key);
+                    result.append(": ").append(fragment.getConcentration()).append('\n');
+                    result.append(fragment.getContent(), 0, 200).append('\n');
 
                     //Сохранение приложений
                     fragment.saveAttachments(outputDirectory);
