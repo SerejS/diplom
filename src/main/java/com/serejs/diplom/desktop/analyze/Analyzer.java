@@ -181,7 +181,7 @@ public class Analyzer {
         for (var i = 0; i < normalWords.size(); i++) {
             checkPhrases:
             for (var phrase : keyPhrases) {
-                for (var j = 0; j < phrase.size(); j++) {
+                for (var j = 0; j < phrase.size() && i + j < normalWords.size(); j++) {
                     if (!normalWords.get(i + j).equals(phrase.get(j))) continue checkPhrases;
                 }
                 qty++;
