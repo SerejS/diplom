@@ -26,14 +26,21 @@ public class ModalFileController extends ModalController<Source> {
     @FXML
     private TextField uriField;
     @FXML
-    private HBox customFields;
-    @FXML
     private final FileChooser fileChooser = new FileChooser();
 
     @FXML
     private ComboBox<LiteratureType> typeBox;
     @FXML
     private ComboBox<SourceType> sourceBox;
+
+    @FXML
+    private HBox customFields;
+    @FXML
+    private TextField prev;
+    @FXML
+    private TextField mid;
+    @FXML
+    private TextField after;
 
     private TableViewController<Source> parent;
 
@@ -56,14 +63,23 @@ public class ModalFileController extends ModalController<Source> {
             ErrorAlert.info("Не указан тип литературы");
             return;
         }
+
         if (sourceBox.getSelectionModel().isEmpty()) {
             ErrorAlert.info("Не указан тип источника");
             return;
         }
+        var fileSource = sourceBox.getValue();
+        if ((fileSource == SourceType.PDF || fileSource == SourceType.CUSTOM) &&
+            prev.getText().isEmpty() || mid.getText().isEmpty() || after.getText().isEmpty()
+        ) {
+            ErrorAlert.info("При данном типе литературе необходимо заполнить разделители.");
+            return;
+        }
+
+
 
         var source = new Source(new URI(uri), sourceBox.getValue(), typeBox.getValue());
         parent.addRow(source);
-
     }
 
     @Override
