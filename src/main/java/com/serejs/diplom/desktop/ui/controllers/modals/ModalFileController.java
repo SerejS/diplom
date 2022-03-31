@@ -1,6 +1,7 @@
 package com.serejs.diplom.desktop.ui.controllers.modals;
 
 import com.serejs.diplom.desktop.enums.SourceType;
+import com.serejs.diplom.desktop.text.container.Format;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.ui.App;
@@ -50,7 +51,7 @@ public class ModalFileController extends ModalController<Source> {
     }
 
     public void addFile() throws URISyntaxException {
-        if (!(parent instanceof FilesViewController)) return;
+        if (!(parent instanceof FilesViewController parent)) return;
 
         var uri = uriField.getText();
 
@@ -68,18 +69,24 @@ public class ModalFileController extends ModalController<Source> {
             ErrorAlert.info("Не указан тип источника");
             return;
         }
+
         var fileSource = sourceBox.getValue();
-        if ((fileSource == SourceType.PDF || fileSource == SourceType.CUSTOM) &&
-            prev.getText().isEmpty() || mid.getText().isEmpty() || after.getText().isEmpty()
-        ) {
+        boolean isFormatSource = fileSource == SourceType.PDF || fileSource == SourceType.CUSTOM;
+        if (isFormatSource && (prev.getText().isEmpty() || mid.getText().isEmpty() || after.getText().isEmpty())) {
             ErrorAlert.info("При данном типе литературе необходимо заполнить разделители.");
             return;
         }
 
 
-
-        var source = new Source(new URI(uri), sourceBox.getValue(), typeBox.getValue());
+        var source = new Source(new URI(uri), fileSource, typeBox.getValue());
         parent.addRow(source);
+
+        if (isFormatSource){
+            parent.getCustomSources().put(
+                    source,
+                    new Format(prev.getText(), mid.getText(), after.getText())
+            );
+        }
     }
 
     @Override
