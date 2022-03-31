@@ -4,6 +4,7 @@ import com.serejs.diplom.desktop.enums.SourceType;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.ui.App;
+import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.FilesViewController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
@@ -42,10 +43,26 @@ public class ModalFileController extends ModalController<Source> {
     }
 
     public void addFile() throws URISyntaxException {
-        if (parent instanceof FilesViewController parent) {
-            var source = new Source(new URI(uriField.getText()), sourceBox.getValue(), typeBox.getValue());
-            parent.addRow(source);
+        if (!(parent instanceof FilesViewController)) return;
+
+        var uri = uriField.getText();
+
+        //Валидация полей ввода
+        if (uri.isEmpty() || titleField.getText().isEmpty()) {
+            ErrorAlert.info("Не указан файл");
+            return;
         }
+        if (typeBox.getSelectionModel().isEmpty()) {
+            ErrorAlert.info("Не указан тип литературы");
+            return;
+        }
+        if (sourceBox.getSelectionModel().isEmpty()) {
+            ErrorAlert.info("Не указан тип источника");
+            return;
+        }
+
+        var source = new Source(new URI(uri), sourceBox.getValue(), typeBox.getValue());
+        parent.addRow(source);
 
     }
 
@@ -57,9 +74,10 @@ public class ModalFileController extends ModalController<Source> {
         );
 
         sourceBox.setOnAction(event ->
-            customFields.setVisible(
-                    sourceBox.getValue() == SourceType.CUSTOM || sourceBox.getValue() == SourceType.PDF
-            )
+                customFields.setVisible(
+                        sourceBox.getValue() == SourceType.CUSTOM
+                        || sourceBox.getValue() == SourceType.PDF
+                )
         );
 
         assert typeBox != null;
@@ -78,7 +96,8 @@ public class ModalFileController extends ModalController<Source> {
                 var file = fileChooser.showOpenDialog(stage);
                 if (uriField.getText().isEmpty()) titleField.setText(file.getName());
                 uriField.setText(file.toURI().toString());
-            } catch (NullPointerException ignore) {}
+            } catch (NullPointerException ignore) {
+            }
 
         });
         closeInit();

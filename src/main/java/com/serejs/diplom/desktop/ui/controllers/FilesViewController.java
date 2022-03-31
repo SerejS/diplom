@@ -4,6 +4,7 @@ import com.serejs.diplom.desktop.enums.SourceType;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.ui.App;
+import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -44,7 +45,13 @@ public class FilesViewController extends TableViewController<Source> {
 
     @FXML
     public void onNextPage() {
-        App.addSources(getItems());
+        var sources = getItems();
+        if (sources.isEmpty()) {
+            ErrorAlert.info("Проект должен содержать хотя бы один источник");
+            return;
+        }
+
+        App.addSources(sources);
         anotherPage(nextButton, "web-view.fxml");
     }
 
