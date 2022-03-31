@@ -19,7 +19,7 @@ public class Settings {
     private static long maxWords = 5000L;
 
     @Getter @Setter
-    private static long minKeyWords = 2L;
+    private static long minKeyNGrams = 2L;
 
     @Getter @Setter
     private static float minConcentration = 0.01f;

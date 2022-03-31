@@ -41,7 +41,7 @@ public class SettingsController extends RootController implements Initializable 
         delta.setText(String.valueOf(Settings.getDelta()));
         minWords.setText(String.valueOf(Settings.getMinWords()));
         maxWords.setText(String.valueOf(Settings.getMaxWords()));
-        minKeyWords.setText(String.valueOf(Settings.getMinKeyWords()));
+        minKeyWords.setText(String.valueOf(Settings.getMinKeyNGrams()));
         maxMicroRange.setText(String.valueOf(Settings.getMaxMicroRange()));
         minConcentration.setText(String.valueOf(Settings.getMinConcentration()));
         referring.setSelected(Settings.isAutoReferring());
@@ -52,7 +52,7 @@ public class SettingsController extends RootController implements Initializable 
         Settings.setDelta(Short.parseShort(delta.getText()));
         Settings.setMinWords(Long.parseLong(minWords.getText()));
         Settings.setMaxWords(Long.parseLong(maxWords.getText()));
-        Settings.setMinKeyWords(Long.parseLong(minKeyWords.getText()));
+        Settings.setMinKeyNGrams(Long.parseLong(minKeyWords.getText()));
         Settings.setMaxMicroRange(Long.parseLong(maxMicroRange.getText()));
         Settings.setMinConcentration(Float.parseFloat(minConcentration.getText()));
         Settings.setAutoReferring(referring.isSelected());

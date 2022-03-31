@@ -99,7 +99,7 @@ public class Analyzer {
         if (content.split("\\s").length < Settings.getMinWords()) return null;
 
         //Минимальное количество ключевых слов
-        var min = Settings.getMinKeyWords();
+        var min = Settings.getMinKeyNGrams();
 
         //Получение темы с наибольшим количеством совпадений ключевых слов
         Theme resultTheme = null;

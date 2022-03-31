@@ -3,9 +3,11 @@ package com.serejs.diplom.desktop.ui.controllers.modals;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.ui.App;
+import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.ThemeController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.utils.Settings;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
@@ -61,6 +63,26 @@ public class ModalThemeController extends ModalController<Theme> {
 
         var textNGrams = areaNGrams.getText();
         var types = typeBox.getCheckModel().getCheckedItems();
+
+        //Валидация
+        if (titleTheme.getText().isEmpty()) {
+            ErrorAlert.info("Не введено название темы");
+            return;
+        }
+        if (types.isEmpty()) {
+            ErrorAlert.info("Не выбран хотя бы один тип литературы");
+            return;
+        }
+        if (slider.getValue() == 0) {
+            ErrorAlert.info("Процентное отношение темы не может быть 0%");
+            return;
+        }
+        if (textNGrams.split(",").length < Settings.getMinKeyNGrams()) {
+            ErrorAlert.info("Количество ключевых n-грамм меньше минимально допустимого");
+            return;
+        }
+
+
         if (obj == null) {
             obj = new Theme(themeBox.getValue(), titleTheme.getText(), slider.getValue(), textNGrams, new HashSet<>(types));
             parent.addRow(obj);

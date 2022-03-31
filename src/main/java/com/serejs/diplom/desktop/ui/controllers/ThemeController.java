@@ -58,8 +58,21 @@ public class ThemeController extends TableViewController<Theme> {
 
     @FXML
     private void goNextPage() {
-        App.setProjectTitle(titleProject.getText());
-        App.setThemes(getItems());
+        var title = titleProject.getText();
+        var themes = getItems();
+
+        if (title.isEmpty()) {
+            ErrorAlert.info("Проект должен иметь название");
+            return;
+        }
+        if (themes.isEmpty()) {
+            ErrorAlert.info("Проект должен содержать хотя бы одну тему");
+            return;
+        }
+
+        App.setProjectTitle(title);
+        App.setThemes(themes);
+
         anotherPage(nextButton, "files-view.fxml");
     }
 
