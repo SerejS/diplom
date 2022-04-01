@@ -2,6 +2,8 @@ package com.serejs.diplom.desktop.utils;
 
 import com.serejs.diplom.desktop.enums.AttachmentType;
 import com.serejs.diplom.desktop.text.container.Attachment;
+import javafx.util.Pair;
+import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -20,17 +22,14 @@ public class AttachmentParser {
         return xmlAttachments;
     }
 
-    private static Set<Attachment> imgFromXML(Document doc) {
+    private static HashSet<Attachment> imgFromXML(Document doc) {
         var imageAttachments = new HashSet<Attachment>();
-        doc.getElementsByTag("img").forEach(((Element img) ->
-                img.attributes().forEach(attr -> {
-                    if (attr.getKey().equals("src")) {
-                        var name = attr.getValue();
-                        if (name.contains("/")) name = name.substring(name.lastIndexOf("/") + 1);
+        doc.getElementsByTag("img").forEach(((Element img) -> {
+            Pair<String, String> pair = tagSource(img);
+            if (pair == null) return;
 
-                        imageAttachments.add(new Attachment(name, attr.getValue(), AttachmentType.IMAGE));
-                    }
-                })
+            imageAttachments.add(new Attachment(pair.getKey(), pair.getValue(), AttachmentType.IMAGE));
+        }
         ));
         return imageAttachments;
     }
@@ -42,20 +41,35 @@ public class AttachmentParser {
         return tablesAttachments;
     }
 
-    private static Set<Attachment> audioFromXML(Document doc) {
+    private static HashSet<Attachment> audioFromXML(Document doc) {
         var audioAttachments = new HashSet<Attachment>();
         doc.getElementsByTag("audio").forEach((Element audio) ->
-                audio.getElementsByTag("source").forEach((Element source) ->
-                        source.attributes().forEach(attr -> {
-                            if (attr.getKey().equals("src")) {
-                                var name = attr.getValue();
-                                if (name.contains("/")) name = name.substring(name.lastIndexOf("/") + 1);
+            audio.getElementsByTag("source").forEach((Element source) -> {
+                Pair<String, String> pair = tagSource(source);
+                if (pair == null) return;
 
-                                audioAttachments.add(new Attachment(name, attr.getValue(), AttachmentType.AUDIO));
-                            }
-                        })
-                )
+                audioAttachments.add(new Attachment(pair.getKey(), pair.getValue(), AttachmentType.AUDIO));
+            })
         );
         return audioAttachments;
+    }
+
+
+    /**
+     * Возвращает файл и ссылку на него
+     * @param source Тег в котором лежит аттрибут с сылкой
+     * @return Пара: название, ссылка на файл
+     */
+    private static Pair<String, String> tagSource(Element source) {
+        for (Attribute attr : source.attributes()) {
+            if (attr.getKey().equals("src")) {
+                var name = attr.getValue();
+                if (name.contains("/")) name = name.substring(name.lastIndexOf("/") + 1);
+
+                return new Pair<>(name, attr.getValue());
+            }
+        }
+
+        return null;
     }
 }

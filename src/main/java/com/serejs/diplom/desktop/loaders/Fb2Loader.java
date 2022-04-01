@@ -23,7 +23,9 @@ public class Fb2Loader extends AbstractLoader {
     @Override
     public void load(URI uri) throws IOException {
         var file = new File(uri.getPath());
-        var firstLine = FileUtils.readLines(file).get(0);
+
+        var encoding = "UTF-8";
+        var firstLine = FileUtils.readLines(file, encoding).get(0);
 
         var attrEncode = "encoding=\"";
         var startIndex = firstLine.indexOf(attrEncode) + attrEncode.length();
@@ -31,7 +33,7 @@ public class Fb2Loader extends AbstractLoader {
         var endEncode = "\"?>";
         var endIndex = firstLine.lastIndexOf(endEncode);
 
-        var encoding = firstLine.substring(startIndex, endIndex);
+        encoding = firstLine.substring(startIndex, endIndex);
         var doc = Jsoup.parse(file, encoding);
 
 

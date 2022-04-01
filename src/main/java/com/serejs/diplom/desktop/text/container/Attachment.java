@@ -20,7 +20,7 @@ public record Attachment(String name, Object content, AttachmentType type) {
             case TABLE -> FileUtils.writeStringToFile(newFile, str, "UTF-8", true);
             case IMAGE -> {
                 byte[] imageBytes;
-                if (str.contains("http")) {
+                if (str.startsWith("http")) {
                     URL url = new URL(str);
 
                     try (InputStream is = url.openStream()) {
@@ -39,13 +39,6 @@ public record Attachment(String name, Object content, AttachmentType type) {
                 FileUtils.writeByteArrayToFile(newFile, imageBytes);
             }
             case AUDIO -> {
-                //IF EPUB than bytes
-                //Форматы аудио
-                //ogg/vorbis
-                //wav
-                //mp3
-                //AAC
-
                 var url = new URL(str);
                 try (var is = url.openStream()) {
                     byte[] bytes = is.readAllBytes();
