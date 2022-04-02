@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/test/java/com/serejs/diplom/server/DiplomServerApplicationTests.java
+/.mvn/wrapper/maven-wrapper.jar
+/.mvn/wrapper/maven-wrapper.properties
+/mvnw
+/mvnw.cmd
