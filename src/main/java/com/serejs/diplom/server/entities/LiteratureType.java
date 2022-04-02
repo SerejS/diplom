@@ -1,29 +1,36 @@
 package com.serejs.diplom.server.entities;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "profile_view", schema = "diplom")
-public class View {
+@Table(name = "literature_type")
+public class LiteratureType {
     @Id
     @GeneratedValue
+    @Column(name = "id", nullable = false)
     private Long id;
 
     private String title;
+    private boolean main;
 
-    public View() {}
+    public LiteratureType() {
+    }
 
-    public View(String title) {
-        this.title = title;
+
+    public Long getId() {
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() {
-        return id;
+    public boolean isMain() {
+        return main;
+    }
+
+    public void setMain(boolean main) {
+        this.main = main;
     }
 
     public String getTitle() {

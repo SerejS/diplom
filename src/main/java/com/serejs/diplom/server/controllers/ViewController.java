@@ -3,7 +3,6 @@ package com.serejs.diplom.server.controllers;
 import com.serejs.diplom.server.entities.View;
 import com.serejs.diplom.server.repositories.ViewRepository;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
