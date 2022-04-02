@@ -1,6 +1,8 @@
 package com.serejs.diplom.server.entities;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "literature_type")
@@ -12,6 +14,16 @@ public class LiteratureType {
 
     private String title;
     private boolean main;
+
+    @OneToMany(mappedBy = "type")
+    private List<EngineParams> params;
+
+    @OneToMany(mappedBy = "type")
+    private List<Literature> literatures;
+
+    @ManyToMany(mappedBy = "types")
+    Set<Theme> themes;
+
 
     public LiteratureType() {
     }

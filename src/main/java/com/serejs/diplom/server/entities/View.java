@@ -9,8 +9,15 @@ public class View {
     @Id
     @GeneratedValue
     private Long id;
-
     private String title;
+
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
+    @OneToMany(mappedBy = "view")
+    private List<Project> projects;
+
 
     public View() {}
 
