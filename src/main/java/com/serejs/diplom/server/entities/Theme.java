@@ -1,5 +1,7 @@
 package com.serejs.diplom.server.entities;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -28,6 +30,17 @@ public class Theme {
             inverseJoinColumns = @JoinColumn(name = "id_types"))
     Set<LiteratureType> types;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Nullable
+    @JoinColumn(name = "root")
+    private Theme root;
+
+    public Long getRoot() {
+        if (root == null) return null;
+
+        return root.getId();
+    }
+
 
     public String getTitle() {
         return title;
@@ -45,8 +58,8 @@ public class Theme {
         this.percent = percent;
     }
 
-    public Project getProject() {
-        return project;
+    public Long getProject() {
+        return project.getId();
     }
 
     public void setProject(Project project) {
