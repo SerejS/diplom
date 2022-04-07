@@ -12,6 +12,9 @@ public class Project {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
+
+    private String title;
+
     @CreatedDate
     private Date date;
 
@@ -25,6 +28,7 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Theme> themes;
 
+    public String getTitle() {return title;}
 
     public Long getId() {
         return id;
