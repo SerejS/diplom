@@ -4,6 +4,7 @@ import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.ui.states.State;
 import com.serejs.diplom.desktop.utils.GoogleSearchEngine;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,12 +32,12 @@ public class WebSearchController extends TableViewController<GoogleSearchEngine>
     @FXML
     private Button clearButton;
     @FXML
-    private FileChooser fileChooser = new FileChooser();
+    private final FileChooser fileChooser = new FileChooser();
     private File rpdFile;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        var engines = App.getEngines();
+        var engines = State.getEngines();
         table.getItems().addAll(engines);
 
         var cx = new TableColumn<GoogleSearchEngine, String>("CX");
@@ -84,7 +85,7 @@ public class WebSearchController extends TableViewController<GoogleSearchEngine>
     private void openModal() {
         var containsAllTypes = table.getItems()
                 .stream().map(GoogleSearchEngine::getType)
-                .collect(Collectors.toSet()).containsAll(App.getTypes());
+                .collect(Collectors.toSet()).containsAll(State.getLitTypes());
 
         if (containsAllTypes)
             ErrorAlert.info("Добавлены поисковые движки ко всем типам литерартуры");

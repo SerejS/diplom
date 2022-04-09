@@ -1,12 +1,12 @@
 package com.serejs.diplom.desktop.ui.controllers;
 
-import com.serejs.diplom.desktop.server.User;
+import com.serejs.diplom.desktop.server.ServerClient;
+import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
@@ -27,7 +27,11 @@ public class UserViewController extends TableViewController<String> {
     }
 
     protected void load() {
-        listView.getItems().addAll(User.getViewTitles());
+        try {
+            listView.getItems().addAll(ServerClient.getViews().values());
+        } catch (Exception e) {
+            System.err.println("Ошибка получения отображений с сервера.");
+        }
     }
 
     @FXML
@@ -51,7 +55,7 @@ public class UserViewController extends TableViewController<String> {
 
     @FXML
     private void goNextPage() {
-        User.setView(view);
+        State.setViewID((long) 1);
         anotherPage(selectButton, "project-overview.fxml");
     }
 
@@ -63,7 +67,7 @@ public class UserViewController extends TableViewController<String> {
     @Override
     public void addRow(String string) {
         listView.getItems().add(string);
-        User.addView(string);
+        ServerClient.addView(string);
         modal.close();
     }
 }

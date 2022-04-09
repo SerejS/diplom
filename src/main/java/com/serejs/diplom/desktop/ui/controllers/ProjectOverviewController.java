@@ -1,15 +1,17 @@
 package com.serejs.diplom.desktop.ui.controllers;
 
-import com.serejs.diplom.desktop.server.User;
+import com.serejs.diplom.desktop.server.ServerClient;
 import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SplitMenuButton;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class ProjectOverviewController extends TableViewController<String> {
@@ -25,7 +27,8 @@ public class ProjectOverviewController extends TableViewController<String> {
             if (event.getClickCount() == 2) {
                 var project = projectList.getSelectionModel().getSelectedItem();
 
-                App.openProject(project.length());
+                //Получить идентификатор проекта
+                //App.openProject(project.length());
                 anotherPage(createButton, "theme-view.fxml");
             }
 
@@ -36,7 +39,16 @@ public class ProjectOverviewController extends TableViewController<String> {
     }
 
     protected void loadProjects()  {
-        projectList.getItems().addAll(User.projectTitles());
+        var projects = new HashMap<Long, String>();
+
+        try {
+            projects = ServerClient.getProjects(State.getViewID());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Добавить получение идентификаторов, чтобы можно было сделать следующий запрос.
+        projectList.getItems().addAll(projects.values());
     }
 
     @Override
@@ -50,7 +62,7 @@ public class ProjectOverviewController extends TableViewController<String> {
 
     @FXML
     protected void onCreateProject() {
-        App.createNewProject();
+        State.createNewProject();
         anotherPage(createButton, "theme-view.fxml");
     }
 

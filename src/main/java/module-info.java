@@ -32,4 +32,6 @@ module diplom.desktop.ui {
     opens com.serejs.diplom.desktop.ui.controllers.modals to javafx.fxml;
     exports com.serejs.diplom.desktop.ui.controllers.abstracts;
     opens com.serejs.diplom.desktop.ui.controllers.abstracts to javafx.fxml;
+    exports com.serejs.diplom.desktop.ui.states;
+    opens com.serejs.diplom.desktop.ui.states to javafx.fxml;
 }

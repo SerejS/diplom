@@ -1,9 +1,10 @@
 package com.serejs.diplom.desktop.ui.controllers;
 
-import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.alerts.InfoAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.RootController;
+import com.serejs.diplom.desktop.ui.states.State;
+import com.serejs.diplom.desktop.utils.Processing;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
@@ -32,7 +33,7 @@ public class ResultController extends RootController implements Initializable {
         var task = new Task<String>() {
             @Override
             protected String call() throws Exception {
-                return App.getResult();
+                return Processing.getResult();
             }
         };
 
@@ -47,16 +48,16 @@ public class ResultController extends RootController implements Initializable {
     }
 
     public void goProjectOverview() {
-        App.saveProject();
+        //Сохранение проекта State.saveProject();
         anotherPage(finishButton, "project-overview.fxml");
     }
 
     public void saveMdFile() {
-        var dir = App.getOutputDirectory();
+        var dir = State.getOutputDirectory();
         try {
-            var mdFile = new File(dir.getAbsolutePath() + "/" + App.getProjectTitle() + ".md");
+            var mdFile = new File(dir.getAbsolutePath() + "/" + State.getProjectTitle() + ".md");
             var writer = new BufferedWriter(new FileWriter(mdFile));
-            writer.write(App.getMdResult(App.getFragments(), App.getOutputDirectory()));
+            writer.write(Processing.getMdResult(State.getFragments(), State.getOutputDirectory()));
             writer.flush();
             InfoAlert.info("Вы сохранили результат в файл MarkDown");
         } catch (IOException ex) {

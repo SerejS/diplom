@@ -7,6 +7,7 @@ import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,7 +27,7 @@ public class FilesViewController extends TableViewController<Source> {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        var sources = App.getSources();
+        var sources = State.getSources();
         table.getItems().addAll(sources.stream().filter(s -> s.getSourceType() != SourceType.WEB).toList());
 
         var uri = new TableColumn<Source, URI>("Название файла");
@@ -57,13 +58,13 @@ public class FilesViewController extends TableViewController<Source> {
             return;
         }
 
-        App.addSources(sources);
+        State.setSources(sources);
         anotherPage(nextButton, "web-view.fxml");
     }
 
     @FXML
     public void onPrevPage() {
-        App.addSources(getItems());
+        State.setSources(getItems());
         anotherPage(prevButton, "theme-view.fxml");
     }
 }

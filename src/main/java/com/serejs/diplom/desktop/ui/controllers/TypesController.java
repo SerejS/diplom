@@ -5,6 +5,7 @@ import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,7 +19,7 @@ public class TypesController extends TableViewController<LiteratureType> {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        var types = App.getTypes();
+        var types = State.getLitTypes();
         if (types != null) table.getItems().addAll(types);
 
         var title = new TableColumn<LiteratureType, String>("Название типа литературы");
@@ -48,7 +49,7 @@ public class TypesController extends TableViewController<LiteratureType> {
 
         LiteratureType t = table.getSelectionModel().getSelectedItem();
         table.getItems().removeAll(t);
-        App.remove(t);
+        State.getLitTypes().remove(t);
     }
 
     @FXML

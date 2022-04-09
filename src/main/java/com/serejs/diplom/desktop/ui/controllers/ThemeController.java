@@ -5,6 +5,7 @@ import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
@@ -20,10 +21,10 @@ public class ThemeController extends TableViewController<Theme> {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        var project = App.getProjectTitle();
+        var project = State.getProjectTitle();
         if (project != null) titleProject.setText(project);
 
-        var themes = App.getThemes();
+        var themes = State.getThemes();
         if (themes != null) table.getItems().addAll(themes);
 
         var title = new TableColumn<Theme, String>("Название темы");
@@ -70,8 +71,8 @@ public class ThemeController extends TableViewController<Theme> {
             return;
         }
 
-        App.setProjectTitle(title);
-        App.setThemes(themes);
+        State.setProjectTitle(title);
+        State.setThemes(themes);
 
         anotherPage(nextButton, "files-view.fxml");
     }

@@ -7,6 +7,7 @@ import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.ThemeController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.ui.states.State;
 import com.serejs.diplom.desktop.utils.Settings;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -51,7 +52,7 @@ public class ModalThemeController extends ModalController<Theme> {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         areaNGrams.setWrapText(true);
-        typeBox.getItems().addAll(App.getTypes());
+        typeBox.getItems().addAll(State.getLitTypes());
         closeInit();
     }
 

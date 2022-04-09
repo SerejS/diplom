@@ -6,6 +6,7 @@ import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.TypesController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
@@ -36,7 +37,7 @@ public class ModalTypeController extends ModalController<LiteratureType> {
             var type = new LiteratureType(title.getText(), main.isSelected());
 
             parent.addRow(type);
-            App.getTypes().add(type);
+            State.getLitTypes().add(type);
         }
 
     }

@@ -9,6 +9,7 @@ import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.FilesViewController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -104,7 +105,7 @@ public class ModalFileController extends ModalController<Source> {
         );
 
         assert typeBox != null;
-        typeBox.getItems().addAll(App.getTypes());
+        typeBox.getItems().addAll(State.getLitTypes());
 
         FileChooser.ExtensionFilter extFilter1 = new FileChooser.ExtensionFilter("FB2 files", "*.fb2");
         FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("TXT files", "*.txt");

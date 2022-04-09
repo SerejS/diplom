@@ -1,10 +1,10 @@
 package com.serejs.diplom.desktop.ui.controllers.modals;
 
 import com.serejs.diplom.desktop.text.container.LiteratureType;
-import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.controllers.WebSearchController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.ui.states.State;
 import com.serejs.diplom.desktop.utils.GoogleSearchEngine;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -39,14 +39,14 @@ public class ModalWebController extends ModalController<GoogleSearchEngine> {
                     litTypes.getSelectionModel().getSelectedItem());
 
             parent.addRow(engine);
-            App.addEngine(engine);
+            State.addEngine(engine);
         }
 
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        litTypes.getItems().addAll(App.getTypes());
+        litTypes.getItems().addAll(State.getLitTypes());
         closeInit();
     }
 
