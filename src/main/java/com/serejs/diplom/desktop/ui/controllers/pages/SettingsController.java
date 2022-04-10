@@ -29,6 +29,8 @@ public class SettingsController extends RootController implements Initializable 
     TextField minConcentration;
     @FXML
     CheckBox referring;
+    @FXML
+    CheckBox attachments;
 
     @FXML
     Button nextButton;
@@ -45,6 +47,7 @@ public class SettingsController extends RootController implements Initializable 
         maxMicroRange.setText(String.valueOf(Settings.getMaxMicroRange()));
         minConcentration.setText(String.valueOf(Settings.getMinConcentration()));
         referring.setSelected(Settings.isAutoReferring());
+        attachments.setSelected(Settings.isSaveAttachments());
     }
 
     private void saveState() throws NumberFormatException {
@@ -56,6 +59,7 @@ public class SettingsController extends RootController implements Initializable 
         Settings.setMaxMicroRange(Long.parseLong(maxMicroRange.getText()));
         Settings.setMinConcentration(Float.parseFloat(minConcentration.getText()));
         Settings.setAutoReferring(referring.isSelected());
+        Settings.setSaveAttachments(attachments.isSelected());
     }
 
     @FXML

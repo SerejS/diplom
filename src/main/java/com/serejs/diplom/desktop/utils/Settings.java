@@ -27,6 +27,8 @@ public class Settings {
     private static long maxMicroRange = 3;
     @Getter @Setter
     private static boolean autoReferring = true;
+    @Getter @Setter
+    private static boolean saveAttachments = false;
 
     @Getter @Setter
     private static String mainCX;
