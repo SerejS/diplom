@@ -34,10 +34,6 @@ public class ThemeController extends TableViewController<Theme> {
         percent.setMinWidth(200);
         percent.setCellValueFactory(new PropertyValueFactory<>("percent"));
 
-       /* var keywords = new TableColumn<Theme, String>("Ключевые слова");
-        keywords.setMinWidth(400);
-        keywords.setCellValueFactory(new PropertyValueFactory<>("keyWords"));*/
-
         var root = new TableColumn<Theme, String>("Родительская тема");
         root.setMinWidth(200);
         root.setCellValueFactory(new PropertyValueFactory<>("root"));
