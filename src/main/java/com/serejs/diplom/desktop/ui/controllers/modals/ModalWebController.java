@@ -1,7 +1,7 @@
 package com.serejs.diplom.desktop.ui.controllers.modals;
 
 import com.serejs.diplom.desktop.text.container.LiteratureType;
-import com.serejs.diplom.desktop.ui.controllers.WebSearchController;
+import com.serejs.diplom.desktop.ui.controllers.pages.WebSearchController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import com.serejs.diplom.desktop.ui.states.State;

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="362.0" prefWidth="719.0" spacing="20.0" stylesheets="@../style/index.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.ProjectOverviewController">
+<VBox alignment="CENTER" prefHeight="362.0" prefWidth="719.0" spacing="20.0" stylesheets="@../style/index.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.pages.ProjectOverviewController">
    <Label alignment="CENTER" prefHeight="30.0" prefWidth="230.0" text="Выберите проект">
       <font>
          <Font size="24.0" />

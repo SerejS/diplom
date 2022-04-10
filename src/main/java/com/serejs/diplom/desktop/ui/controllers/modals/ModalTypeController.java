@@ -1,9 +1,8 @@
 package com.serejs.diplom.desktop.ui.controllers.modals;
 
 import com.serejs.diplom.desktop.text.container.LiteratureType;
-import com.serejs.diplom.desktop.ui.App;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
-import com.serejs.diplom.desktop.ui.controllers.TypesController;
+import com.serejs.diplom.desktop.ui.controllers.pages.TypesController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import com.serejs.diplom.desktop.ui.states.State;

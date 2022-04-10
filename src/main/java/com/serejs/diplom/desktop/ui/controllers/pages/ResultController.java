@@ -1,4 +1,4 @@
-package com.serejs.diplom.desktop.ui.controllers;
+package com.serejs.diplom.desktop.ui.controllers.pages;
 
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.alerts.InfoAlert;

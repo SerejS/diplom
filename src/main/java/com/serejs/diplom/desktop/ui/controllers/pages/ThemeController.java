@@ -1,4 +1,4 @@
-package com.serejs.diplom.desktop.ui.controllers;
+package com.serejs.diplom.desktop.ui.controllers.pages;
 
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.ui.App;
