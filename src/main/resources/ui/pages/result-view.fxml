@@ -22,10 +22,8 @@
         </font>
     </TextArea>
     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-        <children>
-            <Button fx:id="finishButton" mnemonicParsing="false" onAction="#goProjectOverview" text="Сохранить"/>
-            <Button onAction="#saveMdFile" mnemonicParsing="false" text="Экспорт в md"/>
-        </children>
+        <Button fx:id="finishButton" mnemonicParsing="false" onAction="#goProjectOverview" text="Сохранить"/>
+        <Button onAction="#saveMdFile" mnemonicParsing="false" text="Экспорт в md"/>
     </HBox>
 
 

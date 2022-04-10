@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="539.0" prefWidth="730.0" spacing="20.0" style="-fx-background-color: D7D2FB;" stylesheets="@../style/index.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.pages.SettingsController">
+<VBox alignment="CENTER" prefHeight="599.0" prefWidth="730.0" spacing="20.0" style="-fx-background-color: D7D2FB;" stylesheets="@../style/index.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.pages.SettingsController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -85,6 +85,13 @@
             </font>
         </Label>
         <CheckBox fx:id="referring" minWidth="-Infinity" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+
+        <Label prefHeight="53.0" prefWidth="368.0" text="Сохранение вложенных фрагментов" GridPane.rowIndex="8">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <CheckBox fx:id="attachments" minWidth="-Infinity" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
 
     </GridPane>
     <HBox alignment="CENTER" prefHeight="26.0" prefWidth="271.0" spacing="50.0">
