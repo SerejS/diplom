@@ -48,7 +48,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Label>
-                        <TextField />
+                        <PasswordField />
                     </children>
                     <VBox.margin>
                         <Insets bottom="20.0" />
