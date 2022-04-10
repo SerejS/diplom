@@ -1,7 +1,7 @@
 package com.serejs.diplom.desktop.ui.controllers.pages;
 
 import com.serejs.diplom.desktop.server.ServerClient;
-import com.serejs.diplom.desktop.ui.App;
+import com.serejs.diplom.desktop.text.container.View;
 import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import com.serejs.diplom.desktop.ui.states.State;
@@ -18,8 +18,9 @@ public class UserViewController extends TableViewController<String> {
     @FXML
     private Button deleteButton;
     @FXML
-    private ListView<String> listView = new ListView<>();
-    private String view;
+    private ListView<View> listView = new ListView<>();
+
+    private View view = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -28,7 +29,8 @@ public class UserViewController extends TableViewController<String> {
 
     protected void load() {
         try {
-            listView.getItems().addAll(ServerClient.getViews().values());
+            ServerClient.getViews().forEach((key, value) ->
+                    listView.getItems().add(new View(key, value)));
         } catch (Exception e) {
             System.err.println("Ошибка получения отображений с сервера.");
         }
@@ -55,7 +57,7 @@ public class UserViewController extends TableViewController<String> {
 
     @FXML
     private void goNextPage() {
-        State.setViewID((long) 1);
+        State.setViewID(view.getId());
         anotherPage(selectButton, "project-overview.fxml");
     }
 
@@ -66,7 +68,10 @@ public class UserViewController extends TableViewController<String> {
 
     @Override
     public void addRow(String string) {
-        listView.getItems().add(string);
+
+        ///Добавить отправление на сервер отображения
+
+        listView.getItems().add(new View(-1L, string));
         ServerClient.addView(string);
         modal.close();
     }
