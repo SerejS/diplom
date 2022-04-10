@@ -82,7 +82,11 @@ public class State {
 
     public static List<LiteratureType> getLitTypes() {
         if (types.isEmpty())
-            ServerClient.getTypes(viewID);
+            try {
+                types.addAll(ServerClient.getTypes(viewID));
+            } catch (Exception e) {
+                System.err.println("Ошибка получения типов литературы с сервера");
+            }
 
         return types;
     }
