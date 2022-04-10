@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
+import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -60,6 +61,8 @@ public class ResultController extends RootController implements Initializable {
             writer.write(Processing.getMdResult(State.getFragments(), State.getOutputDirectory()));
             writer.flush();
             InfoAlert.info("Вы сохранили результат в файл MarkDown");
+
+            Desktop.getDesktop().open(State.getOutputDirectory());
         } catch (IOException ex) {
             ErrorAlert.info("Ошибка создания файла.");
         } catch (Exception e) {
