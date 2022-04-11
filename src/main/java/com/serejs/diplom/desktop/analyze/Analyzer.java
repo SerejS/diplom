@@ -1,6 +1,6 @@
 package com.serejs.diplom.desktop.analyze;
 
-import com.serejs.diplom.desktop.Main;
+import com.serejs.diplom.desktop.utils.Main;
 import com.serejs.diplom.desktop.text.container.FragmentMap;
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.utils.Settings;
