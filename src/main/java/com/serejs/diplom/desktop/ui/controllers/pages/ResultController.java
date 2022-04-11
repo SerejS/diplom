@@ -49,7 +49,7 @@ public class ResultController extends RootController implements Initializable {
     }
 
     public void goProjectOverview() {
-        //Сохранение проекта State.saveProject();
+        State.saveProject();
         anotherPage(finishButton, "project-overview.fxml");
     }
 
@@ -58,14 +58,16 @@ public class ResultController extends RootController implements Initializable {
         try {
             var mdFile = new File(dir.getAbsolutePath() + "/" + State.getProjectTitle() + ".md");
             var writer = new BufferedWriter(new FileWriter(mdFile));
-            writer.write(Processing.getMdResult(State.getFragments(), State.getOutputDirectory()));
+            writer.write(Processing.getMdResult(State.getFragments(), mdFile));
             writer.flush();
             InfoAlert.info("Вы сохранили результат в файл MarkDown");
 
             Desktop.getDesktop().open(State.getOutputDirectory());
         } catch (IOException ex) {
+            ex.printStackTrace();
             ErrorAlert.info("Ошибка создания файла.");
         } catch (Exception e) {
+            e.printStackTrace();
             ErrorAlert.info("Ошибка получения результата.");
         }
     }

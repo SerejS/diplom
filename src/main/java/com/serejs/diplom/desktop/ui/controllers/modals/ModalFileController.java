@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -116,6 +117,7 @@ public class ModalFileController extends ModalController<Source> {
             var stage = addButton.getScene().getWindow();
 
             try {
+                fileChooser.setInitialDirectory(new File("C:\\Users\\serej\\Desktop"));
                 var file = fileChooser.showOpenDialog(stage);
                 if (uriField.getText().isEmpty()) titleField.setText(file.getName());
                 uriField.setText(file.toURI().toString());

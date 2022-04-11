@@ -35,8 +35,7 @@ public class Fragment {
     }
 
     public void saveAttachments(File dir) {
-        if (attachments.isEmpty()) return;
-
+        if (attachments.isEmpty() || dir == null) return;
         var dirs = new HashMap<AttachmentType, String>();
         dirs.put(AttachmentType.AUDIO, dir.getAbsolutePath() + "audio/");
         dirs.put(AttachmentType.IMAGE, dir.getAbsolutePath() + "image/");
