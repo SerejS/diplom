@@ -1,15 +1,16 @@
 package com.serejs.diplom.desktop.ui.states;
 
 import com.serejs.diplom.desktop.server.ServerClient;
-import com.serejs.diplom.desktop.text.container.*;
+import com.serejs.diplom.desktop.text.container.FragmentMap;
+import com.serejs.diplom.desktop.text.container.LiteratureType;
+import com.serejs.diplom.desktop.text.container.Source;
+import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.utils.GoogleSearchEngine;
-import javafx.stage.DirectoryChooser;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,8 +66,6 @@ public class State {
         projectTitle = "";
         sources = new LinkedList<>();
         themes = new LinkedList<>();
-
-        setOutputDirectory();
     }
 
     //Установка полей существующего проекта
@@ -74,7 +73,6 @@ public class State {
         projectTitle = projects.get(id);
         sources = ServerClient.getSources(id);
         themes = ServerClient.getThemes(id);
-        setOutputDirectory();
     }
 
     public static List<LiteratureType> getLitTypes() {
@@ -101,19 +99,14 @@ public class State {
         sources.addAll(newSources);
     }
 
-
-    public static void addEngine(GoogleSearchEngine engine) {
-        engines.add(engine);
+    public static void saveProject() {
+        projects.put(-1L, projectTitle);
     }
 
 
     //Установка директории с файлами
-    public static void setOutputDirectory() {
-        var chooser = new DirectoryChooser();
-        try {
-            var dir = chooser.showDialog(null);
-            if (dir.isDirectory()) outputDirectory = dir;
-        } catch (NullPointerException ignored) {
-        }
+    public static void setOutputDirectory(File dir) {
+        if (dir.isDirectory())
+            outputDirectory = dir;
     }
 }

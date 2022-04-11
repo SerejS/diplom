@@ -39,7 +39,7 @@ public class ModalWebController extends ModalController<GoogleSearchEngine> {
                     litTypes.getSelectionModel().getSelectedItem());
 
             parent.addRow(engine);
-            State.addEngine(engine);
+            State.getEngines().add(engine);
         }
 
     }

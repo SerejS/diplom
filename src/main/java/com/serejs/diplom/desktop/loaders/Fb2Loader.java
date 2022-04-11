@@ -2,8 +2,8 @@ package com.serejs.diplom.desktop.loaders;
 
 import com.serejs.diplom.desktop.enums.AttachmentType;
 import com.serejs.diplom.desktop.text.container.Attachment;
+import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.utils.MarkDown;
-import com.serejs.diplom.desktop.utils.Settings;
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -11,7 +11,6 @@ import org.jsoup.safety.Safelist;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.util.HashSet;
 
 public class Fb2Loader extends AbstractLoader {
@@ -49,11 +48,13 @@ public class Fb2Loader extends AbstractLoader {
         for (int i = 0; i < mainSections.size(); i++) {
             var section = mainSections.get(i);
 
-            var secTitle = section.getElementsByTag("title").text();
+            /*var secTitle = section.getElementsByTag("title").text();
             var title = file.getName() + " " + (i + 1) + " - " + Jsoup.clean(secTitle, Safelist.none());
             if (title.length() > Settings.getMaxLengthTitle()) {
                 title = title.substring(0, Settings.getMaxLengthTitle());
-            }
+            }*/
+
+            var title = file.getName() + " " + i;
 
             //Собирание текста главы из всего текста в тегах
             var sb = new StringBuilder();

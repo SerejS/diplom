@@ -1,6 +1,5 @@
 package com.serejs.diplom.desktop.ui;
 
-import com.serejs.diplom.desktop.server.ServerClient;
 import com.serejs.diplom.desktop.ui.controllers.AppScene;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
