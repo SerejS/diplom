@@ -1,30 +1,29 @@
 package com.serejs.diplom.desktop.loaders;
 
-import static com.serejs.diplom.desktop.utils.AttachmentParser.xmlAttachments;
-
+import com.serejs.diplom.desktop.text.container.Source;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.epub.EpubReader;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+
+import static com.serejs.diplom.desktop.utils.AttachmentParser.xmlAttachments;
 
 public class EpubLoader extends AbstractLoader {
     /**
      * Функция получение глав книги из файла epub
      *
-     * @param uri источник epub
+     * @param source источник epub
      */
     @Override
-    public void load(URI uri) throws IOException {
+    public void load(Source source) throws IOException {
         //Преобразование файла в книгу java
-        Book book = new EpubReader().readEpub(new FileInputStream(uri.getPath()));
+        Book book = new EpubReader().readEpub(new FileInputStream(source.getUri().getPath()));
         fragments = new HashMap<>();
 
         //Получение таблицы глав и добавление их в мапу

@@ -1,27 +1,27 @@
 package com.serejs.diplom.desktop.loaders;
 
 
-import com.serejs.diplom.desktop.text.container.Format;
+import com.serejs.diplom.desktop.text.container.FormatSource;
+import com.serejs.diplom.desktop.text.container.Source;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URI;
 
 public class CustomLoader extends AbstractLoader {
-    private final Format format;
-
-    public CustomLoader(Format format) {
-        this.format = format;
-    }
 
     /**
      * Функция получение содержания книги из файла пользовательского формата
      *
-     * @param uri Файл книги
+     * @param source Источник
      */
     @Override
-    public void load(URI uri) {
+    public void load(Source source) {
+        if (!(source instanceof FormatSource formatSource)) return;
+
+        var uri = formatSource.getUri();
+        var format = formatSource.getFormat();
+
         //Получение текста из файла
         StringBuilder text = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(uri.getPath()))) {

@@ -3,25 +3,27 @@ package com.serejs.diplom.desktop.loaders;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
-import com.serejs.diplom.desktop.text.container.Format;
+import com.serejs.diplom.desktop.text.container.FormatSource;
+import com.serejs.diplom.desktop.text.container.Source;
 
-import java.net.URI;
 import java.util.Arrays;
 
 public class PdfLoader extends AbstractLoader {
-    private final Format format;
-
-    public PdfLoader(Format format) {
-        this.format = format;
-    }
 
     @Override
-    public void load(URI uri) throws Exception {
-        PdfReader reader = new PdfReader(uri.toString());
+    public void load(Source source) throws Exception {
+        if (!(source instanceof FormatSource formatSource)) return;
+
+        var format = formatSource.getFormat();
+        //Перенос страниц выделения в инфтерфейс источника
+        var startPage = 1;
+
+        PdfReader reader = new PdfReader(source.getUri().toString());
 
         var textBook = new StringBuilder();
         var strategy = new SimpleTextExtractionStrategy();
-        for (int i = 1; i < reader.getNumberOfPages(); i++) {
+
+        for (int i = startPage; i < reader.getNumberOfPages(); i++) {
             textBook.append(PdfTextExtractor.getTextFromPage(reader, i, strategy));
         }
 

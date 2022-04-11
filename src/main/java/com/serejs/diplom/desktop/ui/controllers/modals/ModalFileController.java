@@ -2,6 +2,7 @@ package com.serejs.diplom.desktop.ui.controllers.modals;
 
 import com.serejs.diplom.desktop.enums.SourceType;
 import com.serejs.diplom.desktop.text.container.Format;
+import com.serejs.diplom.desktop.text.container.FormatSource;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
@@ -79,15 +80,15 @@ public class ModalFileController extends ModalController<Source> {
         }
 
 
-        var source = new Source(new URI(uri), fileSource, typeBox.getValue());
-        parent.addRow(source);
-
+        Source source;
         if (isFormatSource){
-            parent.getCustomSources().put(
-                    source,
-                    new Format(prev.getText(), mid.getText(), after.getText())
-            );
+            var format = new Format(prev.getText(), mid.getText(), after.getText());
+            source = new FormatSource(new URI(uri), fileSource, typeBox.getValue(), format);
+        } else {
+            source = new Source(new URI(uri), fileSource, typeBox.getValue());
         }
+
+        parent.addRow(source);
     }
 
     @Override

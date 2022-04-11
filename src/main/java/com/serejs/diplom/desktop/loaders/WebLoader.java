@@ -1,11 +1,11 @@
 package com.serejs.diplom.desktop.loaders;
 
+import com.serejs.diplom.desktop.text.container.Source;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.HashMap;
 
 import static com.serejs.diplom.desktop.utils.AttachmentParser.xmlAttachments;
@@ -14,7 +14,8 @@ import static com.serejs.diplom.desktop.utils.AttachmentParser.xmlAttachments;
 public class WebLoader extends AbstractLoader {
 
     @Override
-    public void load(URI uri) throws IOException {
+    public void load(Source source) throws IOException {
+        var uri = source.getUri();
         fragments = new HashMap<>();
 
         //Получение содержимого сайта в виде документа

@@ -21,8 +21,8 @@ public class Processing {
             switch (source.getSourceType()) {
                 case EPUB -> loader = new EpubLoader();
                 case FB2 -> loader = new Fb2Loader();
-                case PDF -> loader = new PdfLoader(State.getCustomSources().get(source));
-                case CUSTOM -> loader = new CustomLoader(State.getCustomSources().get(source));
+                case PDF -> loader = new PdfLoader();
+                case CUSTOM -> loader = new CustomLoader();
                 case WEB -> loader = new WebLoader();
                 default -> {
                     System.err.println("Тип литературы не определен: " + source.getUri());
@@ -35,7 +35,7 @@ public class Processing {
                     .toList();
             if (localThemes.isEmpty()) continue;
 
-            loader.load(source.getUri());
+            loader.load(source);
             var contents = loader.getContent();
 
             for (String key : contents.keySet()) {

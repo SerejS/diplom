@@ -18,11 +18,11 @@ public class Fb2Loader extends AbstractLoader {
     /**
      * Функция получение глав книги из файла fb2
      *
-     * @param uri Файл fb2
+     * @param source источник fb2
      */
     @Override
-    public void load(URI uri) throws IOException {
-        var file = new File(uri.getPath());
+    public void load(Source source) throws IOException {
+        var file = new File(source.getUri().getPath());
 
         var encoding = "UTF-8";
         var firstLine = FileUtils.readLines(file, encoding).get(0);

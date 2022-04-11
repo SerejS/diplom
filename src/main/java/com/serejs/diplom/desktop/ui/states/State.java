@@ -37,9 +37,6 @@ public class State {
     @Setter
     private static List<Theme> themes;
 
-    @Getter
-    private static final Map<Source, Format> customSources = new HashMap<>();
-
     private static final List<LiteratureType> types = new LinkedList<>();
 
     @Getter
@@ -100,16 +97,10 @@ public class State {
     }
 
 
-    public static void addSources(List<Source> newSources, Map<Source, Format> newCustomSources) {
+    public static void addSources(List<Source> newSources) {
         sources.addAll(newSources);
-        customSources.putAll(newCustomSources);
     }
 
-    public static void addSources(GoogleSearchEngine engine) throws IOException, URISyntaxException {
-        for (Theme theme : themes) {
-            sources.addAll(engine.getSources(theme));
-        }
-    }
 
     public static void addEngine(GoogleSearchEngine engine) {
         engines.add(engine);
