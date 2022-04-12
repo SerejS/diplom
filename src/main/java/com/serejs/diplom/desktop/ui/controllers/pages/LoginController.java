@@ -11,9 +11,11 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelloController extends RootController implements Initializable {
+public class LoginController extends RootController implements Initializable {
     @FXML
     private Button login;
+    @FXML
+    private Button register;
 
     @FXML
     private HBox topPane;
@@ -63,8 +65,8 @@ public class HelloController extends RootController implements Initializable {
     }
 
     @FXML
-    protected void registration() {
-        System.out.println("Reg click");
+    protected void handleRegisterEvent() {
+       anotherPage(register, "register-view.fxml");
     }
 
     @Override

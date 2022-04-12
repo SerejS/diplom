@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="305.0" prefWidth="507.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.pages.RegisterController">
+    <center>
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" stylesheets="@../style/index.css" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </BorderPane.margin>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="499.0" text="Создайте аккаунт" textAlignment="CENTER">
+                <font>
+                    <Font size="24.0" />
+                </font>
+            </Label>
+            <HBox alignment="CENTER">
+                <VBox.margin>
+                    <Insets bottom="5.0" top="20.0" />
+                </VBox.margin>
+                <padding>
+                    <Insets top="5.0" />
+                </padding>
+                <Label prefHeight="35.0" prefWidth="130.0" text="Логин:">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+
+                <TextField fx:id="login" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <VBox.margin>
+                    <Insets bottom="5.0" />
+                </VBox.margin>
+                <Label prefHeight="17.0" prefWidth="130.0" text="Пароль:">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <PasswordField fx:id="pass" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <VBox.margin>
+                    <Insets bottom="20.0" />
+                </VBox.margin>
+                <Label prefHeight="17.0" prefWidth="130.0" text="Повтор:">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <PasswordField fx:id="repeat"/>
+            </HBox>
+
+            <Button fx:id="prevButton" onAction="#goPrevPage" text="Отмена" />
+            <Button fx:id="regButton" onAction="#register" text="Зарегистрироваться" />
+        </VBox>
+    </center>
+</BorderPane>
