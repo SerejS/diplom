@@ -72,8 +72,6 @@ public class GoogleSearchEngine {
             uris.add(new URI(jArr.getJSONObject(i).get("link").toString()));
         }
 
-        //Изменить!
-        var testLitType = new LiteratureType("Веб ресурс", true);
-        return uris.stream().map(uri -> new Source(uri, SourceType.WEB, testLitType)).toList();
+        return uris.stream().map(uri -> new Source(uri, SourceType.WEB, type)).toList();
     }
 }
