@@ -4,9 +4,10 @@ import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.alerts.InfoAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.RootController;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+
+import static com.serejs.diplom.desktop.utils.Encrypt.encrypt;
 
 public class RegisterController extends RootController {
     @FXML
@@ -40,6 +41,16 @@ public class RegisterController extends RootController {
 
         if (!pass.equals(repeat)) {
             ErrorAlert.info("Пароли должны совпадать!");
+            return;
+        }
+
+        String salt = null;
+        try {
+            var encrypted = encrypt(pass);
+            pass = encrypted.getKey();
+            salt = encrypted.getValue();
+        } catch (Exception e) {
+            ErrorAlert.info("Ошибка шифрования пароля");
             return;
         }
 
