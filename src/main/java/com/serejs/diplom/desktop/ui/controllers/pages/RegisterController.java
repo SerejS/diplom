@@ -23,7 +23,7 @@ public class RegisterController extends RootController {
 
     @FXML
     private void goPrevPage() {
-        anotherPage(prevButton, "hello-view.fxml");
+        anotherPage(prevButton, "login-view.fxml");
     }
 
     @FXML
@@ -46,6 +46,6 @@ public class RegisterController extends RootController {
         ///Тут должен быть запрос к серверу...
 
         InfoAlert.info("Аккаунт успешно создан");
-        anotherPage(regButton, "hello-view.fxml");
+        anotherPage(regButton, "login-view.fxml");
     }
 }
