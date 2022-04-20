@@ -3,16 +3,14 @@ package com.serejs.diplom.desktop.ui.controllers.modals;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Theme;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
-import com.serejs.diplom.desktop.ui.controllers.pages.ThemeController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.ui.controllers.pages.ThemeController;
 import com.serejs.diplom.desktop.ui.states.State;
 import com.serejs.diplom.desktop.utils.Settings;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
@@ -26,6 +24,8 @@ public class ModalThemeController extends ModalController<Theme> {
     private Slider slider;
     @FXML
     private ComboBox<Theme> themeBox;
+    @FXML
+    private Label percentLabel;
 
     @FXML
     private CheckComboBox<LiteratureType> typeBox;
@@ -52,6 +52,11 @@ public class ModalThemeController extends ModalController<Theme> {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         areaNGrams.setWrapText(true);
         typeBox.getItems().addAll(State.getLitTypes());
+
+        slider.addEventHandler(EventType.ROOT, event ->
+            percentLabel.setText(Math.round(slider.getValue()) + "%")
+        );
+
         closeInit();
     }
 
@@ -102,9 +107,13 @@ public class ModalThemeController extends ModalController<Theme> {
     public void setObject(Theme theme) {
         this.obj = theme;
 
+        var startPercent = theme.getPercent() * 100;
         titleTheme.setText(theme.getTitle());
-        slider.setValue(theme.getPercent() * 100);
-        slider.setMax(slider.getMax() + theme.getPercent() * 100);
+        slider.setValue(startPercent);
+        slider.setMax(slider.getMax() + startPercent);
+
+        percentLabel.setText(Math.round(startPercent) + "%");
+
 
         if (theme.getRoot() != null) themeBox.setValue(theme.getRoot());
         theme.getTypes().forEach(type -> typeBox.getCheckModel().check(type));
