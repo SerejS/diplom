@@ -11,12 +11,12 @@ import javafx.scene.control.ListView;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class ProjectOverviewController extends TableViewController<String> {
     @FXML
-    private ListView<String> projectList;
+    private ListView<Project> projectList;
     @FXML
     private Button createButton;
 
@@ -28,7 +28,7 @@ public class ProjectOverviewController extends TableViewController<String> {
                 var project = projectList.getSelectionModel().getSelectedItem();
 
                 //Получить идентификатор проекта
-                //App.openProject(project.length());
+                State.getProjectData(project.getId());
                 anotherPage(createButton, "theme-view.fxml");
             }
 
@@ -39,16 +39,15 @@ public class ProjectOverviewController extends TableViewController<String> {
     }
 
     protected void loadProjects()  {
-        var projects = new HashMap<Long, String>();
+        var projects = new LinkedList<Project>();
 
         try {
-            projects = ServerClient.getProjects(State.getViewID());
+            projects = State.getProjects();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //Добавить получение идентификаторов, чтобы можно было сделать следующий запрос.
-        projectList.getItems().addAll(projects.values());
+        projectList.getItems().addAll(projects);
     }
 
     @Override

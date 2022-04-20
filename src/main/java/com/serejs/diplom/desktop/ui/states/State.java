@@ -1,30 +1,26 @@
 package com.serejs.diplom.desktop.ui.states;
 
 import com.serejs.diplom.desktop.server.ServerClient;
-import com.serejs.diplom.desktop.text.container.FragmentMap;
-import com.serejs.diplom.desktop.text.container.LiteratureType;
-import com.serejs.diplom.desktop.text.container.Source;
-import com.serejs.diplom.desktop.text.container.Theme;
+import com.serejs.diplom.desktop.text.container.*;
 import com.serejs.diplom.desktop.utils.GoogleSearchEngine;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 public class State {
     @Getter
     @Setter
     private static Long viewID;
-    private static HashMap<Long, String> projects = new HashMap<>();
+    private static LinkedList<Project> projects = new LinkedList<>();
 
     @Getter
     @Setter
-    private static String projectTitle;
+    private static Project project;
 
     @Getter
     @Setter
@@ -53,7 +49,7 @@ public class State {
     }
 
     //Получение списка проектов
-    public static Map<Long, String> getProjects() throws IOException {
+    public static LinkedList<Project> getProjects() throws IOException {
         if (projects.isEmpty())
             projects = ServerClient.getProjects(viewID);
 
@@ -63,16 +59,23 @@ public class State {
 
     //Создание нового проекта
     public static void createNewProject() {
-        projectTitle = "";
+        project = new Project(-1L, "");
         sources = new LinkedList<>();
         themes = new LinkedList<>();
     }
 
     //Установка полей существующего проекта
-    public static void openProject(Long id) {
-        projectTitle = projects.get(id);
-        sources = ServerClient.getSources(id);
+    public static void getProjectData(Long id) {
+        var pr = projects.stream().filter(p -> Objects.equals(p.getId(), id)).findFirst().orElseThrow();
+
+        project = pr;
         themes = ServerClient.getThemes(id);
+        sources = ServerClient.getSources(id);
+    }
+
+
+    public static LiteratureType getLitTypeById(Long id) {
+        return getLitTypes().stream().filter(lt -> Objects.equals(lt.getId(), id)).findFirst().get();
     }
 
     public static List<LiteratureType> getLitTypes() {
@@ -100,7 +103,7 @@ public class State {
     }
 
     public static void saveProject() {
-        projects.put(-1L, projectTitle);
+        projects.add(new Project(project.getId(), project.getTitle()));
     }
 
 
