@@ -46,7 +46,7 @@ public class SettingsController extends RootController implements Initializable 
         minKeyWords.setText(String.valueOf(Settings.getMinKeyNGrams()));
         maxMicroRange.setText(String.valueOf(Settings.getMaxMicroRange()));
         minConcentration.setText(String.valueOf(Settings.getMinConcentration()));
-        referring.setSelected(Settings.isAutoReferring());
+        referring.setSelected(Settings.isAutoExtracting());
         attachments.setSelected(Settings.isSaveAttachments());
     }
 
@@ -58,7 +58,7 @@ public class SettingsController extends RootController implements Initializable 
         Settings.setMinKeyNGrams(Long.parseLong(minKeyWords.getText()));
         Settings.setMaxMicroRange(Long.parseLong(maxMicroRange.getText()));
         Settings.setMinConcentration(Float.parseFloat(minConcentration.getText()));
-        Settings.setAutoReferring(referring.isSelected());
+        Settings.setAutoExtracting(referring.isSelected());
         Settings.setSaveAttachments(attachments.isSelected());
     }
 

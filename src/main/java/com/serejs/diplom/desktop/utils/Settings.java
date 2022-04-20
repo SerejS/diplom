@@ -26,7 +26,7 @@ public class Settings {
     @Getter @Setter
     private static long maxMicroRange = 3;
     @Getter @Setter
-    private static boolean autoReferring = true;
+    private static boolean autoExtracting = true;
     @Getter @Setter
     private static boolean saveAttachments = false;
 
