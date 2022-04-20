@@ -20,7 +20,7 @@ public class ThemeController extends TableViewController<Theme> {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        var project = State.getProjectTitle();
+        var project = State.getProject().getTitle();
         if (project != null) titleProject.setText(project);
 
         var themes = State.getThemes();
@@ -66,7 +66,7 @@ public class ThemeController extends TableViewController<Theme> {
             return;
         }
 
-        State.setProjectTitle(title);
+        State.getProject().setTitle(title);
         State.setThemes(themes);
 
         anotherPage(nextButton, "files-view.fxml");

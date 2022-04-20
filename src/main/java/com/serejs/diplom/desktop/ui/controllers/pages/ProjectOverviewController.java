@@ -1,7 +1,6 @@
 package com.serejs.diplom.desktop.ui.controllers.pages;
 
-import com.serejs.diplom.desktop.server.ServerClient;
-import com.serejs.diplom.desktop.ui.App;
+import com.serejs.diplom.desktop.text.container.Project;
 import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import com.serejs.diplom.desktop.ui.states.State;

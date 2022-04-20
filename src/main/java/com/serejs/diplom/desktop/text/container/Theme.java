@@ -10,6 +10,7 @@ import java.util.*;
 @Data
 //Percent относительно root -> фактический
 public class Theme {
+    private Long id;
     private Theme root;
     private String title;
     private double percent;
@@ -31,6 +32,12 @@ public class Theme {
         } else {
             this.percent = percent / 100;
         }
+    }
+
+
+    public Theme(Long id, Theme root, String title, double percent, String textKeyNGrams, Set<LiteratureType> types) {
+
+        this(root, title, percent, textKeyNGrams, types);
     }
 
     public void setKeyNGrams(String textKeyNGrams) {
