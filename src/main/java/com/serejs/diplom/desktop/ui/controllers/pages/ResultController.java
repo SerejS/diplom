@@ -56,7 +56,7 @@ public class ResultController extends RootController implements Initializable {
     public void saveMdFile() {
         var dir = State.getOutputDirectory();
         try {
-            var mdFile = new File(dir.getAbsolutePath() + "/" + State.getProjectTitle() + ".md");
+            var mdFile = new File(dir.getAbsolutePath() + "/" + State.getProject().getTitle() + ".md");
             var writer = new BufferedWriter(new FileWriter(mdFile));
             writer.write(Processing.getMdResult(State.getFragments(), mdFile));
             writer.flush();
