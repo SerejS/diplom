@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 import java.io.File;
 import java.net.URI;
@@ -81,7 +82,7 @@ public class ModalFileController extends ModalController<Source> {
 
 
         Source source;
-        if (isFormatSource){
+        if (isFormatSource) {
             var format = new Format(prev.getText(), mid.getText(), after.getText());
             source = new FormatSource(new URI(uri), fileSource, typeBox.getValue(), format);
         } else {
@@ -98,23 +99,33 @@ public class ModalFileController extends ModalController<Source> {
                 Arrays.stream(SourceType.values()).filter(type -> type != SourceType.WEB).toList()
         );
 
-        sourceBox.setOnAction(event ->
-                customFields.setVisible(
-                        sourceBox.getValue() == SourceType.CUSTOM
-                        || sourceBox.getValue() == SourceType.PDF
-                )
-        );
+        sourceBox.setOnAction(event -> {
+            customFields.setVisible(
+                    sourceBox.getValue() == SourceType.CUSTOM
+                            || sourceBox.getValue() == SourceType.PDF
+            );
+
+            ExtensionFilter extFilter = null;
+            switch (sourceBox.getValue()) {
+                case PDF -> extFilter = new FileChooser.ExtensionFilter("PDF files", "*.pdf");
+                case FB2 -> extFilter = new FileChooser.ExtensionFilter("FB2 files", "*.fb2");
+                case EPUB -> extFilter = new FileChooser.ExtensionFilter("EPUB files", "*.epub");
+                case CUSTOM -> extFilter = new FileChooser.ExtensionFilter("TXT files", "*.txt");
+                default -> System.err.println("Ошибка формата файла");
+            }
+
+            var filters = fileChooser.getExtensionFilters();
+            filters.clear();
+            filters.add(extFilter);
+
+        });
 
         assert typeBox != null;
         typeBox.getItems().addAll(State.getLitTypes());
 
-        FileChooser.ExtensionFilter extFilter1 = new FileChooser.ExtensionFilter("FB2 files", "*.fb2");
-        FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("TXT files", "*.txt");
-        FileChooser.ExtensionFilter extFilter3 = new FileChooser.ExtensionFilter("EPUB files", "*.epub");
-        FileChooser.ExtensionFilter extFilter4 = new FileChooser.ExtensionFilter("PDF files", "*.pdf");
-        fileChooser.getExtensionFilters().addAll(extFilter1, extFilter2, extFilter3, extFilter4);
-
         uriField.setOnMouseClicked(e -> {
+            if (sourceBox.getSelectionModel().isEmpty()) return;
+
             var stage = addButton.getScene().getWindow();
 
             try {
