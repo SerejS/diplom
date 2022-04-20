@@ -21,7 +21,7 @@ public class App extends Application {
         stage.setHeight(600);
         stage.setMinHeight(400);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/ui/pages/hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/ui/pages/login-view.fxml"));
         AppScene scene = new AppScene(fxmlLoader.load());
         stage.initStyle(StageStyle.UNDECORATED);
 

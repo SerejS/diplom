@@ -8,56 +8,52 @@
 <BorderPane prefHeight="305.0" prefWidth="507.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.serejs.diplom.desktop.ui.controllers.pages.LoginController">
 
     <top>
-        <HBox fx:id="topPane" alignment="CENTER_RIGHT" onMouseClicked="#handleClickAction"
-              onMouseDragged="#handleMovementAction" prefHeight="39.0" prefWidth="507.0"
-              style="-fx-background-color: #7B68F2;" BorderPane.alignment="CENTER">
-            <Button mnemonicParsing="false" onAction="#handleMinAction" text="Свернуть"/>
-            <Button mnemonicParsing="false" onAction="#handleFullscreenMode" text="Полный экран"/>
-            <Button mnemonicParsing="false" onAction="#handleClose" text="Закрыть" textAlignment="CENTER"/>
+        <HBox fx:id="topPane" alignment="CENTER_RIGHT" onMouseClicked="#handleClickAction" onMouseDragged="#handleMovementAction" prefHeight="39.0" prefWidth="507.0" style="-fx-background-color: #7B68F2;" BorderPane.alignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#handleMinAction" text="Свернуть" />
+            <Button mnemonicParsing="false" onAction="#handleFullscreenMode" text="Полный экран" />
+            <Button mnemonicParsing="false" onAction="#handleClose" text="Закрыть" textAlignment="CENTER" />
         </HBox>
     </top>
 
     <center>
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" stylesheets="@../style/index.css"
-              BorderPane.alignment="CENTER">
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" stylesheets="@../style/index.css" BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </BorderPane.margin>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="477.0"
-                   text="Войдите в аккаунт" textAlignment="CENTER">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="477.0" text="Войдите в аккаунт" textAlignment="CENTER">
                 <font>
-                    <Font size="24.0"/>
+                    <Font size="24.0" />
                 </font>
             </Label>
             <HBox alignment="CENTER" prefHeight="38.0" prefWidth="271.0">
                 <VBox.margin>
-                    <Insets bottom="5.0" top="20.0"/>
+                    <Insets bottom="5.0" top="20.0" />
                 </VBox.margin>
                 <padding>
-                    <Insets top="5.0"/>
+                    <Insets top="5.0" />
                 </padding>
                 <Label prefHeight="35.0" prefWidth="130.0" text="Логин:">
                     <font>
-                        <Font size="20.0"/>
+                        <Font size="20.0" />
                     </font>
                 </Label>
 
-                <TextField/>
+                <TextField fx:id="username" />
             </HBox>
             <HBox alignment="CENTER" prefHeight="47.0" prefWidth="271.0">
                 <VBox.margin>
-                    <Insets bottom="20.0"/>
+                    <Insets bottom="20.0" />
                 </VBox.margin>
                 <Label prefHeight="17.0" prefWidth="130.0" text="Пароль:">
                     <font>
-                        <Font size="20.0"/>
+                        <Font size="20.0" />
                     </font>
                 </Label>
-                <PasswordField/>
+                <PasswordField fx:id="password" />
             </HBox>
 
-            <Button fx:id="login" onAction="#handleLoginEvent" text="Вход"/>
-            <Button fx:id="register" onAction="#handleRegisterEvent" text="Регистрация"/>
+            <Button fx:id="login" onAction="#handleLoginEvent" text="Вход" />
+            <Button fx:id="register" onAction="#handleRegisterEvent" text="Регистрация" />
         </VBox>
     </center>
 </BorderPane>
