@@ -1,8 +1,9 @@
 package com.serejs.diplom.desktop.ui.controllers.pages;
 
-import com.serejs.diplom.desktop.server.ServerClient;
+import com.serejs.diplom.desktop.server.controllers.ViewClientController;
 import com.serejs.diplom.desktop.text.container.View;
 import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
+import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
@@ -29,8 +30,7 @@ public class UserViewController extends TableViewController<String> {
 
     protected void load() {
         try {
-            ServerClient.getViews().forEach((key, value) ->
-                    listView.getItems().add(new View(key, value)));
+            listView.getItems().addAll(ViewClientController.getViews());
         } catch (Exception e) {
             System.err.println("Ошибка получения отображений с сервера.");
         }
@@ -68,11 +68,13 @@ public class UserViewController extends TableViewController<String> {
 
     @Override
     public void addRow(String string) {
-
-        ///Добавить отправление на сервер отображения
-
         listView.getItems().add(new View(-1L, string));
-        ServerClient.addView(string);
+        try {
+            ViewClientController.addView(string);
+        } catch (Exception e) {
+            ErrorAlert.info("Ошибка добавления изображения");
+        }
+
         modal.close();
     }
 }

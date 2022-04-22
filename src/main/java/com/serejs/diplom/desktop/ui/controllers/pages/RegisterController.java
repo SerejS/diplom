@@ -1,15 +1,12 @@
 package com.serejs.diplom.desktop.ui.controllers.pages;
 
-import com.serejs.diplom.desktop.server.ServerClient;
+import com.serejs.diplom.desktop.server.controllers.UserClientController;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.alerts.InfoAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.RootController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import org.apache.http.HttpException;
-
-import java.io.IOException;
 
 public class RegisterController extends RootController {
     @FXML
@@ -47,9 +44,11 @@ public class RegisterController extends RootController {
         }
 
         try {
-            ServerClient.register(username, password);
-        } catch (IOException | HttpException e) {
+            UserClientController.register(username, password);
+        } catch (Exception e) {
+            ErrorAlert.info("Ошибка регистрации");
             e.printStackTrace();
+            return;
         }
 
         InfoAlert.info("Аккаунт успешно создан");

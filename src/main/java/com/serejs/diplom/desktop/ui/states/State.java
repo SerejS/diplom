@@ -1,6 +1,9 @@
 package com.serejs.diplom.desktop.ui.states;
 
-import com.serejs.diplom.desktop.server.ServerClient;
+import com.serejs.diplom.desktop.server.User;
+import com.serejs.diplom.desktop.server.controllers.AbstractClientController;
+import com.serejs.diplom.desktop.server.controllers.ProjectClientController;
+import com.serejs.diplom.desktop.server.controllers.TypeClientController;
 import com.serejs.diplom.desktop.text.container.*;
 import com.serejs.diplom.desktop.utils.GoogleSearchEngine;
 import lombok.Getter;
@@ -13,6 +16,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class State {
+    @Getter
+    @Setter
+    private static User user;
+
     @Getter
     @Setter
     private static Long viewID;
@@ -51,7 +58,7 @@ public class State {
     //Получение списка проектов
     public static LinkedList<Project> getProjects() throws IOException {
         if (projects.isEmpty())
-            projects = ServerClient.getProjects(viewID);
+            projects = ProjectClientController.getProjects(viewID);
 
         return projects;
     }
@@ -66,22 +73,20 @@ public class State {
 
     //Установка полей существующего проекта
     public static void getProjectData(Long id) {
-        var pr = projects.stream().filter(p -> Objects.equals(p.getId(), id)).findFirst().orElseThrow();
-
-        project = pr;
-        themes = ServerClient.getThemes(id);
-        sources = ServerClient.getSources(id);
+        project = projects.stream().filter(p -> Objects.equals(p.getId(), id)).findFirst().orElseThrow();
+        themes = ProjectClientController.getThemes(id);
+        sources = ProjectClientController.getSources(id);
     }
 
 
     public static LiteratureType getLitTypeById(Long id) {
-        return getLitTypes().stream().filter(lt -> Objects.equals(lt.getId(), id)).findFirst().get();
+        return getLitTypes().stream().filter(lt -> Objects.equals(lt.getId(), id)).findFirst().orElseThrow();
     }
 
     public static List<LiteratureType> getLitTypes() {
         if (types.isEmpty())
             try {
-                types.addAll(ServerClient.getTypes(viewID));
+                types.addAll(TypeClientController.getTypes(viewID));
             } catch (Exception e) {
                 System.err.println("Ошибка получения типов литературы с сервера");
             }

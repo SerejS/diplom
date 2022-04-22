@@ -1,6 +1,7 @@
 package com.serejs.diplom.desktop.ui.controllers.pages;
 
-import com.serejs.diplom.desktop.server.ServerClient;
+import com.serejs.diplom.desktop.server.controllers.AbstractClientController;
+import com.serejs.diplom.desktop.server.controllers.UserClientController;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.RootController;
 import javafx.fxml.FXML;
@@ -10,12 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.apache.http.HttpException;
 
-import java.io.IOException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.ResourceBundle;
 
 public class LoginController extends RootController implements Initializable {
@@ -83,7 +80,7 @@ public class LoginController extends RootController implements Initializable {
         }
 
         try {
-            ServerClient.auth(usernameValue, passwordValue);
+            UserClientController.auth(usernameValue, passwordValue);
             anotherPage(login, "user-view.fxml");
         } catch (Exception e) {
             ErrorAlert.info("Неверные данные");
