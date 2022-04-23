@@ -1,11 +1,16 @@
 package com.serejs.diplom.server.entities;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
@@ -16,6 +21,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<View> views;
 
+    public User() {}
+
     public Long getId() {
         return id;
     }
@@ -25,20 +32,47 @@ public class User {
     }
 
 
-    public String getUsername() {
-        return username;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new LinkedList<>();
+    }
+
+    @Override
+    public String getPassword() {
+        return pass;
+    }
+
+    public void setPassword(String pass) {
+        this.pass = pass;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getPass() {
-        return pass;
+    @Override
+    public String getUsername() {
+        return username;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public List<View> getViews() {
