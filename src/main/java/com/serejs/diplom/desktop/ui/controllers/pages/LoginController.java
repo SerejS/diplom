@@ -1,6 +1,5 @@
 package com.serejs.diplom.desktop.ui.controllers.pages;
 
-import com.serejs.diplom.desktop.server.controllers.AbstractClientController;
 import com.serejs.diplom.desktop.server.controllers.UserClientController;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.RootController;
@@ -32,6 +31,7 @@ public class LoginController extends RootController implements Initializable {
 
     private double x, y;
 
+    //Функции работы с аппбаром
     @FXML
     protected void handleClickAction(MouseEvent event) {
         Stage stage = (Stage) topPane.getScene().getWindow();
@@ -48,13 +48,11 @@ public class LoginController extends RootController implements Initializable {
        stage.setY(event.getScreenY() - y);
     }
 
-
     @FXML
     protected void handleMinAction() {
         Stage stage = (Stage) topPane.getScene().getWindow();
         stage.setIconified(true);
     }
-
 
     @FXML
     protected void handleFullscreenMode() {
@@ -62,13 +60,14 @@ public class LoginController extends RootController implements Initializable {
         stage.setFullScreen(!stage.isFullScreen());
     }
 
-
     @FXML
     protected void handleClose() {
         Stage stage = (Stage) topPane.getScene().getWindow();
         stage.close();
     }
 
+
+    //Контроллеры экрана
     @FXML
     protected void handleLoginEvent() {
         var usernameValue = username.getText();
