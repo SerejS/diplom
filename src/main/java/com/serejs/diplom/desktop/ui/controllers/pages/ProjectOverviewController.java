@@ -23,8 +23,10 @@ public class ProjectOverviewController extends TableViewController<String> {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadProjects();
         projectList.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                var project = projectList.getSelectionModel().getSelectedItem();
+            var model = projectList.getSelectionModel();
+
+            if (event.getClickCount() == 2 && !model.isEmpty()) {
+                var project = model.getSelectedItem();
 
                 //Получить идентификатор проекта
                 State.getProjectData(project.getId());
