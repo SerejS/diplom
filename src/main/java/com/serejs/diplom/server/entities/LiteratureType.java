@@ -24,6 +24,8 @@ public class LiteratureType {
     @ManyToMany(mappedBy = "types")
     Set<Theme> themes;
 
+    @ManyToOne
+    View view;
 
     public LiteratureType() {
     }
@@ -51,5 +53,9 @@ public class LiteratureType {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setView(View view) {
+        this.view = view;
     }
 }
