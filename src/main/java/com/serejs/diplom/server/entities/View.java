@@ -18,6 +18,9 @@ public class View {
     @OneToMany(mappedBy = "view")
     private List<Project> projects;
 
+    @OneToMany(mappedBy = "view")
+    private List<LiteratureType> types;
+
 
     public View() {}
 
@@ -39,5 +42,9 @@ public class View {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
