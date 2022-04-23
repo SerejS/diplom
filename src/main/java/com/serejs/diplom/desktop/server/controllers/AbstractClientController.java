@@ -38,8 +38,8 @@ public abstract class AbstractClientController {
         //Выбор метода запроса
         HttpRequestBase request;
         if (method.equals("GET")) {
-            request = new HttpGet(requestBuilder.build());
             if (params != null) requestBuilder.addParameters(params);
+            request = new HttpGet(requestBuilder.build());
         } else if (method.equals("POST")) {
             Gson gson = new Gson();
 
