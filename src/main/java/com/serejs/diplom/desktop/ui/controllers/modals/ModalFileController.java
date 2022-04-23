@@ -6,9 +6,9 @@ import com.serejs.diplom.desktop.text.container.FormatSource;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
-import com.serejs.diplom.desktop.ui.controllers.pages.FilesViewController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
+import com.serejs.diplom.desktop.ui.controllers.pages.FilesViewController;
 import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -22,6 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class ModalFileController extends ModalController<Source> {
@@ -40,11 +41,11 @@ public class ModalFileController extends ModalController<Source> {
     @FXML
     private HBox customFields;
     @FXML
-    private TextField prev;
+    private ComboBox<String> prev;
     @FXML
-    private TextField mid;
+    private ComboBox<String> mid;
     @FXML
-    private TextField after;
+    private ComboBox<String> after;
 
     private TableViewController<Source> parent;
 
@@ -75,7 +76,7 @@ public class ModalFileController extends ModalController<Source> {
 
         var fileSource = sourceBox.getValue();
         boolean isFormatSource = fileSource == SourceType.PDF || fileSource == SourceType.CUSTOM;
-        if (isFormatSource && (prev.getText().isEmpty() || mid.getText().isEmpty() || after.getText().isEmpty())) {
+        if (isFormatSource && (prev.getValue().isEmpty() || mid.getValue().isEmpty() || after.getValue().isEmpty())) {
             ErrorAlert.info("При данном типе литературе необходимо заполнить разделители.");
             return;
         }
@@ -83,7 +84,11 @@ public class ModalFileController extends ModalController<Source> {
 
         Source source;
         if (isFormatSource) {
-            var format = new Format(prev.getText(), mid.getText(), after.getText());
+            var format = new Format(
+                    getSeparator(prev.getValue()),
+                    getSeparator(mid.getValue()),
+                    getSeparator(after.getValue())
+            );
             source = new FormatSource(new URI(uri), fileSource, typeBox.getValue(), format);
         } else {
             source = new Source(new URI(uri), fileSource, typeBox.getValue());
@@ -137,8 +142,34 @@ public class ModalFileController extends ModalController<Source> {
             }
 
         });
+
+        //Format set
+        var separators = new LinkedList<String>();
+        separators.add("Пробел");
+        separators.add("Новая строка");
+        separators.add("Табуляция");
+
+        prev.setEditable(true);
+        prev.getItems().addAll(separators);
+
+        mid.setEditable(true);
+        mid.getItems().addAll(separators);
+
+        after.setEditable(true);
+        after.getItems().addAll(separators);
+
         closeInit();
     }
+
+    public String getSeparator(String separatorName) {
+        return switch (separatorName) {
+            case "Пробел" -> "\\\\s+";
+            case "Новая строка" -> "\n";
+            case "Табуляция" -> "\t";
+            default -> separatorName;
+        };
+    }
+
 
     @Override
     public void setObject(Source source) {

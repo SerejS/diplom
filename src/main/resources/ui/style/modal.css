@@ -56,3 +56,7 @@
     -fx-background-insets: 0, 1;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 8, 0.0, 0, 0);
 }
+
+#prev, #mid, #after {
+    -fx-font-size: 12;
+}

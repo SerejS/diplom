@@ -25,10 +25,10 @@
     <ComboBox fx:id="typeBox" prefHeight="30.0" prefWidth="649.0" promptText="Тип литературы" style="-fx-font-size: 16;" stylesheets="@../style/modal.css" visibleRowCount="5" />
     <ComboBox fx:id="sourceBox" prefHeight="30.0" prefWidth="669.0" promptText="Тип файла" style="-fx-font-size: 16;" visibleRowCount="5" />
     <TextField fx:id="uriField" editable="false" promptText="Путь к файлу" style="-fx-border-width: 1; -fx-font-size: 14;" />
-    <HBox fx:id="customFields" visible="false">
-        <TextField fx:id="prev" alignment="CENTER" prefHeight="25.0" prefWidth="144.0" promptText="До названия" />
-        <TextField fx:id="mid" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="215.0" promptText="Между названием и содержанием" />
-        <TextField fx:id="after" alignment="CENTER" layoutX="159.0" layoutY="10.0" promptText="После содержания" />
+    <HBox fx:id="customFields" alignment="CENTER" spacing="20.0" visible="false">
+        <ComboBox fx:id="prev" prefHeight="25.0" prefWidth="144.0" promptText="До названия" />
+        <ComboBox fx:id="mid" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="206.0" promptText="Перед содержанием" />
+        <ComboBox fx:id="after" layoutX="159.0" layoutY="10.0" promptText="После содержания" />
     </HBox>
 
     <HBox alignment="CENTER" prefHeight="57.0" prefWidth="318.0" spacing="50.0">
@@ -36,7 +36,6 @@
         <Button fx:id="closeButton" mnemonicParsing="false" text="Отменить" />
     </HBox>
    <stylesheets>
-      <URL value="@../style/index.css" />
       <URL value="@../style/modal.css" />
    </stylesheets>
 </VBox>
