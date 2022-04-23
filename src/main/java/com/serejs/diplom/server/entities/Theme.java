@@ -3,6 +3,7 @@ package com.serejs.diplom.server.entities;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -68,6 +69,10 @@ public class Theme {
 
     public String getNgrams() {
         return ngrams;
+    }
+
+    public List<Long> getTypes() {
+        return types.stream().map(LiteratureType::getId).toList();
     }
 
     public void setNgrams(String ngrams) {
