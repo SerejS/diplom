@@ -22,17 +22,29 @@ import java.util.Set;
 
 @Getter
 public class GoogleSearchEngine {
+    private final Long id;
     private final URIBuilder uriBuilder = new URIBuilder("https://customsearch.googleapis.com/customsearch/v1?");
     private final String cx;
-    private final String key;
+    private final String token;
     private final LiteratureType type;
 
-    public GoogleSearchEngine(String cx, String key, LiteratureType type) throws URISyntaxException {
+    public GoogleSearchEngine(String cx, String token, LiteratureType type) throws URISyntaxException {
+        this.id = -1L;
         uriBuilder.addParameter("cx", cx);
-        uriBuilder.addParameter("key", key);
+        uriBuilder.addParameter("key", token);
 
         this.cx = cx;
-        this.key = key;
+        this.token = token;
+        this.type = type;
+    }
+
+    public GoogleSearchEngine(Long id, String cx, String token, LiteratureType type) throws URISyntaxException {
+        this.id = id;
+        uriBuilder.addParameter("cx", cx);
+        uriBuilder.addParameter("key", token);
+
+        this.cx = cx;
+        this.token = token;
         this.type = type;
     }
 

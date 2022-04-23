@@ -70,6 +70,7 @@ public class State {
         project = projects.stream().filter(p -> Objects.equals(p.getId(), id)).findFirst().orElseThrow();
         themes = ProjectClientController.getThemes(id);
         sources = ProjectClientController.getSources(id);
+        engines.addAll(ProjectClientController.getEngines(id));
     }
 
 
