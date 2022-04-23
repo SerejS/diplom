@@ -21,7 +21,7 @@ public class State {
 
     @Getter
     @Setter
-    private static Long viewID;
+    private static View view;
     private static LinkedList<Project> projects = new LinkedList<>();
 
     @Getter
@@ -49,15 +49,10 @@ public class State {
     private static File outputDirectory;
 
 
-    //Установка отображений
-    public static void setView(Long id) {
-        viewID = id;
-    }
-
     //Получение списка проектов
     public static LinkedList<Project> getProjects() throws IOException {
         if (projects.isEmpty())
-            projects = ProjectClientController.getProjects(viewID);
+            projects = ProjectClientController.getProjects(view);
 
         return projects;
     }
@@ -85,7 +80,7 @@ public class State {
     public static List<LiteratureType> getLitTypes() {
         if (types.isEmpty())
             try {
-                types.addAll(TypeClientController.getTypes(viewID));
+                types.addAll(TypeClientController.getTypes(view));
             } catch (Exception e) {
                 System.err.println("Ошибка получения типов литературы с сервера");
             }

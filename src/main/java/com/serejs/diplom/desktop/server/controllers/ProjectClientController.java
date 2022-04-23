@@ -17,7 +17,8 @@ import java.util.stream.Collectors;
 
 public class ProjectClientController extends AbstractClientController {
 
-    public static LinkedList<Project> getProjects(Long viewID) {
+    public static LinkedList<Project> getProjects(View view) {
+        var viewID = view.getId();
         var projects = new LinkedList<Project>();
 
         JSONArray jsonProjects;

@@ -15,7 +15,8 @@ import java.util.List;
 
 public class TypeClientController extends AbstractClientController {
 
-    public static List<LiteratureType> getTypes(long viewID) {
+    public static List<LiteratureType> getTypes(View view) {
+        var viewID = view.getId();
         List<LiteratureType> types = new LinkedList<>();
 
         String responseContent;
@@ -41,5 +42,10 @@ public class TypeClientController extends AbstractClientController {
         }
 
         return types;
+    }
+
+    public static void addType(LiteratureType type) throws HttpException, IOException, URISyntaxException {
+        postRequest("/api/types", type);
+
     }
 }

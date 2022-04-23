@@ -57,7 +57,7 @@ public class UserViewController extends TableViewController<String> {
 
     @FXML
     private void goNextPage() {
-        State.setViewID(view.getId());
+        State.setView(view);
         anotherPage(selectButton, "project-overview.fxml");
     }
 
