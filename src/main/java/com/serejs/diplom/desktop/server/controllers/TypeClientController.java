@@ -3,6 +3,7 @@ package com.serejs.diplom.desktop.server.controllers;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.text.container.View;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
+import com.serejs.diplom.desktop.ui.states.State;
 import org.apache.http.HttpException;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -37,15 +38,16 @@ public class TypeClientController extends AbstractClientController {
             var type = new LiteratureType(
                     jsonLitTypes.getLong("id"),
                     jsonLitTypes.getString("title"),
-                    jsonLitTypes.getBoolean("main"));
+                    jsonLitTypes.getBoolean("main"),
+                    State.getView()
+            );
             types.add(type);
         }
 
         return types;
     }
 
-    public static void addType(LiteratureType type) throws HttpException, IOException, URISyntaxException {
+    public static void createType(LiteratureType type) throws HttpException, IOException, URISyntaxException {
         postRequest("/api/types", type);
-
     }
 }
