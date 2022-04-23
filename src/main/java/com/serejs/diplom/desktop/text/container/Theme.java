@@ -6,8 +6,8 @@ import lombok.EqualsAndHashCode;
 import java.util.*;
 
 
-@EqualsAndHashCode
 @Data
+@EqualsAndHashCode
 //Percent относительно root -> фактический
 public class Theme {
     private Long id;
@@ -36,8 +36,8 @@ public class Theme {
 
 
     public Theme(Long id, Theme root, String title, double percent, String textKeyNGrams, Set<LiteratureType> types) {
-
         this(root, title, percent, textKeyNGrams, types);
+        this.id = id;
     }
 
     public void setKeyNGrams(String textKeyNGrams) {
