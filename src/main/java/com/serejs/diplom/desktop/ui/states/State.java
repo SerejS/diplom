@@ -1,7 +1,6 @@
 package com.serejs.diplom.desktop.ui.states;
 
 import com.serejs.diplom.desktop.server.User;
-import com.serejs.diplom.desktop.server.controllers.AbstractClientController;
 import com.serejs.diplom.desktop.server.controllers.ProjectClientController;
 import com.serejs.diplom.desktop.server.controllers.TypeClientController;
 import com.serejs.diplom.desktop.text.container.*;

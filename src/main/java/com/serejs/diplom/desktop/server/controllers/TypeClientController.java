@@ -1,11 +1,15 @@
 package com.serejs.diplom.desktop.server.controllers;
 
 import com.serejs.diplom.desktop.text.container.LiteratureType;
+import com.serejs.diplom.desktop.text.container.View;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
+import org.apache.http.HttpException;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 

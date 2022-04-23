@@ -3,6 +3,7 @@ package com.serejs.diplom.desktop.server.controllers;
 import com.serejs.diplom.desktop.text.container.Project;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.text.container.Theme;
+import com.serejs.diplom.desktop.text.container.View;
 import com.serejs.diplom.desktop.ui.states.State;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
