@@ -16,6 +16,16 @@ public class EngineParams {
     @JoinColumn(name = "type")
     private LiteratureType type;
 
+    @ManyToOne
+    @JoinColumn(name = "project")
+    private Project project;
+
+    public EngineParams() {
+    }
+
+    public LiteratureType getType() {
+        return this.type;
+    }
 
     public String getCx() {
         return cx;
