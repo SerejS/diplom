@@ -1,12 +1,12 @@
 package com.serejs.diplom.desktop.text.container;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 @AllArgsConstructor
 public class View {
-    private final Long id;
+    private Long id;
     private final String title;
 
     @Override

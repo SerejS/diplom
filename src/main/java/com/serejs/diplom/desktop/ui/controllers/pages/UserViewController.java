@@ -68,11 +68,12 @@ public class UserViewController extends TableViewController<String> {
 
     @Override
     public void addRow(String string) {
-        listView.getItems().add(new View(-1L, string));
         try {
-            ViewClientController.addView(string);
+            var view = ViewClientController.addView(string);
+            listView.getItems().add(view);
         } catch (Exception e) {
             ErrorAlert.info("Ошибка добавления изображения");
+            e.printStackTrace();
         }
 
         modal.close();
