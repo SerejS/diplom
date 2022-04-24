@@ -18,7 +18,7 @@ public class ModalWebController extends ModalController<GoogleSearchEngine> {
     @FXML
     private TextField cx;
     @FXML
-    private TextField key;
+    private TextField token;
     @FXML
     private ComboBox<LiteratureType> litTypes;
 
@@ -35,7 +35,7 @@ public class ModalWebController extends ModalController<GoogleSearchEngine> {
         if (parent instanceof WebSearchController parent) {
             var engine = new GoogleSearchEngine(
                     cx.getText(),
-                    key.getText(),
+                    token.getText(),
                     litTypes.getSelectionModel().getSelectedItem());
 
             parent.addRow(engine);
@@ -52,6 +52,8 @@ public class ModalWebController extends ModalController<GoogleSearchEngine> {
 
     @Override
     public void setObject(GoogleSearchEngine engine) {
-
+        cx.setText(engine.getCx());
+        token.setText(engine.getToken());
+        litTypes.getSelectionModel().select(engine.getType());
     }
 }

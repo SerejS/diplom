@@ -1,14 +1,12 @@
 package com.serejs.diplom.desktop.text.container;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @AllArgsConstructor
-@Getter
+@Data
 public class Project {
-    private final Long id;
-    @Setter
+    private Long id;
     private String title;
 
     @Override

@@ -43,9 +43,9 @@ public class WebSearchController extends TableViewController<GoogleSearchEngine>
         cx.setMinWidth(300);
         cx.setCellValueFactory(new PropertyValueFactory<>("cx"));
 
-        var key = new TableColumn<GoogleSearchEngine, String>("Key");
+        var key = new TableColumn<GoogleSearchEngine, String>("Token");
         key.setMinWidth(300);
-        key.setCellValueFactory(new PropertyValueFactory<>("key"));
+        key.setCellValueFactory(new PropertyValueFactory<>("token"));
 
         var litType = new TableColumn<GoogleSearchEngine, LiteratureType>("Тип литературного источника");
         litType.setMinWidth(300);

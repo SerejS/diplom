@@ -20,6 +20,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProjectClientController extends AbstractClientController {
+    public static void createProject(Project project) {
+        try {
+            var resp = postRequest("/api/project", project);
+            var id = Long.parseLong(resp);
+            project.setId(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static LinkedList<Project> getProjects(View view) {
         var viewID = view.getId();

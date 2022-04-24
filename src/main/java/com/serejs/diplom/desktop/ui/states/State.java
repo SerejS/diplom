@@ -100,6 +100,7 @@ public class State {
 
     public static void addSources(List<Source> newSources) {
         sources.addAll(newSources);
+        ProjectClientController.addSources(newSources);
     }
 
     public static void saveProject() {
