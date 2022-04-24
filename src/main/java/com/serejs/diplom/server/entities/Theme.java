@@ -1,5 +1,6 @@
 package com.serejs.diplom.server.entities;
 
+import org.hibernate.annotations.Cascade;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -10,7 +11,8 @@ import java.util.Set;
 @Table(name = "theme")
 public class Theme {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue
+    @Column(name = "id")
     private Long id;
 
     @Column(length = 45)
@@ -31,10 +33,13 @@ public class Theme {
             inverseJoinColumns = @JoinColumn(name = "id_types"))
     Set<LiteratureType> types;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Nullable
     @JoinColumn(name = "root")
     private Theme root;
+
+    public Theme() {
+    }
 
     public Long getRoot() {
         if (root == null) return null;

@@ -24,7 +24,7 @@ public class ViewController {
         this.viewRepo = viewRepo;
     }
 
-    @GetMapping(value = "", produces = "application/json")
+    @GetMapping(produces = "application/json")
     public List<View> getViews() {
         var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!(principal instanceof UserDetails userDetail)) return new ArrayList<>();
@@ -33,8 +33,8 @@ public class ViewController {
         return viewRepo.findAllByUser(user);
     }
 
-    @PostMapping(value = "", produces = "application/json")
-    public ResponseEntity<View> createView(@RequestBody View view) {
+    @PostMapping(produces = "application/json")
+    public ResponseEntity<Long> createView(@RequestBody View view) {
         var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!(principal instanceof UserDetails userDetail))
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -42,8 +42,8 @@ public class ViewController {
         var user = userRepo.findByUsername(userDetail.getUsername());
         view.setUser(user);
 
-        viewRepo.save(view);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        var id = viewRepo.save(view).getId();
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
 }
