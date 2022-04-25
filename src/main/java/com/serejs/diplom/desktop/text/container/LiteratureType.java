@@ -2,9 +2,9 @@ package com.serejs.diplom.desktop.text.container;
 
 import com.serejs.diplom.desktop.ui.states.State;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 @AllArgsConstructor
 public class LiteratureType {
     private Long id;

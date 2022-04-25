@@ -1,5 +1,6 @@
 package com.serejs.diplom.desktop.ui.controllers.pages;
 
+import com.serejs.diplom.desktop.server.controllers.TypeClientController;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
 import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
@@ -8,7 +9,10 @@ import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.apache.http.HttpException;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -47,8 +51,16 @@ public class TypesController extends TableViewController<LiteratureType> {
         }
 
         LiteratureType t = table.getSelectionModel().getSelectedItem();
-        table.getItems().removeAll(t);
-        State.getLitTypes().remove(t);
+
+        try {
+            TypeClientController.deleteType(t);
+            table.getItems().removeAll(t);
+            State.getLitTypes().remove(t);
+        } catch (HttpException | IOException | URISyntaxException e) {
+            ErrorAlert.info("Ошибка удаления типа литературы");
+            e.printStackTrace();
+        }
+
     }
 
     @FXML

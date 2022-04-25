@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.serejs.diplom.desktop.ui.states.State;
 import org.apache.http.*;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -24,7 +25,7 @@ import java.util.List;
 public abstract class AbstractClientController {
     protected static final String baseUrl = "http://localhost:8080";
 
-    private static String request(String method, String endpoint, List<NameValuePair> params, Object body)
+    private static String request(String method, String endpoint, List<NameValuePair> params, Object payload)
             throws IOException, HttpException, URISyntaxException {
 
         var user = State.getUser();
@@ -37,17 +38,20 @@ public abstract class AbstractClientController {
 
         //Выбор метода запроса
         HttpRequestBase request;
-        if (method.equals("GET")) {
-            if (params != null) requestBuilder.addParameters(params);
-            request = new HttpGet(requestBuilder.build());
-        } else if (method.equals("POST")) {
-            Gson gson = new Gson();
+        switch (method) {
+            case "GET" -> {
+                if (params != null) requestBuilder.addParameters(params);
+                request = new HttpGet(requestBuilder.build());
+            }
+            case "POST" -> {
+                Gson gson = new Gson();
+                request = new HttpPost(requestBuilder.build());
+                ((HttpPost) request).setEntity(new StringEntity(gson.toJson(payload)));
+            }
+            case "DELETE" -> request = new HttpDelete(requestBuilder.build());
 
-            request = new HttpPost(requestBuilder.build());
-            ((HttpPost) request).setEntity(new StringEntity(gson.toJson(body)));
-        } else throw new MethodNotSupportedException("Метод не поддерживается");
-
-
+            default -> throw new MethodNotSupportedException("Метод не поддерживается");
+        }
 
         // Заголовок запроса
         String encoding = Base64.getEncoder().encodeToString((name + ":" + pass).getBytes(StandardCharsets.UTF_8));
@@ -60,6 +64,9 @@ public abstract class AbstractClientController {
         var responseCode = response.getStatusLine().getStatusCode();
         if (responseCode == HttpStatus.SC_UNAUTHORIZED)
             throw new HttpException("Ошибка авторизации. " + responseCode);
+
+        var responseEntity = response.getEntity();
+        if (responseEntity == null) return String.valueOf(responseCode);
 
         try (var is = response.getEntity().getContent()) {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
@@ -81,5 +88,10 @@ public abstract class AbstractClientController {
     protected static String postRequest(String endpoint, Object body)
             throws HttpException, IOException, URISyntaxException {
         return request("POST", endpoint, null, body);
+    }
+
+    protected static void deleteRequest(String endpoint)
+            throws HttpException, IOException, URISyntaxException {
+        request("DELETE", endpoint, null, null);
     }
 }
