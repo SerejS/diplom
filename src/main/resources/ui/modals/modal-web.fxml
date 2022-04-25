@@ -21,7 +21,7 @@
             <Font size="14.0" />
         </font>
     </TextField>
-   <TextField fx:id="key" layoutX="30.0" layoutY="92.0" prefHeight="39.0" prefWidth="400.0" promptText="cx" style="-fx-font-size: 16;">
+   <TextField fx:id="token" layoutX="30.0" layoutY="92.0" prefHeight="39.0" prefWidth="400.0" promptText="cx" style="-fx-font-size: 16;">
       <font>
          <Font size="14.0" />
       </font>
