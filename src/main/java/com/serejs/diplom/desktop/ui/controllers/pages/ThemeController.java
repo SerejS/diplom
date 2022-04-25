@@ -7,22 +7,16 @@ import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ThemeController extends TableViewController<Theme> {
-    @FXML
-    TextField titleProject;
     String modalFileName = "modal-theme.fxml";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        var project = State.getProject().getTitle();
-        if (project != null) titleProject.setText(project);
-
         var themes = State.getThemes();
         if (themes != null) table.getItems().addAll(themes);
 
@@ -54,19 +48,13 @@ public class ThemeController extends TableViewController<Theme> {
 
     @FXML
     private void goNextPage() {
-        var title = titleProject.getText();
         var themes = getItems();
 
-        if (title.isEmpty()) {
-            ErrorAlert.info("Проект должен иметь название");
-            return;
-        }
         if (themes.isEmpty()) {
             ErrorAlert.info("Проект должен содержать хотя бы одну тему");
             return;
         }
 
-        State.getProject().setTitle(title);
         State.setThemes(themes);
 
         anotherPage(nextButton, "files-view.fxml");

@@ -1,5 +1,6 @@
 package com.serejs.diplom.desktop.server.controllers;
 
+import com.google.gson.Gson;
 import com.serejs.diplom.desktop.text.container.Project;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.text.container.Theme;
@@ -22,7 +23,9 @@ import java.util.stream.Collectors;
 public class ProjectClientController extends AbstractClientController {
     public static void createProject(Project project) {
         try {
-            var resp = postRequest("/api/project", project);
+            Gson gson = new Gson();
+
+            var resp = postRequest("/api/project", gson.toJson(project));
             var id = Long.parseLong(resp);
             project.setId(id);
         } catch (Exception e) {
@@ -49,7 +52,7 @@ public class ProjectClientController extends AbstractClientController {
 
             var id = jsonProject.getBigInteger("id").longValue();
             var title = jsonProject.getString("title");
-            projects.add(new Project(id, title));
+            projects.add(new Project(id, title, view));
         }
 
         return projects;
@@ -83,6 +86,7 @@ public class ProjectClientController extends AbstractClientController {
             var themeID = jsonTheme.getLong("id");
             var theme = new Theme(
                     themeID,
+                    projectID,
                     null,
                     jsonTheme.getString("title"),
                     jsonTheme.getDouble("percent"),
@@ -106,17 +110,30 @@ public class ProjectClientController extends AbstractClientController {
         return themes.values().stream().toList();
     }
 
+    public static void sendThemes(List<Theme> themes) {
+        try {
+
+            postRequest("/api/themes", themes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addSources(List<Source> sources) {
+
+    }
+
     public static List<Source> getSources(long projectId) {
         return new LinkedList<>();
     }
 
-    public static List<GoogleSearchEngine> getEngines(long projectId) {
+    public static List<GoogleSearchEngine> getEngines(Project project) {
         LinkedList<NameValuePair> params = new LinkedList<>();
-        params.add(new BasicNameValuePair("projectId", String.valueOf(projectId)));
+        params.add(new BasicNameValuePair("projectId", String.valueOf(project.getId())));
 
         var engines = new LinkedList<GoogleSearchEngine>();
         try {
-            var response = getRequest("/api/params", params);
+            var response = getRequest("/api/engines", params);
 
             var list = new JSONArray(response);
             for (int i = 0; i < list.length(); i++) {
@@ -126,7 +143,8 @@ public class ProjectClientController extends AbstractClientController {
                         jsonObj.getLong("id"),
                         jsonObj.getString("cx"),
                         jsonObj.getString("token"),
-                        State.getLitTypeById(jsonObj.getJSONObject("type").getLong("id"))
+                        State.getLitTypeById(jsonObj.getJSONObject("type").getLong("id")),
+                        project
                 );
 
                 engines.add(gse);
@@ -136,5 +154,14 @@ public class ProjectClientController extends AbstractClientController {
         }
 
         return engines;
+    }
+
+    //Отправление оторажений на сервер
+    public static void sendEngines(List<GoogleSearchEngine> engines) {
+        try {
+            postRequest("/api/engines", engines);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

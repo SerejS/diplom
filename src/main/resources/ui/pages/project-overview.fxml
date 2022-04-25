@@ -14,7 +14,7 @@
     <ListView fx:id="projectList" cacheShape="false" centerShape="false" focusTraversable="false" prefHeight="396.0" prefWidth="679.0" scaleShape="false" style="-fx-border-color: #D7D2FB; -fx-border-width: 3px;" stylesheets="@../style/index.css" />
    <HBox alignment="CENTER" prefHeight="149.0" prefWidth="431.0" spacing="20.0">
       <Button onAction="#openLiteratures" mnemonicParsing="false" text="Типы литературы"/>
-      <Button fx:id="createButton" onAction="#onCreateProject" mnemonicParsing="false" text="Создать проект"/>
+      <Button fx:id="addButton" onAction="#onCreateProject" mnemonicParsing="false" text="Создать проект"/>
       <Button fx:id="deleteButton" onAction="#deleteRow" disable="true" mnemonicParsing="false" text="Удалить проект"/>
    </HBox>
    <padding>

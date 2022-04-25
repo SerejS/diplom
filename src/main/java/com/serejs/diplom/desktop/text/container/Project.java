@@ -8,6 +8,7 @@ import lombok.Data;
 public class Project {
     private Long id;
     private String title;
+    private View view;
 
     @Override
     public String toString() {

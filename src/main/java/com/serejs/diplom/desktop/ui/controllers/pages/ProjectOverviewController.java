@@ -5,69 +5,66 @@ import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-public class ProjectOverviewController extends TableViewController<String> {
+public class ProjectOverviewController extends TableViewController<Project> {
     @FXML
     private ListView<Project> projectList;
-    @FXML
-    private Button createButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadProjects();
+
+        //Открытие проекта по двойному щелчку
         projectList.setOnMouseClicked(event -> {
+            if (!projectList.getSelectionModel().isEmpty()) deleteButton.setDisable(false);
+
             var model = projectList.getSelectionModel();
+            if (event.getClickCount() != 2 || model.isEmpty()) return;
 
-            if (event.getClickCount() == 2 && !model.isEmpty()) {
-                var project = model.getSelectedItem();
+            var project = model.getSelectedItem();
+            State.getProjectData(project);
 
-                //Получить идентификатор проекта
-                State.getProjectData(project.getId());
-                anotherPage(createButton, "theme-view.fxml");
-            }
-
-            if (!projectList.getSelectionModel().isEmpty()) {
-                deleteButton.setDisable(false);
-            }
+            anotherPage(addButton, "theme-view.fxml");
         });
     }
 
-    protected void loadProjects()  {
-        var projects = new LinkedList<Project>();
-
+    private void loadProjects()  {
         try {
-            projects = State.getProjects();
+            var projects = State.getProjects();
+            projectList.getItems().addAll(projects);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        projectList.getItems().addAll(projects);
+
+    @Override
+    public void addRow(Project project) {
+        projectList.getItems().add(project);
+        modal.close();
     }
 
     @Override
     public void deleteRow() {
-        if (DeleteAlert.confirm()) {
-            projectList.getItems().remove(projectList.getSelectionModel().getSelectedIndex());
-        }
+        var selectedModel = projectList.getSelectionModel();
 
-        if (projectList.getSelectionModel().isEmpty()) deleteButton.setDisable(true);
+        if (DeleteAlert.confirm()) projectList.getItems().remove(selectedModel.getSelectedIndex());
+
+        if (selectedModel.isEmpty()) deleteButton.setDisable(true);
     }
 
     @FXML
     protected void onCreateProject() {
-        State.createNewProject();
-        anotherPage(createButton, "theme-view.fxml");
+        openModal("modal-project.fxml");
     }
 
     @FXML
     protected void openLiteratures() {
-        anotherPage(createButton, "types-view.fxml");
+        anotherPage(addButton, "types-view.fxml");
     }
 }

@@ -58,19 +58,14 @@ public class State {
     }
 
 
-    //Создание нового проекта
-    public static void createNewProject() {
-        project = new Project(-1L, "");
-        sources = new LinkedList<>();
-        themes = new LinkedList<>();
-    }
-
     //Установка полей существующего проекта
-    public static void getProjectData(Long id) {
-        project = projects.stream().filter(p -> Objects.equals(p.getId(), id)).findFirst().orElseThrow();
+    public static void getProjectData(Project selectedProject) {
+        var id = selectedProject.getId();
+
+        project = selectedProject;
         themes = ProjectClientController.getThemes(id);
         sources = ProjectClientController.getSources(id);
-        engines.addAll(ProjectClientController.getEngines(id));
+        engines.addAll(ProjectClientController.getEngines(selectedProject));
     }
 
 
@@ -103,8 +98,7 @@ public class State {
         ProjectClientController.addSources(newSources);
     }
 
-    public static void saveProject() {
-        projects.add(new Project(project.getId(), project.getTitle()));
+    public static void saveProjectData() {
     }
 
 
