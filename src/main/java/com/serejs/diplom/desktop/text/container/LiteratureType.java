@@ -1,12 +1,14 @@
 package com.serejs.diplom.desktop.text.container;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.serejs.diplom.desktop.ui.states.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LiteratureType {
+public class LiteratureType implements JsonSerializable {
     private Long id;
     private final String title;
     private final boolean main;
@@ -29,5 +31,22 @@ public class LiteratureType {
     @Override
     public String toString() {
         return title;
+    }
+
+    @Override
+    public JsonObject toJson() {
+        Gson gson = new Gson();
+        var typeObj = gson.toJsonTree(this).getAsJsonObject();
+        typeObj.remove("view");
+
+        JsonObject nestedJson = null;
+        if (view != null) {
+            nestedJson = new JsonObject();
+            nestedJson.addProperty("id", view.getId());
+        }
+
+        typeObj.add("view", nestedJson);
+
+        return typeObj;
     }
 }
