@@ -63,7 +63,7 @@ public class State {
         var id = selectedProject.getId();
 
         project = selectedProject;
-        themes = ProjectClientController.getThemes(id);
+        themes = ProjectClientController.getThemes(selectedProject);
         sources = ProjectClientController.getSources(id);
         engines.addAll(ProjectClientController.getEngines(selectedProject));
     }
