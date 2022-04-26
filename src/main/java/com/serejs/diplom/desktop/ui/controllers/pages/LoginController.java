@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -93,6 +94,8 @@ public class LoginController extends RootController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        password.setOnKeyPressed((keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) handleLoginEvent();
+        }));
     }
 }
