@@ -47,7 +47,6 @@ public class UserClientController extends AbstractClientController {
     public static void auth(String username, String password) throws Exception {
         State.setUser(new User(username, password));
 
-        List<NameValuePair> body = new LinkedList<>();
-        postRequest("/auth", null);
+        postRequest("/auth", new LinkedList<>());
     }
 }

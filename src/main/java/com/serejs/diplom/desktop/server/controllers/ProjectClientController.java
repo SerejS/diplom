@@ -1,6 +1,5 @@
 package com.serejs.diplom.desktop.server.controllers;
 
-import com.google.gson.Gson;
 import com.serejs.diplom.desktop.text.container.Project;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.text.container.Theme;
@@ -23,9 +22,7 @@ import java.util.stream.Collectors;
 public class ProjectClientController extends AbstractClientController {
     public static void createProject(Project project) {
         try {
-            Gson gson = new Gson();
-
-            var resp = postRequest("/api/project", gson.toJson(project));
+            var resp = postRequest("/api/project", project);
             var id = Long.parseLong(resp);
             project.setId(id);
         } catch (Exception e) {
@@ -112,7 +109,6 @@ public class ProjectClientController extends AbstractClientController {
 
     public static void sendThemes(List<Theme> themes) {
         try {
-
             postRequest("/api/themes", themes);
         } catch (Exception e) {
             e.printStackTrace();

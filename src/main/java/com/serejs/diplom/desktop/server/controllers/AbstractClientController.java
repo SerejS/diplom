@@ -1,7 +1,8 @@
 package com.serejs.diplom.desktop.server.controllers;
 
 
-import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.serejs.diplom.desktop.text.container.JsonSerializable;
 import com.serejs.diplom.desktop.ui.states.State;
 import org.apache.http.*;
 import org.apache.http.client.HttpClient;
@@ -25,7 +26,7 @@ import java.util.List;
 public abstract class AbstractClientController {
     protected static final String baseUrl = "http://localhost:8080";
 
-    private static String request(String method, String endpoint, List<NameValuePair> params, Object payload)
+    private static String request(String method, String endpoint, List<NameValuePair> params, String payload)
             throws IOException, HttpException, URISyntaxException {
 
         var user = State.getUser();
@@ -44,9 +45,9 @@ public abstract class AbstractClientController {
                 request = new HttpGet(requestBuilder.build());
             }
             case "POST" -> {
-                Gson gson = new Gson();
                 request = new HttpPost(requestBuilder.build());
-                ((HttpPost) request).setEntity(new StringEntity(gson.toJson(payload)));
+                System.out.println(payload);
+                ((HttpPost) request).setEntity(new StringEntity(payload, StandardCharsets.UTF_8));
             }
             case "DELETE" -> request = new HttpDelete(requestBuilder.build());
 
@@ -85,9 +86,17 @@ public abstract class AbstractClientController {
         return request("GET", endpoint, params, null);
     }
 
-    protected static String postRequest(String endpoint, Object body)
+    protected static String postRequest(String endpoint, JsonSerializable jsonObj)
             throws HttpException, IOException, URISyntaxException {
-        return request("POST", endpoint, null, body);
+        return request("POST", endpoint, null, jsonObj.toJson().toString());
+    }
+
+    protected static void postRequest(String endpoint, List<? extends JsonSerializable> jsonList)
+            throws HttpException, IOException, URISyntaxException {
+        var jsonArray = new JsonArray();
+        jsonList.forEach(obj -> jsonArray.add(obj.toJson()));
+
+        request("POST", endpoint, null, jsonArray.toString());
     }
 
     protected static void deleteRequest(String endpoint)
