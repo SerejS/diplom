@@ -1,10 +1,9 @@
 package com.serejs.diplom.desktop.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.serejs.diplom.desktop.enums.SourceType;
-import com.serejs.diplom.desktop.text.container.LiteratureType;
-import com.serejs.diplom.desktop.text.container.Project;
-import com.serejs.diplom.desktop.text.container.Source;
-import com.serejs.diplom.desktop.text.container.Theme;
+import com.serejs.diplom.desktop.text.container.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.http.annotation.Experimental;
@@ -24,7 +23,7 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
-public class GoogleSearchEngine {
+public class GoogleSearchEngine implements JsonSerializable {
     private static final String baseGoogleSearch = "https://customsearch.googleapis.com/customsearch/v1?";
 
     private Long id;
@@ -80,5 +79,31 @@ public class GoogleSearchEngine {
         }
 
         return uris.stream().map(uri -> new Source(uri, SourceType.WEB, type)).toList();
+    }
+
+    @Override
+    public JsonObject toJson() {
+        Gson gson = new Gson();
+        var gseObj = gson.toJsonTree(this).getAsJsonObject();
+        gseObj.remove("project");
+        gseObj.remove("type");
+
+        JsonObject nestedJson = null;
+        if (project != null) {
+            nestedJson = new JsonObject();
+            nestedJson.addProperty("id", project.getId());
+        }
+
+        gseObj.add("project", nestedJson);
+
+        nestedJson = null;
+        if (project != null) {
+            nestedJson = new JsonObject();
+            nestedJson.addProperty("id", type.getId());
+        }
+
+        gseObj.add("type", nestedJson);
+
+        return gseObj;
     }
 }
