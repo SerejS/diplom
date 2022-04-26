@@ -1,6 +1,5 @@
 package com.serejs.diplom.server.entities;
 
-import org.hibernate.annotations.Cascade;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -24,7 +23,7 @@ public class Theme {
     private Project project;
 
     @Column(columnDefinition = "TEXT")
-    private String ngrams;
+    private String textKeyNGrams;
 
     @ManyToMany
     @JoinTable(
@@ -72,16 +71,16 @@ public class Theme {
         this.project = project;
     }
 
-    public String getNgrams() {
-        return ngrams;
+    public String getTextKeyNGrams() {
+        return textKeyNGrams;
     }
 
     public List<Long> getTypes() {
         return types.stream().map(LiteratureType::getId).toList();
     }
 
-    public void setNgrams(String ngrams) {
-        this.ngrams = ngrams;
+    public void setTextKeyNGrams(String ngrams) {
+        this.textKeyNGrams = ngrams;
     }
 
     public Long getId() {
