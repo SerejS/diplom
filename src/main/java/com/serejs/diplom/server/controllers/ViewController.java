@@ -46,4 +46,11 @@ public class ViewController {
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<View> deleteView(@PathVariable Long id) {
+        if (!viewRepo.existsById(id)) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        viewRepo.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
