@@ -15,13 +15,13 @@ public class LiteratureType {
     private String title;
     private boolean main;
 
-    @OneToMany(mappedBy = "type")
+    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
     private List<EngineParams> params;
 
-    @OneToMany(mappedBy = "type")
+    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
     private List<Literature> literatures;
 
-    @ManyToMany(mappedBy = "types")
+    @ManyToMany(mappedBy = "types", cascade = CascadeType.ALL)
     Set<Theme> themes;
 
     @ManyToOne

@@ -23,9 +23,17 @@ public class LiteratureTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<LiteratureType> createType(@RequestBody LiteratureType type) {
-        repository.save(type);
+    public ResponseEntity<Long> createType(@RequestBody LiteratureType type) {
+        var newType = repository.save(type);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return new ResponseEntity<>(newType.getId(), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<LiteratureType> deleteType(@PathVariable Long id) {
+        if (!repository.existsById(id)) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        repository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
