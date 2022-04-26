@@ -9,7 +9,10 @@ import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import org.apache.http.HttpException;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -49,7 +52,15 @@ public class UserViewController extends TableViewController<String> {
     private void deleteListItem() {
         if (!DeleteAlert.confirm()) return;
 
-        listView.getItems().remove(view);
+        try {
+            ViewClientController.deleteView(view);
+            listView.getItems().remove(view);
+        } catch (HttpException | IOException | URISyntaxException e) {
+            ErrorAlert.info("Ошибка удаления отображения");
+            e.printStackTrace();
+            return;
+        }
+
         this.view = null;
         selectButton.setDisable(true);
         deleteButton.setDisable(true);

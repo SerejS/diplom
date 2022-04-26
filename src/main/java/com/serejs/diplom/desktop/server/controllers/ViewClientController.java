@@ -29,4 +29,8 @@ public class ViewClientController extends AbstractClientController {
         view.setId(Long.parseLong(response));
         return view;
     }
+
+    public static void deleteView(View view) throws HttpException, IOException, URISyntaxException {
+        deleteRequest("/api/views/" + view.getId());
+    }
 }
