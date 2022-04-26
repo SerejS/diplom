@@ -24,7 +24,7 @@ public class ProjectController {
     }
 
     //Создание нового проекта
-    @PostMapping(value = "/projects", produces = "application/json")
+    @PostMapping(value = "/project", produces = "application/json")
     public ResponseEntity<Long> createProject(@RequestBody Project project) {
         var projectID = repository.save(project).getId();
 
@@ -39,5 +39,13 @@ public class ProjectController {
         if (project.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
         return ResponseEntity.ok(project.get());
+    }
+
+    @DeleteMapping("/project/{id}")
+    public ResponseEntity<Project> deleteProject(@PathVariable Long id) {
+        if (!repository.existsById(id)) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        repository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
