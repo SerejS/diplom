@@ -89,7 +89,14 @@ public class ModalThemeController extends ModalController<Theme> {
 
 
         if (obj == null) {
-            obj = new Theme(themeBox.getValue(), titleTheme.getText(), slider.getValue(), textNGrams, new HashSet<>(types));
+            obj = new Theme(
+                    themeBox.getValue(),
+                    State.getProject(),
+                    titleTheme.getText(),
+                    slider.getValue(),
+                    textNGrams,
+                    new HashSet<>(types));
+
             parent.addRow(obj);
             return;
         }
