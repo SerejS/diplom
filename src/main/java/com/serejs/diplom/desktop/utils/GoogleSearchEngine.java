@@ -2,9 +2,11 @@ package com.serejs.diplom.desktop.utils;
 
 import com.serejs.diplom.desktop.enums.SourceType;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
+import com.serejs.diplom.desktop.text.container.Project;
 import com.serejs.diplom.desktop.text.container.Source;
 import com.serejs.diplom.desktop.text.container.Theme;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.apache.http.annotation.Experimental;
 import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONObject;
@@ -20,32 +22,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Getter
+@Data
+@AllArgsConstructor
 public class GoogleSearchEngine {
-    private final Long id;
-    private final URIBuilder uriBuilder = new URIBuilder("https://customsearch.googleapis.com/customsearch/v1?");
-    private final String cx;
-    private final String token;
-    private final LiteratureType type;
+    private static final String baseGoogleSearch = "https://customsearch.googleapis.com/customsearch/v1?";
 
-    public GoogleSearchEngine(String cx, String token, LiteratureType type) throws URISyntaxException {
+    private Long id;
+    private String cx;
+    private String token;
+    private LiteratureType type;
+    private Project project;
+
+    public GoogleSearchEngine(String cx, String token, LiteratureType type, Project project)  {
         this.id = -1L;
-        uriBuilder.addParameter("cx", cx);
-        uriBuilder.addParameter("key", token);
-
         this.cx = cx;
         this.token = token;
         this.type = type;
-    }
-
-    public GoogleSearchEngine(Long id, String cx, String token, LiteratureType type) throws URISyntaxException {
-        this.id = id;
-        uriBuilder.addParameter("cx", cx);
-        uriBuilder.addParameter("key", token);
-
-        this.cx = cx;
-        this.token = token;
-        this.type = type;
+        this.project = project;
     }
 
     /**
@@ -56,12 +49,14 @@ public class GoogleSearchEngine {
      */
     @Experimental
     public List<Source> getSources(Theme theme) throws IOException, URISyntaxException {
+        var uriBuilder = new URIBuilder(baseGoogleSearch);
+
         var query = theme.getTitle();
-        var keyNGrams = theme.getKeyNGrams().stream().reduce("", (prev, curr) -> prev + " " + curr).trim();
 
         URL url = uriBuilder
+                .addParameter("cx", cx)
+                .addParameter("key", token)
                 .addParameter("q", query)
-                .addParameter("orTerms", keyNGrams)
                 .build().toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
