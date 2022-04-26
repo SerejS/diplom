@@ -1,7 +1,9 @@
 package com.serejs.diplom.desktop.ui.controllers.pages;
 
+import com.serejs.diplom.desktop.server.controllers.ProjectClientController;
 import com.serejs.diplom.desktop.text.container.Project;
 import com.serejs.diplom.desktop.ui.alerts.DeleteAlert;
+import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
@@ -53,7 +55,17 @@ public class ProjectOverviewController extends TableViewController<Project> {
     public void deleteRow() {
         var selectedModel = projectList.getSelectionModel();
 
-        if (DeleteAlert.confirm()) projectList.getItems().remove(selectedModel.getSelectedIndex());
+        if (DeleteAlert.confirm()) {
+            var project = selectedModel.getSelectedItem();
+
+            try {
+                projectList.getItems().remove(project);
+                ProjectClientController.deleteProject(project);
+            } catch (Exception e) {
+                ErrorAlert.info("Ошибка удаления проекта");
+                e.printStackTrace();
+            }
+        }
 
         if (selectedModel.isEmpty()) deleteButton.setDisable(true);
     }

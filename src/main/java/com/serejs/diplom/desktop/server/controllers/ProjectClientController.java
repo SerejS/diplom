@@ -30,6 +30,10 @@ public class ProjectClientController extends AbstractClientController {
         }
     }
 
+    public static void deleteProject(Project project) throws HttpException, IOException, URISyntaxException {
+        deleteRequest("/api/project/" + project.getId());
+    }
+
     public static LinkedList<Project> getProjects(View view) {
         var viewID = view.getId();
         var projects = new LinkedList<Project>();
@@ -55,7 +59,8 @@ public class ProjectClientController extends AbstractClientController {
         return projects;
     }
 
-    public static List<Theme> getThemes(long projectID) {
+    public static List<Theme> getThemes(Project project) {
+
         //ИД - тема
         Map<Long, Theme> themes = new HashMap<>();
         //ИД темы -  ИД родительской темы
@@ -65,7 +70,7 @@ public class ProjectClientController extends AbstractClientController {
         JSONArray jsonThemes;
         try {
             var params = new LinkedList<NameValuePair>();
-            params.add(new BasicNameValuePair("projectId", String.valueOf(projectID)));
+            params.add(new BasicNameValuePair("projectId", String.valueOf(project.getId())));
 
             jsonThemes = new JSONArray(getRequest("/api/themes", params));
         } catch (Exception e) {
@@ -83,11 +88,11 @@ public class ProjectClientController extends AbstractClientController {
             var themeID = jsonTheme.getLong("id");
             var theme = new Theme(
                     themeID,
-                    projectID,
+                    project,
                     null,
                     jsonTheme.getString("title"),
                     jsonTheme.getDouble("percent"),
-                    jsonTheme.getString("ngrams"),
+                    jsonTheme.getString("textKeyNGrams"),
                     types
             );
 
