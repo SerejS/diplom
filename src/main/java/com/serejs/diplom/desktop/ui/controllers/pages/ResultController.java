@@ -49,7 +49,7 @@ public class ResultController extends RootController implements Initializable {
     }
 
     public void goProjectOverview() {
-        State.saveProject();
+        State.saveProjectData();
         anotherPage(finishButton, "project-overview.fxml");
     }
 
