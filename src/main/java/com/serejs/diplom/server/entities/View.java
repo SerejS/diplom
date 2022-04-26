@@ -15,10 +15,10 @@ public class View {
     @JoinColumn(name = "id_user")
     private User user;
 
-    @OneToMany(mappedBy = "view")
+    @OneToMany(mappedBy = "view", cascade = CascadeType.ALL)
     private List<Project> projects;
 
-    @OneToMany(mappedBy = "view")
+    @OneToMany(mappedBy = "view", cascade = CascadeType.ALL)
     private List<LiteratureType> types;
 
 
