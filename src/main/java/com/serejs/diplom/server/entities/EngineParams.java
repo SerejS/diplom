@@ -50,4 +50,8 @@ public class EngineParams {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 }
