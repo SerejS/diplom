@@ -21,6 +21,7 @@ module diplom.desktop.ui {
     requires itextpdf;
     requires static lombok;
     requires com.google.gson;
+    requires java.sql;
 
     exports com.serejs.diplom.desktop.ui;
     opens com.serejs.diplom.desktop.ui to javafx.fxml;

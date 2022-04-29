@@ -13,10 +13,8 @@ import org.json.JSONArray;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProjectClientController extends AbstractClientController {
@@ -53,7 +51,8 @@ public class ProjectClientController extends AbstractClientController {
 
             var id = jsonProject.getBigInteger("id").longValue();
             var title = jsonProject.getString("title");
-            projects.add(new Project(id, title, view));
+            var date = Date.valueOf(jsonProject.getString("date"));
+            projects.add(new Project(id, title, view, date));
         }
 
         return projects;

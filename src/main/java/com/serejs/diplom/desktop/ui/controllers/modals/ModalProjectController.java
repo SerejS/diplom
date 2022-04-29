@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 
 public class ModalProjectController extends ModalController<Project> {
@@ -31,7 +32,7 @@ public class ModalProjectController extends ModalController<Project> {
             return;
         }
 
-        var project = new Project(-1L, title.getText(), State.getView());
+        var project = new Project(-1L, title.getText(), State.getView(), new Date(System.currentTimeMillis()));
         ProjectClientController.createProject(project);
 
         parent.addRow(project);

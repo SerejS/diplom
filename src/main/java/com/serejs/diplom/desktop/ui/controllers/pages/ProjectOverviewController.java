@@ -7,7 +7,9 @@ import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
 import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +22,24 @@ public class ProjectOverviewController extends TableViewController<Project> {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadProjects();
+
+        projectList.setCellFactory(cell -> new ListCell<>() {
+            final Tooltip tooltip = new Tooltip();
+
+            @Override
+            protected void updateItem(Project project, boolean empty) {
+                super.updateItem(project, empty);
+
+                if (project == null || empty) {
+                    setText(null);
+                    setTooltip(null);
+                } else {
+                    setText(project.getTitle());
+                    tooltip.setText("Дата создания: " + project.getDate());
+                    setTooltip(tooltip);
+                }
+            }
+        });
 
         //Открытие проекта по двойному щелчку
         projectList.setOnMouseClicked(event -> {
