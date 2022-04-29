@@ -2,7 +2,6 @@ package com.serejs.diplom.desktop.text.container;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.serejs.diplom.desktop.ui.states.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,13 +12,6 @@ public class LiteratureType implements JsonSerializable {
     private final String title;
     private final boolean main;
     private final View view;
-
-    public LiteratureType(String title, boolean main) {
-        this.id = -1L;
-        this.title = title;
-        this.main = main;
-        this.view = State.getView();
-    }
 
     public LiteratureType(String title, boolean main, View view) {
         this.id = -1L;

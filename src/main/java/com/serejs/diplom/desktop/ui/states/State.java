@@ -74,12 +74,13 @@ public class State {
     }
 
     public static List<LiteratureType> getLitTypes() {
-        if (types.isEmpty())
-            try {
-                types.addAll(TypeClientController.getTypes(view));
-            } catch (Exception e) {
-                System.err.println("Ошибка получения типов литературы с сервера");
-            }
+        if (!types.isEmpty()) return types;
+
+        try {
+            types.addAll(TypeClientController.getTypes(view));
+        } catch (Exception e) {
+            System.err.println("Ошибка получения типов литературы с сервера");
+        }
 
         return types;
     }

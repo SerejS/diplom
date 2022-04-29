@@ -23,7 +23,7 @@ public class TypesController extends TableViewController<LiteratureType> {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         var types = State.getLitTypes();
-        if (types != null) table.getItems().addAll(types);
+        if (types != null) table.getItems().setAll(types);
 
         var title = new TableColumn<LiteratureType, String>("Название типа литературы");
         title.setMinWidth(500);
@@ -32,7 +32,6 @@ public class TypesController extends TableViewController<LiteratureType> {
         var main = new TableColumn<LiteratureType, Boolean>("Основная / Дополонительная");
         main.setMinWidth(500);
         main.setCellValueFactory(new PropertyValueFactory<>("main"));
-
 
         super.initialize(modalFileName, title, main);
     }
