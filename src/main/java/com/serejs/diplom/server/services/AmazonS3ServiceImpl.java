@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class AmazonS3ServiceImpl implements AmazonS3Service {
+    private final String bucketName = "litanalis";
     private final AmazonS3 s3;
 
     public AmazonS3ServiceImpl(AmazonS3 s3) {
@@ -21,24 +22,25 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
     }
 
     @Override
-    public void uploadFile(String bucketName, String originalFilename, byte[] bytes) throws Exception {
-        File file = upload(bucketName, originalFilename, bytes);
+    public void uploadFile(String originalFilename, byte[] bytes) throws Exception {
+
+        File file = upload(originalFilename, bytes);
         s3.putObject(bucketName, originalFilename, file);
 
     }
 
     @Override
-    public byte[] downloadFile(String bucketName, String fileUrl) throws Exception {
-        return getFile(bucketName, fileUrl);
+    public byte[] downloadFile(String fileUrl) {
+        return getFile(fileUrl);
     }
 
     @Override
-    public void deleteFile(String bucketName, String fileUrl) throws Exception {
+    public void deleteFile(String fileUrl) {
         s3.deleteObject(bucketName, fileUrl);
     }
 
     @Override
-    public List<String> listFiles(String bucketName) throws Exception {
+    public List<String> listFiles() {
         List<String> list = new LinkedList<>();
         s3.listObjects(bucketName).getObjectSummaries().forEach(itemResult -> {
             list.add(itemResult.getKey());
@@ -48,18 +50,18 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
     }
 
     @Override
-    public File upload(String bucketName, String name, byte[] content) throws Exception {
+    public File upload(String name, byte[] content) throws Exception {
         File file = new File("/" + name);
-        file.canWrite();
-        file.canRead();
-        FileOutputStream iofs = null;
-        iofs = new FileOutputStream(file);
-        iofs.write(content);
+
+        try (FileOutputStream iofs = new FileOutputStream(file)) {
+            iofs.write(content);
+        }
+
         return file;
     }
 
     @Override
-    public byte[] getFile(String bucketName, String key) throws Exception {
+    public byte[] getFile(String key) {
         S3Object obj = s3.getObject(bucketName, key);
         S3ObjectInputStream stream = obj.getObjectContent();
         try {
