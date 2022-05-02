@@ -1,6 +1,6 @@
 package com.serejs.diplom.server.enums;
 
-public enum LiteratureSource {
+public enum SourceType {
     PDF,
     EPUB,
     FB2,

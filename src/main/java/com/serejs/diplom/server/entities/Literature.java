@@ -1,6 +1,6 @@
 package com.serejs.diplom.server.entities;
 
-import com.serejs.diplom.server.enums.LiteratureSource;
+import com.serejs.diplom.server.enums.SourceType;
 
 import javax.persistence.*;
 
@@ -11,7 +11,7 @@ public class Literature {
     @Column(name = "id", nullable = false)
     private Long id;
     private String path;
-    private LiteratureSource source;
+    private SourceType source;
 
     @ManyToOne
     @JoinColumn(name = "project")
