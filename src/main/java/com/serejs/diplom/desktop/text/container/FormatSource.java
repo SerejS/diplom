@@ -9,8 +9,8 @@ public class FormatSource extends Source {
     @Getter
     private final Format format;
 
-    public FormatSource(URI uri, SourceType sourceType, LiteratureType litType, Format format) {
-        super(uri, sourceType, litType);
+    public FormatSource(Long id, URI uri, SourceType sourceType, LiteratureType litType, Format format) {
+        super(id, uri, sourceType, litType);
         this.format = format;
     }
 

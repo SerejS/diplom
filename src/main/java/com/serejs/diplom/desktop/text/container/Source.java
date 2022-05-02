@@ -1,17 +1,25 @@
 package com.serejs.diplom.desktop.text.container;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.serejs.diplom.desktop.enums.SourceType;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.net.URI;
 
-@Getter
+@Data
 @AllArgsConstructor
-public class Source {
+public class Source implements JsonSerializable {
+    private Long id;
     private URI uri;
     private SourceType sourceType;
-    @Setter
     private LiteratureType litType;
+
+    @Override
+    public JsonObject toJson() {
+        var gson = new Gson();
+        var element = gson.toJsonTree(this);
+        return element.getAsJsonObject();
+    }
 }

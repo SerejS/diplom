@@ -78,7 +78,7 @@ public class GoogleSearchEngine implements JsonSerializable {
             uris.add(new URI(jArr.getJSONObject(i).get("link").toString()));
         }
 
-        return uris.stream().map(uri -> new Source(uri, SourceType.WEB, type)).toList();
+        return uris.stream().map(uri -> new Source(-1L, uri, SourceType.WEB, type)).toList();
     }
 
     @Override

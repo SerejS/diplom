@@ -89,9 +89,9 @@ public class ModalFileController extends ModalController<Source> {
                     getSeparator(mid.getValue()),
                     getSeparator(after.getValue())
             );
-            source = new FormatSource(new URI(uri), fileSource, typeBox.getValue(), format);
+            source = new FormatSource(-1L, new URI(uri), fileSource, typeBox.getValue(), format);
         } else {
-            source = new Source(new URI(uri), fileSource, typeBox.getValue());
+            source = new Source(-1L, new URI(uri), fileSource, typeBox.getValue());
         }
 
         parent.addRow(source);
