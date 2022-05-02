@@ -29,10 +29,6 @@ public abstract class AbstractClientController {
     private static String request(String method, String endpoint, List<NameValuePair> params, String payload)
             throws IOException, HttpException, URISyntaxException {
 
-        var user = State.getUser();
-        var name = user.getUsername();
-        var pass = user.getPassword();
-
         HttpClient httpclient = HttpClients.createDefault();
 
         var requestBuilder = new URIBuilder(baseUrl + endpoint);
@@ -55,7 +51,7 @@ public abstract class AbstractClientController {
         }
 
         // Заголовок запроса
-        String encoding = Base64.getEncoder().encodeToString((name + ":" + pass).getBytes(StandardCharsets.UTF_8));
+        String encoding = getEncoding();
         request.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + encoding);
         request.setHeader("Accept", "application/json");
         request.setHeader("Content-type", "application/json");
@@ -102,5 +98,13 @@ public abstract class AbstractClientController {
     protected static void deleteRequest(String endpoint)
             throws HttpException, IOException, URISyntaxException {
         request("DELETE", endpoint, null, null);
+    }
+
+
+    protected static String getEncoding() {
+        var user = State.getUser();
+        var name = user.getUsername();
+        var pass = user.getPassword();
+        return Base64.getEncoder().encodeToString((name + ":" + pass).getBytes(StandardCharsets.UTF_8));
     }
 }
