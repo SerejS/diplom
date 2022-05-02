@@ -16,6 +16,8 @@ module diplom.desktop.ui {
     requires org.apache.httpcomponents.httpcore;
     requires org.apache.httpcomponents.httpclient;
     requires org.apache.commons.io;
+    requires org.apache.httpcomponents.httpmime;
+    requires org.apache.commons.codec;
     requires markdowngenerator;
     requires java.desktop;
     requires itextpdf;
