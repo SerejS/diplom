@@ -25,6 +25,7 @@ module diplom.desktop.ui {
     requires com.google.gson;
     requires java.sql;
 
+    exports com.serejs.diplom.desktop.enums to com.google.gson;
     exports com.serejs.diplom.desktop.ui;
     opens com.serejs.diplom.desktop.ui to javafx.fxml;
     opens com.serejs.diplom.desktop.text.container;
