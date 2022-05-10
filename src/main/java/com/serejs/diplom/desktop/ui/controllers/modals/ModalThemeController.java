@@ -87,13 +87,14 @@ public class ModalThemeController extends ModalController<Theme> {
             return;
         }
 
+        var sliderValue = slider.getValue() / 100.;
 
         if (obj == null) {
             obj = new Theme(
                     themeBox.getValue(),
                     State.getProject(),
                     titleTheme.getText(),
-                    slider.getValue(),
+                    sliderValue,
                     textNGrams,
                     new HashSet<>(types));
 
@@ -103,7 +104,7 @@ public class ModalThemeController extends ModalController<Theme> {
 
         obj.setRoot(themeBox.getValue());
         obj.setTitle(titleTheme.getText());
-        obj.setPercent(slider.getValue() / 100.);
+        obj.setPercent(sliderValue);
         obj.setKeyNGrams(textNGrams);
 
         parent.updateRows();
