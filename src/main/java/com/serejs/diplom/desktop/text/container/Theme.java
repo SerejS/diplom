@@ -36,9 +36,9 @@ public class Theme implements JsonSerializable {
         if (this.root != null) {
             this.types.addAll(root.types);
             this.keyNGrams.addAll(root.keyNGrams);
-            this.percent = percent * root.percent / 100.;
+            this.percent = percent * root.percent;
         } else {
-            this.percent = percent / 100;
+            this.percent = percent;
         }
     }
 
