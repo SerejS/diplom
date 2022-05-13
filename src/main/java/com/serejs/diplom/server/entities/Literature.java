@@ -40,4 +40,12 @@ public class Literature {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public SourceType getSource() {
+        return source;
+    }
+
+    public Long getTypeId() {
+        return type.getId();
+    }
 }
