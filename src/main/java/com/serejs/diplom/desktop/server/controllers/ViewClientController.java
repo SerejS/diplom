@@ -23,7 +23,7 @@ public class ViewClientController extends AbstractClientController {
         return views;
     }
 
-    public static View addView(String viewName) throws HttpException, IOException, URISyntaxException {
+    public static View sendView(String viewName) throws HttpException, IOException, URISyntaxException {
         var view = new View(-1L, viewName);
         var response = postRequest("/api/views", view);
         view.setId(Long.parseLong(response));

@@ -47,7 +47,7 @@ public class TypeClientController extends AbstractClientController {
         return types;
     }
 
-    public static void createType(LiteratureType type) throws HttpException, IOException, URISyntaxException {
+    public static void sendType(LiteratureType type) throws HttpException, IOException, URISyntaxException {
         var response = postRequest("/api/types", type);
         type.setId(Long.parseLong(response));
     }
