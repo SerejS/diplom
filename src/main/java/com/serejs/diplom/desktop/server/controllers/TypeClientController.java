@@ -16,20 +16,14 @@ import java.util.List;
 
 public class TypeClientController extends AbstractClientController {
 
-    public static List<LiteratureType> getTypes(View view) {
+    public static List<LiteratureType> getTypes(View view) throws HttpException, IOException, URISyntaxException {
         var viewID = view.getId();
         List<LiteratureType> types = new LinkedList<>();
 
-        String responseContent;
-        try {
-            var params = new LinkedList<NameValuePair>();
-            params.add(new BasicNameValuePair("viewId", String.valueOf(viewID)));
+        var params = new LinkedList<NameValuePair>();
+        params.add(new BasicNameValuePair("viewId", String.valueOf(viewID)));
 
-            responseContent = getRequest("/api/types", params);
-        } catch (Exception e) {
-            ErrorAlert.info("Ошибка получения типов литературы");
-            return types;
-        }
+        String responseContent = getRequest("/api/types", params);
 
         var jsonLitType = new JSONArray(responseContent);
         for (int i = 0; i < jsonLitType.length(); i++) {

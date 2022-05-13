@@ -1,15 +1,16 @@
 package com.serejs.diplom.desktop.ui.states;
 
 import com.serejs.diplom.desktop.server.User;
-import com.serejs.diplom.desktop.server.controllers.ProjectClientController;
-import com.serejs.diplom.desktop.server.controllers.TypeClientController;
+import com.serejs.diplom.desktop.server.controllers.*;
 import com.serejs.diplom.desktop.text.container.*;
 import com.serejs.diplom.desktop.utils.GoogleSearchEngine;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.http.HttpException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -43,14 +44,14 @@ public class State {
     private static final List<LiteratureType> types = new LinkedList<>();
 
     @Getter
-    private static final List<GoogleSearchEngine> engines = new LinkedList<>();
+    private static List<GoogleSearchEngine> engines = new LinkedList<>();
 
     @Getter
     private static File outputDirectory;
 
 
     //Получение списка проектов
-    public static LinkedList<Project> getProjects() throws IOException {
+    public static LinkedList<Project> getProjects() throws IOException, HttpException, URISyntaxException {
         if (projects.isEmpty())
             projects = ProjectClientController.getProjects(view);
 
@@ -59,13 +60,13 @@ public class State {
 
 
     //Установка полей существующего проекта
-    public static void getProjectData(Project selectedProject) {
+    public static void getProjectData(Project selectedProject) throws HttpException, IOException, URISyntaxException {
         var id = selectedProject.getId();
 
         project = selectedProject;
-        themes = ProjectClientController.getThemes(selectedProject);
-        sources = ProjectClientController.getSources(id);
-        engines.addAll(ProjectClientController.getEngines(selectedProject));
+        themes = ThemeClientController.getThemes(selectedProject);
+        literatures = LiteratureClientController.getLiteratures(id);
+        engines = EngineClientController.getEngines(selectedProject);
     }
 
 

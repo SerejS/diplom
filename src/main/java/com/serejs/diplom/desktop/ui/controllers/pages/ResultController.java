@@ -49,7 +49,11 @@ public class ResultController extends RootController implements Initializable {
     }
 
     public void goProjectOverview() {
-        State.saveProjectData();
+        try {
+            State.saveProjectData();
+        } catch (Exception e) {
+            ErrorAlert.info("Ошибка сохранения данных проекта");
+        }
         anotherPage(finishButton, "project-overview.fxml");
     }
 

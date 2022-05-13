@@ -10,8 +10,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
+import org.apache.http.HttpException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -49,7 +51,12 @@ public class ProjectOverviewController extends TableViewController<Project> {
             if (event.getClickCount() != 2 || model.isEmpty()) return;
 
             var project = model.getSelectedItem();
-            State.getProjectData(project);
+            try {
+                State.getProjectData(project);
+            } catch (HttpException | IOException | URISyntaxException e) {
+                ErrorAlert.info("Ошибка получения данных выбранного проекта");
+                e.printStackTrace();
+            }
 
             anotherPage(addButton, "theme-view.fxml");
         });
@@ -59,7 +66,7 @@ public class ProjectOverviewController extends TableViewController<Project> {
         try {
             var projects = State.getProjects();
             projectList.getItems().addAll(projects);
-        } catch (IOException e) {
+        } catch (IOException | HttpException | URISyntaxException e) {
             e.printStackTrace();
         }
     }
