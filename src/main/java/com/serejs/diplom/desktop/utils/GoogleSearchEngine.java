@@ -47,7 +47,7 @@ public class GoogleSearchEngine implements JsonSerializable {
      * @return Список интернет-источников по теме
      */
     @Experimental
-    public List<Source> getSources(Theme theme) throws IOException, URISyntaxException {
+    public List<Literature> getSources(Theme theme) throws IOException, URISyntaxException {
         var uriBuilder = new URIBuilder(baseGoogleSearch);
 
         var query = theme.getTitle();
@@ -78,7 +78,7 @@ public class GoogleSearchEngine implements JsonSerializable {
             uris.add(new URI(jArr.getJSONObject(i).get("link").toString()));
         }
 
-        return uris.stream().map(uri -> new Source(-1L, uri, SourceType.WEB, type)).toList();
+        return uris.stream().map(uri -> new Literature(-1L, uri, SourceType.WEB, type)).toList();
     }
 
     @Override
