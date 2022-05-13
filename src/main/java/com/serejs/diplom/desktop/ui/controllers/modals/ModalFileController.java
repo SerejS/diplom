@@ -2,9 +2,9 @@ package com.serejs.diplom.desktop.ui.controllers.modals;
 
 import com.serejs.diplom.desktop.enums.SourceType;
 import com.serejs.diplom.desktop.text.container.Format;
-import com.serejs.diplom.desktop.text.container.FormatSource;
+import com.serejs.diplom.desktop.text.container.FormatLiterature;
 import com.serejs.diplom.desktop.text.container.LiteratureType;
-import com.serejs.diplom.desktop.text.container.Source;
+import com.serejs.diplom.desktop.text.container.Literature;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.ModalController;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.TableViewController;
@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-public class ModalFileController extends ModalController<Source> {
+public class ModalFileController extends ModalController<Literature> {
     @FXML
     private TextField titleField;
     @FXML
@@ -47,10 +47,10 @@ public class ModalFileController extends ModalController<Source> {
     @FXML
     private ComboBox<String> after;
 
-    private TableViewController<Source> parent;
+    private TableViewController<Literature> parent;
 
     @Override
-    public void setParent(TableViewController<Source> parent) {
+    public void setParent(TableViewController<Literature> parent) {
         this.parent = parent;
     }
 
@@ -82,19 +82,19 @@ public class ModalFileController extends ModalController<Source> {
         }
 
 
-        Source source;
+        Literature literature;
         if (isFormatSource) {
             var format = new Format(
                     getSeparator(prev.getValue()),
                     getSeparator(mid.getValue()),
                     getSeparator(after.getValue())
             );
-            source = new FormatSource(-1L, new URI(uri), fileSource, typeBox.getValue(), format);
+            literature = new FormatLiterature(-1L, new URI(uri), fileSource, typeBox.getValue(), format);
         } else {
-            source = new Source(-1L, new URI(uri), fileSource, typeBox.getValue());
+            literature = new Literature(-1L, new URI(uri), fileSource, typeBox.getValue());
         }
 
-        parent.addRow(source);
+        parent.addRow(literature);
     }
 
     @Override
@@ -172,9 +172,9 @@ public class ModalFileController extends ModalController<Source> {
 
 
     @Override
-    public void setObject(Source source) {
-        uriField.setText(source.getUri().toString());
-        sourceBox.getSelectionModel().select(source.getSourceType());
-        typeBox.getSelectionModel().select(source.getLitType());
+    public void setObject(Literature literature) {
+        uriField.setText(literature.getUri().toString());
+        sourceBox.getSelectionModel().select(literature.getSourceType());
+        typeBox.getSelectionModel().select(literature.getLitType());
     }
 }

@@ -1,8 +1,8 @@
 package com.serejs.diplom.desktop.loaders;
 
 
-import com.serejs.diplom.desktop.text.container.FormatSource;
-import com.serejs.diplom.desktop.text.container.Source;
+import com.serejs.diplom.desktop.text.container.FormatLiterature;
+import com.serejs.diplom.desktop.text.container.Literature;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,11 +13,11 @@ public class CustomLoader extends AbstractLoader {
     /**
      * Функция получение содержания книги из файла пользовательского формата
      *
-     * @param source Источник
+     * @param literature Источник
      */
     @Override
-    public void load(Source source) {
-        if (!(source instanceof FormatSource formatSource)) return;
+    public void load(Literature literature) {
+        if (!(literature instanceof FormatLiterature formatSource)) return;
 
         var uri = formatSource.getUri();
         var format = formatSource.getFormat();

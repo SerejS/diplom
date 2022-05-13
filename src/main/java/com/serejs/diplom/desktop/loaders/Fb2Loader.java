@@ -2,7 +2,7 @@ package com.serejs.diplom.desktop.loaders;
 
 import com.serejs.diplom.desktop.enums.AttachmentType;
 import com.serejs.diplom.desktop.text.container.Attachment;
-import com.serejs.diplom.desktop.text.container.Source;
+import com.serejs.diplom.desktop.text.container.Literature;
 import com.serejs.diplom.desktop.utils.MarkDown;
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
@@ -17,11 +17,11 @@ public class Fb2Loader extends AbstractLoader {
     /**
      * Функция получение глав книги из файла fb2
      *
-     * @param source источник fb2
+     * @param literature источник fb2
      */
     @Override
-    public void load(Source source) throws IOException {
-        var file = new File(source.getUri().getPath());
+    public void load(Literature literature) throws IOException {
+        var file = new File(literature.getUri().getPath());
 
         var encoding = "UTF-8";
         var firstLine = FileUtils.readLines(file, encoding).get(0);

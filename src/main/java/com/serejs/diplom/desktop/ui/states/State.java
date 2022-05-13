@@ -34,7 +34,7 @@ public class State {
 
     @Getter
     @Setter
-    private static List<Source> sources;
+    private static List<Literature> literatures;
 
     @Getter
     @Setter
@@ -94,9 +94,9 @@ public class State {
     }
 
 
-    public static void addSources(List<Source> newSources) {
-        sources.addAll(newSources);
-        ProjectClientController.addSources(newSources);
+    public static void addLiteratures(List<Literature> newLiteratures) throws HttpException, IOException, URISyntaxException {
+        literatures.addAll(newLiteratures);
+        LiteratureClientController.sendLiteratures(newLiteratures);
     }
 
     public static void saveProjectData() {

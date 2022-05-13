@@ -3,22 +3,22 @@ package com.serejs.diplom.desktop.loaders;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
-import com.serejs.diplom.desktop.text.container.FormatSource;
-import com.serejs.diplom.desktop.text.container.Source;
+import com.serejs.diplom.desktop.text.container.FormatLiterature;
+import com.serejs.diplom.desktop.text.container.Literature;
 
 import java.util.Arrays;
 
 public class PdfLoader extends AbstractLoader {
 
     @Override
-    public void load(Source source) throws Exception {
-        if (!(source instanceof FormatSource formatSource)) return;
+    public void load(Literature literature) throws Exception {
+        if (!(literature instanceof FormatLiterature formatSource)) return;
 
         var format = formatSource.getFormat();
         //Перенос страниц выделения в инфтерфейс источника
         var startPage = 1;
 
-        PdfReader reader = new PdfReader(source.getUri().toString());
+        PdfReader reader = new PdfReader(literature.getUri().toString());
 
         var textBook = new StringBuilder();
         var strategy = new SimpleTextExtractionStrategy();

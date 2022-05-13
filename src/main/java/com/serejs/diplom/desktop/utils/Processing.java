@@ -16,26 +16,26 @@ public class Processing {
     public static String getResult() throws Exception {
         ///Извлечение фрагментов
         var mainFragments = new FragmentMap();
-        for (Source source : State.getSources()) {
+        for (Literature literature : State.getLiteratures()) {
             ContentLoader loader;
-            switch (source.getSourceType()) {
+            switch (literature.getSourceType()) {
                 case EPUB -> loader = new EpubLoader();
                 case FB2 -> loader = new Fb2Loader();
                 case PDF -> loader = new PdfLoader();
                 case CUSTOM -> loader = new CustomLoader();
                 case WEB -> loader = new WebLoader();
                 default -> {
-                    System.err.println("Тип литературы не определен: " + source.getUri());
+                    System.err.println("Тип литературы не определен: " + literature.getUri());
                     continue;
                 }
             }
 
             var localThemes = State.getThemes().stream()
-                    .filter(t -> t.getTypes().contains(source.getLitType()))
+                    .filter(t -> t.getTypes().contains(literature.getLitType()))
                     .toList();
             if (localThemes.isEmpty()) continue;
 
-            loader.load(source);
+            loader.load(literature);
             var contents = loader.getContent();
 
             for (String key : contents.keySet()) {
@@ -44,9 +44,9 @@ public class Processing {
                 Theme theme = Analyzer.getTheme(content, localThemes);
                 if (theme == null) continue;
 
-                System.out.println(source.getUri() + " " + loader.getContent().size());
+                System.out.println(literature.getUri() + " " + loader.getContent().size());
 
-                Fragment fragment = new Fragment(content, theme, source.getLitType(), loader.getAttachments(key));
+                Fragment fragment = new Fragment(content, theme, literature.getLitType(), loader.getAttachments(key));
                 if (fragment.getCountWords() > Settings.getMaxWords()) continue;
 
                 if (fragment.getConcentration() < Settings.getMinConcentration()) {

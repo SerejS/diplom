@@ -1,6 +1,6 @@
 package com.serejs.diplom.desktop.loaders;
 
-import com.serejs.diplom.desktop.text.container.Source;
+import com.serejs.diplom.desktop.text.container.Literature;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,8 +14,8 @@ import static com.serejs.diplom.desktop.utils.AttachmentParser.xmlAttachments;
 public class WebLoader extends AbstractLoader {
 
     @Override
-    public void load(Source source) throws IOException {
-        var uri = source.getUri();
+    public void load(Literature literature) throws IOException {
+        var uri = literature.getUri();
         fragments = new HashMap<>();
 
         //Получение содержимого сайта в виде документа

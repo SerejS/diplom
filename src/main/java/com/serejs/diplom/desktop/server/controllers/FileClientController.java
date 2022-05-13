@@ -1,7 +1,7 @@
 package com.serejs.diplom.desktop.server.controllers;
 
 import com.serejs.diplom.desktop.enums.SourceType;
-import com.serejs.diplom.desktop.text.container.Source;
+import com.serejs.diplom.desktop.text.container.Literature;
 import com.serejs.diplom.desktop.ui.states.State;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.*;
@@ -25,17 +25,17 @@ import java.util.LinkedList;
 public class FileClientController extends AbstractClientController {
     private static final String endpoint = "/api/files";
 
-    public static void upload(Source source) throws Exception {
-        if (source.getSourceType() == SourceType.WEB) throw new Exception("Данный тип источника не имеет файла");
+    public static void upload(Literature literature) throws Exception {
+        if (literature.getSourceType() == SourceType.WEB) throw new Exception("Данный тип источника не имеет файла");
 
-        SourceClientController.createSource(source);
-        var id = source.getId();
+        LiteratureClientController.sendLiterature(literature);
+        var id = literature.getId();
 
         var encoding = getEncoding();
 
         HttpClient httpclient = HttpClients.createDefault();
 
-        var file = new File(source.getUri());
+        var file = new File(literature.getUri());
         var fileBody = new FileBody(file, ContentType.DEFAULT_BINARY);
 
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
@@ -54,13 +54,13 @@ public class FileClientController extends AbstractClientController {
             throw new Exception("Ошибка отправления файла на сервер");
     }
 
-    public static void download(Source source) throws URISyntaxException, IOException, HttpException {
+    public static void download(Literature literature) throws URISyntaxException, IOException, HttpException {
         var outputDir = State.getOutputDirectory().getPath();
-        var fileName = FilenameUtils.getName(source.getUri().getPath());
+        var fileName = FilenameUtils.getName(literature.getUri().getPath());
         var file = new File(outputDir + "/" + fileName);
 
         var pairs = new LinkedList<NameValuePair>();
-        pairs.add(new BasicNameValuePair("literatureId", String.valueOf(source.getId())));
+        pairs.add(new BasicNameValuePair("literatureId", String.valueOf(literature.getId())));
 
         var bytes  = getRequest(endpoint, pairs).getBytes(StandardCharsets.UTF_8);
 

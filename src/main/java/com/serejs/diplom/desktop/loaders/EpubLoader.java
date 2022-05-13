@@ -1,6 +1,6 @@
 package com.serejs.diplom.desktop.loaders;
 
-import com.serejs.diplom.desktop.text.container.Source;
+import com.serejs.diplom.desktop.text.container.Literature;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.epub.EpubReader;
@@ -18,12 +18,12 @@ public class EpubLoader extends AbstractLoader {
     /**
      * Функция получение глав книги из файла epub
      *
-     * @param source источник epub
+     * @param literature источник epub
      */
     @Override
-    public void load(Source source) throws IOException {
+    public void load(Literature literature) throws IOException {
         //Преобразование файла в книгу java
-        Book book = new EpubReader().readEpub(new FileInputStream(source.getUri().getPath()));
+        Book book = new EpubReader().readEpub(new FileInputStream(literature.getUri().getPath()));
         fragments = new HashMap<>();
 
         //Получение таблицы глав и добавление их в мапу

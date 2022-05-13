@@ -10,7 +10,7 @@ import java.net.URI;
 
 @Data
 @AllArgsConstructor
-public class Source implements JsonSerializable {
+public class Literature implements JsonSerializable {
     private Long id;
     private URI uri;
     private SourceType sourceType;
