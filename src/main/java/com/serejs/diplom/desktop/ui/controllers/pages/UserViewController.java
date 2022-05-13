@@ -80,7 +80,7 @@ public class UserViewController extends TableViewController<String> {
     @Override
     public void addRow(String string) {
         try {
-            var view = ViewClientController.addView(string);
+            var view = ViewClientController.sendView(string);
             listView.getItems().add(view);
         } catch (Exception e) {
             ErrorAlert.info("Ошибка добавления изображения");
