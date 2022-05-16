@@ -49,17 +49,21 @@ public class TypesController extends TableViewController<LiteratureType> {
             return;
         }
 
-        LiteratureType t = table.getSelectionModel().getSelectedItem();
+        LiteratureType type = table.getSelectionModel().getSelectedItem();
 
+        //Запрос удаления на сервере
         try {
-            TypeClientController.deleteType(t);
-            table.getItems().removeAll(t);
-            State.getLitTypes().remove(t);
+            TypeClientController.deleteType(type);
         } catch (HttpException | IOException | URISyntaxException e) {
-            ErrorAlert.info("Ошибка удаления типа литературы");
+            ErrorAlert.info("Ошибка удаления типа литературы на сервере");
             e.printStackTrace();
+            return;
         }
 
+        //Удаление типа литературы в приложении
+        table.getItems().removeAll(type);
+        State.getLitTypes().remove(type);
+        State.clearProject();
     }
 
     @FXML

@@ -69,6 +69,17 @@ public class State {
         engines = EngineClientController.getEngines(selectedProject);
     }
 
+    public static void clearProject() {
+        project = null;
+
+        fragments.clear();
+        literatures.clear();
+        themes.clear();
+        engines.clear();
+        outputDirectory = null;
+    }
+
+
 
     public static LiteratureType getLitTypeById(Long id) {
         return getLitTypes().stream().filter(lt -> Objects.equals(lt.getId(), id)).findFirst().orElseThrow();
