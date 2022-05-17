@@ -2,6 +2,7 @@ package com.serejs.diplom.desktop.server.controllers;
 
 import com.serejs.diplom.desktop.enums.SourceType;
 import com.serejs.diplom.desktop.text.container.Literature;
+import com.serejs.diplom.desktop.text.container.Project;
 import com.serejs.diplom.desktop.ui.states.State;
 import org.apache.http.HttpException;
 import org.apache.http.NameValuePair;
@@ -28,9 +29,9 @@ public class LiteratureClientController extends AbstractClientController {
         }
     }
 
-    public static List<Literature> getLiteratures(long projectId) throws HttpException, IOException, URISyntaxException {
+    public static List<Literature> getLiteratures(Project project) throws HttpException, IOException, URISyntaxException {
         var params = new LinkedList<NameValuePair>();
-        params.add(new BasicNameValuePair("projectId", String.valueOf(projectId)));
+        params.add(new BasicNameValuePair("projectId", String.valueOf(project.getId())));
 
         var literatures = new LinkedList<Literature>();
 
@@ -47,7 +48,7 @@ public class LiteratureClientController extends AbstractClientController {
             var litType = State.getLitTypeById(litTypeid);
 
             literatures.add(new Literature(
-                    id, uri, source, litType
+                    id, uri, source, litType, project
             ));
         }
 

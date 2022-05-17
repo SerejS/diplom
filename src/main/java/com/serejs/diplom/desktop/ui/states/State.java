@@ -61,11 +61,9 @@ public class State {
 
     //Установка полей существующего проекта
     public static void getProjectData(Project selectedProject) throws HttpException, IOException, URISyntaxException {
-        var id = selectedProject.getId();
-
         project = selectedProject;
         themes = ThemeClientController.getThemes(selectedProject);
-        literatures = LiteratureClientController.getLiteratures(id);
+        literatures = LiteratureClientController.getLiteratures(selectedProject);
         engines = EngineClientController.getEngines(selectedProject);
     }
 
@@ -97,21 +95,15 @@ public class State {
         return types;
     }
 
-    public static void removeLitType(LiteratureType type) {
-        //Сделать получение из БД
-        var defaultType = new LiteratureType("Общий", true);
+    public static void saveProjectData() throws Exception {
+        ThemeClientController.sendThemes(themes);
 
-        types.remove(type);
-        sources.stream().filter(s -> s.getLitType() == type).forEach(s -> s.setLitType(defaultType));
-    }
+        LiteratureClientController.sendLiteratures(literatures);
+        for (var literature : literatures) {
+            FileClientController.upload(literature);
+        }
 
-
-    public static void addLiteratures(List<Literature> newLiteratures) throws HttpException, IOException, URISyntaxException {
-        literatures.addAll(newLiteratures);
-        LiteratureClientController.sendLiteratures(newLiteratures);
-    }
-
-    public static void saveProjectData() {
+        EngineClientController.sendEngines(engines);
     }
 
 

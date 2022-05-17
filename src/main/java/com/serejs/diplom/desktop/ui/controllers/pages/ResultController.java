@@ -1,5 +1,6 @@
 package com.serejs.diplom.desktop.ui.controllers.pages;
 
+import com.serejs.diplom.desktop.server.controllers.FileClientController;
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.alerts.InfoAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.RootController;
@@ -30,10 +31,17 @@ public class ResultController extends RootController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         area.setWrapText(true);
 
-
         var task = new Task<String>() {
             @Override
             protected String call() throws Exception {
+                var literatures = com.serejs.diplom.desktop.ui.states.State.getLiteratures();
+
+                //Получение файлов литературы с сервера, которых нет на компьютере
+                for (var lit : literatures) {
+                    if (lit.getUri() == null)
+                        FileClientController.download(lit);
+                }
+
                 return Processing.getResult();
             }
         };

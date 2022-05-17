@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.serejs.diplom.desktop.enums.SourceType;
 import com.serejs.diplom.desktop.text.container.*;
+import com.serejs.diplom.desktop.ui.states.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.http.annotation.Experimental;
@@ -78,7 +79,7 @@ public class GoogleSearchEngine implements JsonSerializable {
             uris.add(new URI(jArr.getJSONObject(i).get("link").toString()));
         }
 
-        return uris.stream().map(uri -> new Literature(-1L, uri, SourceType.WEB, type)).toList();
+        return uris.stream().map(uri -> new Literature(-1L, uri, SourceType.WEB, type, State.getProject())).toList();
     }
 
     @Override

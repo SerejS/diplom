@@ -81,7 +81,7 @@ public class ModalFileController extends ModalController<Literature> {
             return;
         }
 
-
+        var currentProject = State.getProject();
         Literature literature;
         if (isFormatSource) {
             var format = new Format(
@@ -89,9 +89,9 @@ public class ModalFileController extends ModalController<Literature> {
                     getSeparator(mid.getValue()),
                     getSeparator(after.getValue())
             );
-            literature = new FormatLiterature(-1L, new URI(uri), fileSource, typeBox.getValue(), format);
+            literature = new FormatLiterature(-1L, new URI(uri), fileSource, typeBox.getValue(), currentProject, format);
         } else {
-            literature = new Literature(-1L, new URI(uri), fileSource, typeBox.getValue());
+            literature = new Literature(-1L, new URI(uri), fileSource, typeBox.getValue(), currentProject);
         }
 
         parent.addRow(literature);

@@ -20,8 +20,8 @@ public class FilesViewController extends TableViewController<Literature> {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        var sources = State.getLiteratures();
-        table.getItems().addAll(sources.stream().filter(s -> s.getSourceType() != SourceType.WEB).toList());
+        var literatures = State.getLiteratures();
+        table.getItems().addAll(literatures.stream().filter(s -> s.getSourceType() != SourceType.WEB).toList());
 
         var uri = new TableColumn<Literature, URI>("Название файла");
         uri.setMinWidth(300);
