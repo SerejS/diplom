@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
+import javafx.stage.DirectoryChooser;
 import org.apache.http.HttpException;
 
 import java.io.IOException;
@@ -49,6 +50,16 @@ public class ProjectOverviewController extends TableViewController<Project> {
 
             var model = projectList.getSelectionModel();
             if (event.getClickCount() != 2 || model.isEmpty()) return;
+
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Выбрать директорию для сохранения файлов");
+
+            var output = directoryChooser.showDialog(projectList.getScene().getWindow());
+            if (output == null) {
+                ErrorAlert.info("Не выбрана директория");
+                return;
+            }
+            State.setOutputDirectory(output);
 
             var project = model.getSelectedItem();
             try {
