@@ -66,5 +66,7 @@ public class FileClientController extends AbstractClientController {
 
         var output = new FileOutputStream(file);
         output.write(bytes);
+
+        literature.setUri(file.getAbsoluteFile().toURI());
     }
 }

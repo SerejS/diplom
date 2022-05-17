@@ -45,13 +45,13 @@ public class FilesViewController extends TableViewController<Literature> {
 
     @FXML
     public void onNextPage() {
-        var sources = getItems();
-        if (sources.isEmpty()) {
+        var literatures = getItems();
+        if (literatures.isEmpty()) {
             ErrorAlert.info("Проект должен содержать хотя бы один источник");
             return;
         }
 
-        State.setLiteratures(sources);
+        State.setLiteratures(literatures);
         anotherPage(nextButton, "web-view.fxml");
     }
 
@@ -59,5 +59,12 @@ public class FilesViewController extends TableViewController<Literature> {
     public void onPrevPage() {
         State.setLiteratures(getItems());
         anotherPage(prevButton, "theme-view.fxml");
+    }
+
+
+    @FXML
+    public void closeProject() {
+        State.clearProject();
+        anotherPage(prevButton, "project-overview.fxml");
     }
 }

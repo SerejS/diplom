@@ -93,6 +93,7 @@ public class WebSearchController extends TableViewController<GoogleSearchEngine>
 
     }
 
+
     @FXML
     protected void goPrevPage() {
         anotherPage(prevButton, "files-view.fxml");
@@ -101,5 +102,11 @@ public class WebSearchController extends TableViewController<GoogleSearchEngine>
     @FXML
     protected void goSettingsPage() {
         anotherPage(analiseButton, "settings-view.fxml");
+    }
+
+    @FXML
+    protected void closeProject() {
+        State.clearProject();
+        anotherPage(prevButton, "project-overview.fxml");
     }
 }

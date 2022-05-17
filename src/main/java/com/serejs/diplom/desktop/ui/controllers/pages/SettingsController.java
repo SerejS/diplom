@@ -2,6 +2,7 @@ package com.serejs.diplom.desktop.ui.controllers.pages;
 
 import com.serejs.diplom.desktop.ui.alerts.ErrorAlert;
 import com.serejs.diplom.desktop.ui.controllers.abstracts.RootController;
+import com.serejs.diplom.desktop.ui.states.State;
 import com.serejs.diplom.desktop.utils.Settings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -74,7 +75,6 @@ public class SettingsController extends RootController implements Initializable 
         anotherPage(nextButton, "result-view.fxml");
     }
 
-
     @FXML
     protected void goPrevPage() {
         try {
@@ -85,5 +85,11 @@ public class SettingsController extends RootController implements Initializable 
         }
 
         anotherPage(prevButton, "web-view.fxml");
+    }
+
+    @FXML
+    public void closeProject() {
+        State.clearProject();
+        anotherPage(prevButton, "project-overview.fxml");
     }
 }

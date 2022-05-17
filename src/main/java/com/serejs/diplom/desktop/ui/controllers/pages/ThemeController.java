@@ -46,6 +46,16 @@ public class ThemeController extends TableViewController<Theme> {
         openModal(modalFileName);
     }
 
+
+    @FXML
+    public void deleteRow() {
+        if (!DeleteAlert.confirm()) return;
+        Theme t = table.getSelectionModel().getSelectedItem();
+        var themes = table.getItems().filtered(item -> item == t || item.getRoot() == t);
+        table.getItems().removeAll(themes);
+    }
+
+
     @FXML
     private void goNextPage() {
         var themes = getItems();
@@ -60,16 +70,10 @@ public class ThemeController extends TableViewController<Theme> {
         anotherPage(nextButton, "files-view.fxml");
     }
 
-    @FXML
-    public void deleteRow() {
-        if (!DeleteAlert.confirm()) return;
-        Theme t = table.getSelectionModel().getSelectedItem();
-        var themes = table.getItems().filtered(item -> item == t || item.getRoot() == t);
-        table.getItems().removeAll(themes);
-    }
 
     @FXML
-    protected void goPrevPage() {
+    private void goPrevPage() {
+        State.clearProject();
         anotherPage(prevButton, "project-overview.fxml");
     }
 }
