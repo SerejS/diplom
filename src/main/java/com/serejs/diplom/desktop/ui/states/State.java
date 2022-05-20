@@ -31,15 +31,15 @@ public class State {
 
     @Getter
     @Setter
-    private static FragmentMap fragments;
+    private static FragmentMap fragments = new FragmentMap();
 
     @Getter
     @Setter
-    private static List<Literature> literatures;
+    private static List<Literature> literatures = new LinkedList<>();
 
     @Getter
     @Setter
-    private static List<Theme> themes;
+    private static List<Theme> themes = new LinkedList<>();
 
     private static final List<LiteratureType> types = new LinkedList<>();
 
