@@ -85,6 +85,7 @@ public class ModalFileController extends ModalController<Literature> {
         Literature literature;
         if (isFormatSource) {
             var format = new Format(
+                    -1L,
                     getSeparator(prev.getValue()),
                     getSeparator(mid.getValue()),
                     getSeparator(after.getValue())

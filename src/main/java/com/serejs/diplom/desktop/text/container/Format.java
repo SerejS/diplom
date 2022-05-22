@@ -1,15 +1,27 @@
 package com.serejs.diplom.desktop.text.container;
 
-public record Format(String prev, String mid, String after) {
-    public String getPrev() {
-        return prev;
-    }
+import com.google.gson.JsonObject;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-    public String getMid() {
-        return mid;
-    }
+@Getter
+@AllArgsConstructor
+public class Format implements JsonSerializable {
+    @Setter
+    private Long id;
+    private String prev;
+    private String mid;
+    private String after;
 
-    public String getAfter() {
-        return after;
+    @Override
+    public JsonObject toJson() {
+        var formatJson = new JsonObject();
+
+        formatJson.addProperty("after", after);
+        formatJson.addProperty("prev", prev);
+        formatJson.addProperty("mid", mid);
+
+        return formatJson;
     }
 }
