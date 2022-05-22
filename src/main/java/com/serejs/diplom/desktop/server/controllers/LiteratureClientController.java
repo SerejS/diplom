@@ -1,6 +1,7 @@
 package com.serejs.diplom.desktop.server.controllers;
 
 import com.serejs.diplom.desktop.enums.SourceType;
+import com.serejs.diplom.desktop.text.container.FormatLiterature;
 import com.serejs.diplom.desktop.text.container.Literature;
 import com.serejs.diplom.desktop.text.container.Project;
 import com.serejs.diplom.desktop.ui.states.State;
@@ -19,13 +20,18 @@ public class LiteratureClientController extends AbstractClientController {
     private final static String endpoint = "/api/literatures";
 
     public static void sendLiterature(Literature literature) throws HttpException, IOException, URISyntaxException {
+        if (literature instanceof FormatLiterature l) {
+            var format = l.getFormat();
+            FormatClientController.sendFormat(format);
+        }
+
         var response = postRequest(endpoint, literature);
         literature.setId(Long.parseLong(response));
     }
 
     public static void sendLiteratures(List<Literature> literatures) throws HttpException, IOException, URISyntaxException {
-        for (var l : literatures) {
-            sendLiterature(l);
+        for (var literature : literatures) {
+            sendLiterature(literature);
         }
     }
 
