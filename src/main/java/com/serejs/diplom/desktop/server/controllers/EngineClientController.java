@@ -43,4 +43,9 @@ public class EngineClientController extends AbstractClientController {
     public static void sendEngines(List<GoogleSearchEngine> engines) throws HttpException, IOException, URISyntaxException {
         postRequest("/api/engines", engines);
     }
+
+    //Отправление поисковых движков на сервер
+    public static void deleteEngine(GoogleSearchEngine engine) throws HttpException, IOException, URISyntaxException {
+        deleteRequest("/api/engines/" + engine.getId());
+    }
 }
