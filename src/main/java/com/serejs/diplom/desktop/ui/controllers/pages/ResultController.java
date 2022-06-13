@@ -38,7 +38,7 @@ public class ResultController extends RootController implements Initializable {
 
                 //Получение файлов литературы с сервера, которых нет на компьютере
                 for (var lit : literatures) {
-                    if (lit.getUri() == null)
+                    if (lit.getId() != -1L)
                         FileClientController.download(lit);
                 }
 

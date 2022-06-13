@@ -49,6 +49,10 @@ public class State {
     @Getter
     private static File outputDirectory;
 
+    @Getter
+    @Setter
+    private static File rpdFile;
+
 
     //Получение списка проектов
     public static LinkedList<Project> getProjects() throws IOException, HttpException, URISyntaxException {
@@ -72,7 +76,7 @@ public class State {
 
         fragments.clear();
         literatures.clear();
-        themes.clear();
+        themes = new LinkedList<>();
         engines.clear();
         outputDirectory = null;
     }
@@ -98,7 +102,6 @@ public class State {
     public static void saveProjectData() throws Exception {
         ThemeClientController.sendThemes(themes);
 
-        LiteratureClientController.sendLiteratures(literatures);
         for (var literature : literatures) {
             FileClientController.upload(literature);
         }
