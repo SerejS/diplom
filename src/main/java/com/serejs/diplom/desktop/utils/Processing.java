@@ -17,6 +17,7 @@ public class Processing {
         ///Извлечение фрагментов
         var mainFragments = new FragmentMap();
         for (Literature literature : State.getLiteratures()) {
+            System.out.println("Начало " + literature.getUri());
             ContentLoader loader;
             switch (literature.getSourceType()) {
                 case EPUB -> loader = new EpubLoader();
@@ -35,8 +36,12 @@ public class Processing {
                     .toList();
             if (localThemes.isEmpty()) continue;
 
+            System.out.println("Получение содержания...");
+
             loader.load(literature);
             var contents = loader.getContent();
+
+            System.out.println("Распределение по темам...");
 
             for (String key : contents.keySet()) {
                 var content = contents.get(key);
@@ -58,12 +63,17 @@ public class Processing {
 
         }
 
+        System.out.println("Данные получены");
+
         //Обработка
         mainFragments.recalculateThemes();
         Analyzer.alignment(mainFragments);
 
+        System.out.println("Отфильтровано");
+
         State.setFragments(mainFragments);
 
+        System.out.println("Начинается вывод фрагментов...");
         return getPlainResult(mainFragments);
     }
 

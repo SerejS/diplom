@@ -42,6 +42,20 @@ public class ResultController extends RootController implements Initializable {
                         FileClientController.download(lit);
                 }
 
+                System.out.println("Литература скачана");
+
+                //Получение текста с искомых сайтов по темам
+                var themes = com.serejs.diplom.desktop.ui.states.State.getThemes();
+                var gse = com.serejs.diplom.desktop.ui.states.State.getEngines();
+
+                for (var theme : themes) {
+                    for (var engine : gse) {
+                        literatures.addAll(engine.getSources(theme));
+                    }
+                }
+
+                System.out.println("Ссылки получены");
+
                 return Processing.getResult();
             }
         };

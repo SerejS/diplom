@@ -42,6 +42,7 @@ public class ModalTypeController extends ModalController<LiteratureType> {
             try {
                 TypeClientController.sendType(type);
                 parent.addRow(type);
+                State.getLitTypes().add(type);
             } catch (HttpException | IOException | URISyntaxException e) {
                 ErrorAlert.info("Ошибка создания типа литературы");
                 e.printStackTrace();

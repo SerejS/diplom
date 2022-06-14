@@ -62,7 +62,8 @@ public class FileClientController extends AbstractClientController {
         var pairs = new LinkedList<NameValuePair>();
         pairs.add(new BasicNameValuePair("literatureId", String.valueOf(literature.getId())));
 
-        var bytes  = getRequest(endpoint, pairs).getBytes(StandardCharsets.UTF_8);
+        //Изменить выбор кодировки файла при получении ответа
+        var bytes  = getRequest(endpoint, pairs).getBytes("Windows-1251");
 
         var output = new FileOutputStream(file);
         output.write(bytes);

@@ -9,7 +9,10 @@ import com.serejs.diplom.desktop.ui.controllers.pages.ProjectOverviewController;
 import com.serejs.diplom.desktop.ui.states.State;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import org.apache.http.HttpException;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
@@ -24,7 +27,7 @@ public class ModalProjectController extends ModalController<Project> {
     }
 
 
-    public void createProject() {
+    public void createProject() throws Exception {
         if (!(parent instanceof ProjectOverviewController parent)) return;
 
         if (title.getText().isEmpty()) {
@@ -36,6 +39,7 @@ public class ModalProjectController extends ModalController<Project> {
         ProjectClientController.createProject(project);
 
         parent.addRow(project);
+        State.getProjects().add(project);
     }
 
 
